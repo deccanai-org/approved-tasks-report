@@ -6,6 +6,8 @@ Static HTML gallery of approved BrowserGym breaker tasks (UI-oracle + Sol agent 
 
 **Live:** https://deccanai-org.github.io/approved-tasks-report/
 
+**mail_002 Sol seed0 trajectory (0fff244a):** https://deccanai-org.github.io/approved-tasks-report/mail002-0fff244a/
+
 Relative image paths work there. Repo: https://github.com/deccanai-org/approved-tasks-report
 
 ## Local viewing
