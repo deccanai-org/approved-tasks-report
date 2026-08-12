@@ -127,20 +127,39 @@ details.shot-gallery[open]>summary::before{content:"▾"}
 .lightbox button,.lightbox a.lb-open{font:inherit;font-size:.8rem;padding:.35rem .7rem;border-radius:6px;border:1px solid #78716c;background:#292524;color:#fff;cursor:pointer;text-decoration:none}
 .lightbox button:hover,.lightbox a.lb-open:hover{background:#44403c}
 /* end screenshot galleries */
+
+.badge-trust-clean{background:#dcfce7;color:#14532d;border:1px solid #86efac}
+.badge-trust-env{background:#fee2e2;color:#7f1d1d;border:1px solid #fca5a5}
+.badge-trust-seed{background:#fef9c3;color:#854d0e;border:1px solid #fde047}
+.badge-trust-border{background:#e0e7ff;color:#1e3a5f;border:1px solid #a5b4fc}
+.badge-trust-other{background:#e7e5e4;color:#44403c;border:1px solid #d6d3d1}
+.verdict{margin-top:1rem;padding:1rem 1.1rem;background:#fff7ed;border:1px solid #fed7aa;border-radius:10px}
+.verdict h3{margin:0 0 .45rem;font-family:var(--sans);font-size:1.05rem;color:#9a3412}
+.verdict p{margin:.35rem 0;color:#44403c}
+.verdict ul{margin:.35rem 0;padding-left:1.2rem}
+.verdict li{margin:.2rem 0}
+.verdict .split{font-weight:650;color:#1c1917}
+.toc-filters button.active.f-clean{background:#14532d;border-color:#14532d}
+.toc-filters button.active.f-env{background:#7f1d1d;border-color:#7f1d1d}
+.toc-filters button.active.f-seed{background:#854d0e;border-color:#854d0e}
+.toc-filters button.active.f-border{background:#1e3a5f;border-color:#1e3a5f}
+.toc-filters button.active.f-other{background:#57534e;border-color:#57534e}
+.trust-note{margin:.55rem 0 0;padding:.55rem .7rem;background:#f5f0e8;border-left:3px solid #a8a29e;border-radius:0 6px 6px 0;font-size:.86rem;color:#44403c}
+
 </style>
 </head>
 <body>
 <div class="wrap">
 <header class="hero" id="top">
   <h1>Approved Tasks Report</h1>
-  <p class="lede">Sol <strong>BREAK</strong>-only brief: local Tier&nbsp;A Good breakers plus long-horizon <code>mp_130</code>–<code>mp_162</code> tasks that Sol failed (HOLD tasks removed). Fairness badges from the 2026-08-11 Q&amp;A audit.</p>
+  <p class="lede">Sol <strong>BREAK</strong>-only brief: local Tier&nbsp;A Good breakers plus long-horizon <code>mp_130</code>–<code>mp_162</code> failures. <strong>Do not</strong> treat the 22 LH BREAKs as equal model-failure evidence — see <a href="#net-verdict">Net verdict</a> (4 clean / 10 env / 4 seed / 2 borderline). Trust badges from 2026-08-12 coworker triage.</p>
   <div class="meta-strip">
     <span class="chip"><strong>24</strong> tasks · Sol BREAK only</span>
     <span class="chip suite"><strong>2</strong> Local Good (BREAK)</span>
-    <span class="chip suite"><strong>22</strong> Long-horizon (BREAK)</span>
+    <span class="chip suite"><strong>22</strong> Long-horizon (BREAK) · trust-split</span>
     <span class="chip suite"><strong>0</strong> Breaker-1 suite (none in this report)</span>
     <span class="chip sol-break">Sol <strong>BREAK 24</strong> (local 2 · LH 22)</span>
-    <span class="chip">LH fairness: <strong>28</strong> Fair · <strong>4</strong> Fixed · <strong>1</strong> Borderline</span>
+    <span class="chip">LH trust: <strong>4</strong> clean · <strong>10</strong> env · <strong>4</strong> seed · <strong>2</strong> borderline</span>
     <span class="chip">Sol seed0 · <code>filtration-mp130-162-sol-seed0-pvzgm</code></span>
     <span class="chip shots"><strong>Screenshots</strong> · agent+reasoning 24/24 · UI-oracle+reasoning 24/24 · seed-UI 0</span>
   </div>
@@ -165,8 +184,22 @@ details.shot-gallery[open]>summary::before{content:"▾"}
       <dd>UI-oracle step galleries with per-step reasoning where captured. LH tasks without a UI film still note mutation-oracle gold. Remaining gaps: none.</dd>
     </dl>
   </div>
+
+  <div class="verdict" id="net-verdict">
+    <h3>Net verdict — do not treat “22 LH BREAKs” as equal model-failure evidence</h3>
+    <p class="split">Long-horizon Sol BREAKs split: <strong>4 clean</strong> · <strong>10 env-bug</strong> · <strong>4 seed-verify</strong> · <strong>2 borderline</strong> (some tasks dual-tagged; unique LH BREAKs in this report = 22 including 4 other/untriaged).</p>
+    <ul>
+      <li><strong>CLEAN FINDING (4)</strong> — trustworthy as model failure until further notice: <code>mp_134</code>, <code>mp_140</code>, <code>mp_147</code>, <code>mp_161</code>. Caveat on <code>mp_134</code>: “email me” means Alice (verifier), not only a reply to the manager.</li>
+      <li><strong>ENV BUG — DO NOT TRUST (10)</strong> — not model-failure evidence until fixed + rerun: GymEats cart silent fail <code>mp_130</code>, <code>132</code>, <code>136</code>, <code>139</code>, <code>142</code>, <code>149</code>, <code>153</code>; GymCal Tab/event-click <code>mp_146</code>, <code>152</code>; GymCal quick-add date <code>mp_159</code>.</li>
+      <li><strong>SEED VERIFY (4)</strong> — check seed before trusting: <code>mp_135</code> (Maya recipe — gym OK), <code>mp_149</code> (gift SKUs searchable — gym OK; also env), <code>mp_155</code> (tip Portland ambient vs Austin), <code>mp_157</code> (tip Riley/Maya ambient vs top-3).</li>
+      <li><strong>BORDERLINE (2)</strong> — don’t present as clean: <code>mp_150</code>, <code>mp_152</code> (also env).</li>
+    </ul>
+    <p>Local Good <code>mail_002</code> / <code>md_002</code> stay in this report as Sol BREAKs but are <strong>not</strong> part of the long-horizon trust verdict above.</p>
+    <p>Audit note: <code>docs/history/audits/LONG_HORIZON_BREAK_TRUST_TRIAGE_2026-08-12.md</code>. No new Sol filtration runs until env/seed fixes land.</p>
+  </div>
+
   <table class="summary-table">
-    <caption>Sol disposition summary (seed0)</caption>
+    <caption>Sol disposition summary (seed0) — LH trust split in Net verdict</caption>
     <thead><tr><th>Suite</th><th>Tasks</th><th>HOLD</th><th>BREAK</th></tr></thead>
     <tbody>
       <tr><td>Local Good (Tier&nbsp;A, BREAK)</td><td class="num">2</td><td class="num disp-hold">0</td><td class="num disp-break">2</td></tr>
@@ -188,16 +221,20 @@ details.shot-gallery[open]>summary::before{content:"▾"}
 </header>
 <nav class="toc" id="toc">
   <h2>Contents</h2>
-  <div class="toc-filters" role="group" aria-label="Filter by Sol disposition or suite">
+  <div class="toc-filters" role="group" aria-label="Filter by trust tier or suite">
     <span class="lbl">Show</span>
     <button type="button" class="active" data-filter="all">All</button>
-    <button type="button" class="f-break" data-filter="break">Sol BREAK</button>
+    <button type="button" class="f-clean" data-filter="clean">Clean (4)</button>
+    <button type="button" class="f-env" data-filter="env">Env bug (10)</button>
+    <button type="button" class="f-seed" data-filter="seed">Seed verify (4)</button>
+    <button type="button" class="f-border" data-filter="border">Borderline (2)</button>
+    <button type="button" class="f-other" data-filter="other">Other BREAK</button>
     <button type="button" data-filter="local">Local Good</button>
     <button type="button" data-filter="lh">Long-horizon</button>
   </div>
   <div class="toc-grid">
     <div class="toc-col"><h3>A · Local Good BREAK (2) — Tier A gallery, not Breaker-1</h3><ol><li data-suite="local" data-disp="break"><a href="#local-mail_002"><code>mail_002/false_warranty_never_bought</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK</span></li><li data-suite="local" data-disp="break"><a href="#local-md_002"><code>md_002/kettle_chase_and_dishrack_reorder</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK</span></li></ol></div>
-    <div class="toc-col"><h3>B · Long-horizon BREAK (22)</h3><ol><li data-suite="lh" data-disp="break"><a href="#mp_130-atlas_90min_slot_prior_restaurant_veg_lunch">#1 <code>mp_130</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.65</span></li><li data-suite="lh" data-disp="break"><a href="#mp_131-laptop_charger_before_trip_abstain">#2 <code>mp_131</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.8</span></li><li data-suite="lh" data-disp="break"><a href="#mp_132-sarah_dinner_email_book_food_no_cal_edit">#3 <code>mp_132</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.4</span></li><li data-suite="lh" data-disp="break"><a href="#mp_134-manager_meet_travel_timezone">#5 <code>mp_134</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.85</span></li><li data-suite="lh" data-disp="break"><a href="#mp_135-recipe_email_groceries_skip_recent_sub_budget">#6 <code>mp_135</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.0</span></li><li data-suite="lh" data-disp="break"><a href="#mp_136-lunch_for_1pm_attendees_dietary_from_invite">#7 <code>mp_136</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.4</span></li><li data-suite="lh" data-disp="break"><a href="#mp_138-clear_friday_afternoon_three_hours_protected">#9 <code>mp_138</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.5</span></li><li data-suite="lh" data-disp="break"><a href="#mp_139-flying_tomorrow_dinner_no_leftovers">#10 <code>mp_139</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.25</span></li><li data-suite="lh" data-disp="break"><a href="#mp_140-visitor_next_month_dates_uncertain_abstain">#11 <code>mp_140</code></a> <span class="badge tiny badge-fixed">Fixed</span> <span class="toc-disp disp-break">Sol BREAK 0.75</span></li><li data-suite="lh" data-disp="break"><a href="#mp_141-reorder_last_groceries_except_party_sub_cap">#12 <code>mp_141</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.15</span></li><li data-suite="lh" data-disp="break"><a href="#mp_142-unprepared_meeting_move_lunch_order_before_prep">#13 <code>mp_142</code></a> <span class="badge tiny badge-fixed">Fixed</span> <span class="toc-disp disp-break">Sol BREAK 0.7</span></li><li data-suite="lh" data-disp="break"><a href="#mp_146-recurring_missed_meeting_move_future_skip_emailed_date">#17 <code>mp_146</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.2</span></li><li data-suite="lh" data-disp="break"><a href="#mp_147-workday_food_tomorrow_not_during_meetings_no_repeat_budget">#18 <code>mp_147</code></a> <span class="badge tiny badge-fixed">Fixed</span> <span class="toc-disp disp-break">Sol BREAK 0.2</span></li><li data-suite="lh" data-disp="break"><a href="#mp_149-birthday_gift_from_calendar_dinner_emails_budget">#20 <code>mp_149</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.4</span></li><li data-suite="lh" data-disp="break"><a href="#mp_150-unresolved_agreed_meet_email_still_relevant">#21 <code>mp_150</code></a> <span class="badge tiny badge-border">Borderline</span> <span class="toc-disp disp-break">Sol BREAK 0.4</span></li><li data-suite="lh" data-disp="break"><a href="#mp_151-wrong_version_purchase_replace_if_confident">#22 <code>mp_151</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.25</span></li><li data-suite="lh" data-disp="break"><a href="#mp_152-packed_tomorrow_min_calendar_moves_for_lunch">#23 <code>mp_152</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.2</span></li><li data-suite="lh" data-disp="break"><a href="#mp_153-dinner_after_last_meeting_unless_virtual_home">#24 <code>mp_153</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.25</span></li><li data-suite="lh" data-disp="break"><a href="#mp_155-trip_purchases_only_essential_forgotten">#26 <code>mp_155</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.15</span></li><li data-suite="lh" data-disp="break"><a href="#mp_157-lunch_least_recent_of_three_most_emailed">#28 <code>mp_157</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.0</span></li><li data-suite="lh" data-disp="break"><a href="#mp_159-make_wednesday_less_stressful_bounded">#30 <code>mp_159</code></a> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.2</span></li><li data-suite="lh" data-disp="break"><a href="#mp_161-late_contradiction_revisit_next_week">Evil E2 <code>mp_161</code></a> <span class="badge tiny badge-fixed">Fixed</span> <span class="toc-disp disp-break">Sol BREAK 0.75</span></li></ol></div>
+    <div class="toc-col"><h3>B · Long-horizon BREAK (22)</h3><ol><li data-suite="lh" data-disp="break" data-trust="env"><a href="#mp_130-atlas_90min_slot_prior_restaurant_veg_lunch">#1 <code>mp_130</code></a> <span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.65</span></li><li data-suite="lh" data-disp="break" data-trust="other"><a href="#mp_131-laptop_charger_before_trip_abstain">#2 <code>mp_131</code></a> <span class="badge badge-trust-other" title="Trust triage 2026-08-12">OTHER BREAK</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.8</span></li><li data-suite="lh" data-disp="break" data-trust="env"><a href="#mp_132-sarah_dinner_email_book_food_no_cal_edit">#3 <code>mp_132</code></a> <span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.4</span></li><li data-suite="lh" data-disp="break" data-trust="clean"><a href="#mp_134-manager_meet_travel_timezone">#5 <code>mp_134</code></a> <span class="badge badge-trust-clean" title="Trust triage 2026-08-12">CLEAN FINDING</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.85</span></li><li data-suite="lh" data-disp="break" data-trust="seed"><a href="#mp_135-recipe_email_groceries_skip_recent_sub_budget">#6 <code>mp_135</code></a> <span class="badge badge-trust-seed" title="Trust triage 2026-08-12">SEED VERIFY</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.0</span></li><li data-suite="lh" data-disp="break" data-trust="env"><a href="#mp_136-lunch_for_1pm_attendees_dietary_from_invite">#7 <code>mp_136</code></a> <span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.4</span></li><li data-suite="lh" data-disp="break" data-trust="other"><a href="#mp_138-clear_friday_afternoon_three_hours_protected">#9 <code>mp_138</code></a> <span class="badge badge-trust-other" title="Trust triage 2026-08-12">OTHER BREAK</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.5</span></li><li data-suite="lh" data-disp="break" data-trust="env"><a href="#mp_139-flying_tomorrow_dinner_no_leftovers">#10 <code>mp_139</code></a> <span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.25</span></li><li data-suite="lh" data-disp="break" data-trust="clean"><a href="#mp_140-visitor_next_month_dates_uncertain_abstain">#11 <code>mp_140</code></a> <span class="badge badge-trust-clean" title="Trust triage 2026-08-12">CLEAN FINDING</span> <span class="badge tiny badge-fixed">Fixed</span> <span class="toc-disp disp-break">Sol BREAK 0.75</span></li><li data-suite="lh" data-disp="break" data-trust="other"><a href="#mp_141-reorder_last_groceries_except_party_sub_cap">#12 <code>mp_141</code></a> <span class="badge badge-trust-other" title="Trust triage 2026-08-12">OTHER BREAK</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.15</span></li><li data-suite="lh" data-disp="break" data-trust="env"><a href="#mp_142-unprepared_meeting_move_lunch_order_before_prep">#13 <code>mp_142</code></a> <span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span> <span class="badge tiny badge-fixed">Fixed</span> <span class="toc-disp disp-break">Sol BREAK 0.7</span></li><li data-suite="lh" data-disp="break" data-trust="env"><a href="#mp_146-recurring_missed_meeting_move_future_skip_emailed_date">#17 <code>mp_146</code></a> <span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.2</span></li><li data-suite="lh" data-disp="break" data-trust="clean"><a href="#mp_147-workday_food_tomorrow_not_during_meetings_no_repeat_budget">#18 <code>mp_147</code></a> <span class="badge badge-trust-clean" title="Trust triage 2026-08-12">CLEAN FINDING</span> <span class="badge tiny badge-fixed">Fixed</span> <span class="toc-disp disp-break">Sol BREAK 0.2</span></li><li data-suite="lh" data-disp="break" data-trust="env" data-trust-extra="seed"><a href="#mp_149-birthday_gift_from_calendar_dinner_emails_budget">#20 <code>mp_149</code></a> <span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.4</span></li><li data-suite="lh" data-disp="break" data-trust="border"><a href="#mp_150-unresolved_agreed_meet_email_still_relevant">#21 <code>mp_150</code></a> <span class="badge badge-trust-border" title="Trust triage 2026-08-12">BORDERLINE</span> <span class="badge tiny badge-border">Borderline</span> <span class="toc-disp disp-break">Sol BREAK 0.4</span></li><li data-suite="lh" data-disp="break" data-trust="other"><a href="#mp_151-wrong_version_purchase_replace_if_confident">#22 <code>mp_151</code></a> <span class="badge badge-trust-other" title="Trust triage 2026-08-12">OTHER BREAK</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.25</span></li><li data-suite="lh" data-disp="break" data-trust="env" data-trust-extra="border"><a href="#mp_152-packed_tomorrow_min_calendar_moves_for_lunch">#23 <code>mp_152</code></a> <span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.2</span></li><li data-suite="lh" data-disp="break" data-trust="env"><a href="#mp_153-dinner_after_last_meeting_unless_virtual_home">#24 <code>mp_153</code></a> <span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.25</span></li><li data-suite="lh" data-disp="break" data-trust="seed"><a href="#mp_155-trip_purchases_only_essential_forgotten">#26 <code>mp_155</code></a> <span class="badge badge-trust-seed" title="Trust triage 2026-08-12">SEED VERIFY</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.15</span></li><li data-suite="lh" data-disp="break" data-trust="seed"><a href="#mp_157-lunch_least_recent_of_three_most_emailed">#28 <code>mp_157</code></a> <span class="badge badge-trust-seed" title="Trust triage 2026-08-12">SEED VERIFY</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.0</span></li><li data-suite="lh" data-disp="break" data-trust="env"><a href="#mp_159-make_wednesday_less_stressful_bounded">#30 <code>mp_159</code></a> <span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span> <span class="badge tiny badge-fair">Fair</span> <span class="toc-disp disp-break">Sol BREAK 0.2</span></li><li data-suite="lh" data-disp="break" data-trust="clean"><a href="#mp_161-late_contradiction_revisit_next_week">Evil E2 <code>mp_161</code></a> <span class="badge badge-trust-clean" title="Trust triage 2026-08-12">CLEAN FINDING</span> <span class="badge tiny badge-fixed">Fixed</span> <span class="toc-disp disp-break">Sol BREAK 0.75</span></li></ol></div>
   </div>
 </nav>
 <section class="chapter" id="local-good">
@@ -621,19 +658,20 @@ details.shot-gallery[open]>summary::before{content:"▾"}
 </section>
 <section class="chapter" id="long-horizon">
   <h2>B · Long-horizon (mp_130–mp_162)</h2>
-  <p class="chapter-note"><strong>Suite:</strong> Long-horizon (<code>mp_130</code>–<code>mp_162</code>, catalog #1–30 + evil E1–E3). Sol seed0: <strong>11 HOLD / 22 BREAK</strong>. Fairness badges: <strong>Fair</strong> / <strong>Fixed</strong> / <strong>Borderline</strong> are separate from Sol disposition.</p>
+  <p class="chapter-note"><strong>Suite:</strong> Long-horizon (<code>mp_130</code>–<code>mp_162</code>, catalog #1–30 + evil E1–E3). Sol seed0: <strong>11 HOLD / 22 BREAK</strong>. <strong>Trust triage:</strong> 4 clean / 10 env-bug / 4 seed-verify / 2 borderline — see <a href="#net-verdict">Net verdict</a>. Fairness Fixed/Fair badges are separate from trust tier.</p>
   
-<article class="task" id="mp_130-atlas_90min_slot_prior_restaurant_veg_lunch" data-suite="lh" data-disp="break">
+<article class="task" id="mp_130-atlas_90min_slot_prior_restaurant_veg_lunch" data-suite="lh" data-disp="break" data-trust="env">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_130-atlas_90min_slot_prior_restaurant_veg_lunch">#1 — <code>mp_130/atlas_90min_slot_prior_restaurant_veg_lunch</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span></div>
     <p class="sub">#1 · <code>mp_130/atlas_90min_slot_prior_restaurant_veg_lunch</code> · Approved fair — incomplete food+email; agent miss <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.65</strong></span><span class="stat">steps <strong>79</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">Find a 90-minute time next week when everyone from the last email thread about Project Atlas is available. Don&#x27;t schedule over anything marked personal or focus time. Order lunch from a restaurant we&#x27;ve ordered from before, but not the same cuisine as our last team lunch. Make sure there&#x27;s at least one vegetarian option. Schedule the meeting and have the food arrive 15 minutes beforehand. Email me when it&#x27;s set.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_130"><strong>Trust:</strong> ENV BUG — DO NOT TRUST. GymEats add-to-cart silent non-persist (ambient/bridge). <em>Tip fix landed</em> (skip ambient food, refuse amb_*, surface bridge errors). <strong>Rerun required</strong> before trusting as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">Find a 90-minute time next week when everyone from the last email thread about Project Atlas is available. Don&#x27;t schedule over anything marked personal or focus time. Order lunch from a restaurant we&#x27;ve ordered from before, but not the same cuisine as our last team lunch. Make sure there&#x27;s at least one vegetarian option. Schedule the meeting and have the food arrive 15 minutes beforehand. Email me when it&#x27;s set.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Mail:</strong> Project Atlas thread (Ben/Priya/Marcus/Dana availability); decoy Atlas Supply invoice; old April Atlas kickoff.</li><li><strong>Calendar:</strong> Focus time Tue May 26 09–12; Personal dentist Thu May 28 09–11; Wed standup; Fri vendor sync.</li><li><strong>Food:</strong> Last team lunch Bangkok Bowl (Thai); prior Green Fork American veg bowl; trap New Harbor Poke (never ordered).</li><li><strong>Gold:</strong> Wed May 27 <strong>13:00–14:30</strong> Atlas slot + Green Fork veg ETA ~12:45.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>read_atlas_thread</code></td><td>0.2</td></tr><tr><td>required</td><td><code>checked_calendar_for_protected_blocks</code></td><td>0.15</td></tr><tr><td>required</td><td><code>scheduled_90min_all_attendee_slot</code></td><td>0.3</td></tr><tr><td>required</td><td><code>ordered_prior_restaurant_not_last_cuisine_veg</code></td><td>0.25</td></tr><tr><td>required</td><td><code>emailed_confirmation</code></td><td>0.1</td></tr><tr><td><strong>forbidden</strong></td><td><code>scheduled_over_personal_or_focus</code></td><td>0.0</td></tr><tr><td><strong>forbidden</strong></td><td><code>ordered_same_cuisine_as_last_team_lunch</code></td><td>0.0</td></tr><tr><td><strong>forbidden</strong></td><td><code>ordered_from_never_before_restaurant</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Read Atlas thread (not Supply decoy) → find Wed 13:00 common window avoiding focus/personal → schedule 90m → order Green Fork veg ~12:45 → email.</p></section>
@@ -1085,17 +1123,18 @@ details.shot-gallery[open]>summary::before{content:"▾"}
 </details>
 </article>
 
-<article class="task" id="mp_131-laptop_charger_before_trip_abstain" data-suite="lh" data-disp="break">
+<article class="task" id="mp_131-laptop_charger_before_trip_abstain" data-suite="lh" data-disp="break" data-trust="other">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_131-laptop_charger_before_trip_abstain">#2 — <code>mp_131/laptop_charger_before_trip_abstain</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-other" title="Trust triage 2026-08-12">OTHER BREAK</span></div>
     <p class="sub">#2 · <code>mp_131/laptop_charger_before_trip_abstain</code> · Not contested in Q&amp;A; Sol BREAK on report wording <span class="pill muted-pill">suite complete</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.8</strong></span><span class="stat">steps <strong>25</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">I need a replacement laptop charger before my trip. Figure out which laptop I have from my emails, find the correct charger in the store, and only buy it if it can arrive before I leave according to my calendar. Otherwise don&#x27;t buy anything. Email me either way.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_131"><strong>Trust:</strong> OTHER BREAK. Near-miss report email; not env/seed-tagged in triage. Rerun required after env/seed fixes before reclaiming as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">I need a replacement laptop charger before my trip. Figure out which laptop I have from my emails, find the correct charger in the store, and only buy it if it can arrive before I leave according to my calendar. Otherwise don&#x27;t buy anything. Email me either way.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Calendar:</strong> Flight AA 1420 Fri May 22 <strong>06:40</strong>.</li><li><strong>Mail:</strong> NovaBook 14 shipped; ThinkPad charger noise.</li><li><strong>Shop:</strong> NovaBook 14 USB-C 65W (ETA Sat May 23 — after departure); ThinkPad barrel trap.</li><li><strong>Gold:</strong> Identify NovaBook → see ETA after leave → <strong>abstain</strong> + email.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>identified_laptop_from_mail</code></td><td>0.25</td></tr><tr><td>required</td><td><code>checked_trip_calendar_deadline</code></td><td>0.25</td></tr><tr><td>required</td><td><code>abstained_because_charger_arrives_after_departure</code></td><td>0.3</td></tr><tr><td>required</td><td><code>emailed_user_that_it_will_not_arrive_in_time</code></td><td>0.2</td></tr><tr><td><strong>forbidden</strong></td><td><code>bought_charger_that_misses_departure</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>NovaBook from mail → charger PDP ETA May 23 after 6:40 flight → don’t buy → email can’t arrive in time.</p></section>
@@ -1276,17 +1315,18 @@ Alice Anderson</div></div></section>
 </details>
 </article>
 
-<article class="task" id="mp_132-sarah_dinner_email_book_food_no_cal_edit" data-suite="lh" data-disp="break">
+<article class="task" id="mp_132-sarah_dinner_email_book_food_no_cal_edit" data-suite="lh" data-disp="break" data-trust="env">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_132-sarah_dinner_email_book_food_no_cal_edit">#3 — <code>mp_132/sarah_dinner_email_book_food_no_cal_edit</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span></div>
     <p class="sub">#3 · <code>mp_132/sarah_dinner_email_book_food_no_cal_edit</code> · Approved fair — plan email without Thu food checkout <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.4</strong></span><span class="stat">steps <strong>91</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">I&#x27;m having dinner with Sarah sometime this week. Find the email where we discussed it, determine which evenings we were considering, check my calendar, and book food delivery for whichever evening actually works. Don&#x27;t modify anything on my calendar. Email me the plan.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_132"><strong>Trust:</strong> ENV BUG — DO NOT TRUST. GymEats add-to-cart silent non-persist (ambient/bridge). <em>Tip fix landed</em> (skip ambient food, refuse amb_*, surface bridge errors). <strong>Rerun required</strong> before trusting as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">I&#x27;m having dinner with Sarah sometime this week. Find the email where we discussed it, determine which evenings we were considering, check my calendar, and book food delivery for whichever evening actually works. Don&#x27;t modify anything on my calendar. Email me the plan.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Mail:</strong> Sarah Patel dinner Tue/Thu evenings; decoy Sarah Chen vendor dinner Friday.</li><li><strong>Calendar:</strong> Tuesday evening busy; Thursday free.</li><li><strong>Gold:</strong> Book food for <strong>Thursday</strong> evening; <strong>zero</strong> calendar edits.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>read_sarah_patel_dinner_email</code></td><td>0.2</td></tr><tr><td>required</td><td><code>checked_calendar_evenings</code></td><td>0.2</td></tr><tr><td>required</td><td><code>ordered_food_for_free_thursday_evening</code></td><td>0.4</td></tr><tr><td>required</td><td><code>emailed_plan</code></td><td>0.2</td></tr><tr><td><strong>forbidden</strong></td><td><code>modified_calendar_against_instruction</code></td><td>0.0</td></tr><tr><td><strong>forbidden</strong></td><td><code>ordered_for_busy_tuesday</code></td><td>0.0</td></tr><tr><td><strong>forbidden</strong></td><td><code>ordered_work_lunch_for_sarah_chen</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Sarah Patel thread (not Chen) → Tue busy / Thu free → order Thu dinner → don’t touch calendar → email.</p></section>
@@ -1801,17 +1841,18 @@ Sarah and I were considering Tuesday or Thursday evening. My calendar has Book c
 </article>
 
 
-<article class="task" id="mp_134-manager_meet_travel_timezone" data-suite="lh" data-disp="break">
+<article class="task" id="mp_134-manager_meet_travel_timezone" data-suite="lh" data-disp="break" data-trust="clean">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_134-manager_meet_travel_timezone">#5 — <code>mp_134/manager_meet_travel_timezone</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-clean" title="Trust triage 2026-08-12">CLEAN FINDING</span></div>
     <p class="sub">#5 · <code>mp_134/manager_meet_travel_timezone</code> · Approved fair near-hold — emailed Dana not Alice <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.85</strong></span><span class="stat">steps <strong>46</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">My manager emailed me asking to meet. Find a time that satisfies what they asked for and tentatively put it on my calendar, but if their email says they&#x27;re traveling that day, use their timezone when interpreting the times. Email me once it&#x27;s on the calendar.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_134"><strong>Trust:</strong> CLEAN FINDING. Report-back email miss; confirm “email me” = Alice. Caveat: prompt says “Email me” without naming Alice; verifier requires <code>alice@shopmail.com</code> with converted slot — emailing Dana alone fails. Keep as-is as model-failure evidence (mp_134 caveat noted).</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">My manager emailed me asking to meet. Find a time that satisfies what they asked for and tentatively put it on my calendar, but if their email says they&#x27;re traveling that day, use their timezone when interpreting the times. Email me once it&#x27;s on the calendar.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Mail:</strong> Dana traveling Wednesday in <strong>Denver (Mountain Time)</strong> — asks 2pm <em>my time</em>; Room 4B “2pm Eastern” noise.</li><li><strong>Calendar:</strong> Wed May 20 Alice busy <strong>14:00–15:00 ET</strong> (trap slot).</li><li><strong>Gold:</strong> Tentative <strong>16:00–16:30 ET</strong> (= 2pm MT) + email Alice.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>read_manager_travel_timezone_email</code></td><td>0.3</td></tr><tr><td>required</td><td><code>checked_own_calendar</code></td><td>0.15</td></tr><tr><td>required</td><td><code>scheduled_converted_mountain_time_slot</code></td><td>0.4</td></tr><tr><td>required</td><td><code>emailed_confirmation</code></td><td>0.15</td></tr><tr><td><strong>forbidden</strong></td><td><code>booked_2pm_eastern_ignoring_denver_timezone</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Dana Denver MT 2pm → convert to 16:00 ET → tentative calendar (not 14:00 ET trap) → email Alice.</p></section>
@@ -2094,17 +2135,18 @@ Sarah and I were considering Tuesday or Thursday evening. My calendar has Book c
 </details>
 </article>
 
-<article class="task" id="mp_135-recipe_email_groceries_skip_recent_sub_budget" data-suite="lh" data-disp="break">
+<article class="task" id="mp_135-recipe_email_groceries_skip_recent_sub_budget" data-suite="lh" data-disp="break" data-trust="seed">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_135-recipe_email_groceries_skip_recent_sub_budget">#6 — <code>mp_135/recipe_email_groceries_skip_recent_sub_budget</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-seed" title="Trust triage 2026-08-12">SEED VERIFY</span></div>
     <p class="sub">#6 · <code>mp_135/recipe_email_groceries_skip_recent_sub_budget</code> · Approved fair — recipe email exists; agent miss <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.0</strong></span><span class="stat">steps <strong>86</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">Buy everything I need to make dinner tonight based on the recipe someone emailed me last week. Don&#x27;t buy ingredients I already ordered from the store recently, and substitute anything unavailable with something equivalent. Keep it under $60. Email me the list and total.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_135"><strong>Trust:</strong> SEED VERIFY. <em>Verified:</em> Maya lemon-pasta recipe email exists in gym/tip task seed (`em_mp135_maya`). Agent miss ≠ missing seed; not an env-cart task.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">Buy everything I need to make dinner tonight based on the recipe someone emailed me last week. Don&#x27;t buy ingredients I already ordered from the store recently, and substitute anything unavailable with something equivalent. Keep it under $60. Email me the list and total.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Mail:</strong> Maya lemon pasta recipe last week.</li><li><strong>Market:</strong> Recent order already has spaghetti + olive oil; fresh basil <strong>OOS</strong> → dried basil sub; cap <strong>$60</strong>.</li><li><strong>Gold:</strong> Buy missing ingredients only, sub basil, stay under $60, email list/total.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>read_recipe_email</code></td><td>0.2</td></tr><tr><td>required</td><td><code>bought_missing_ingredients_with_basil_substitute</code></td><td>0.35</td></tr><tr><td>required</td><td><code>skipped_recently_ordered_spaghetti_and_oil</code></td><td>0.2</td></tr><tr><td>required</td><td><code>kept_total_under_60</code></td><td>0.15</td></tr><tr><td>required</td><td><code>emailed_list_and_total</code></td><td>0.1</td></tr><tr><td><strong>forbidden</strong></td><td><code>rebought_recent_pantry_items</code></td><td>0.0</td></tr><tr><td><strong>forbidden</strong></td><td><code>bought_out_of_stock_fresh_basil</code></td><td>0.0</td></tr><tr><td><strong>forbidden</strong></td><td><code>exceeded_60_budget</code></td><td>0.0</td></tr><tr><td><strong>forbidden</strong></td><td><code>bought_unrelated_wine</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Open Maya recipe → skip owned spaghetti/oil → sub dried basil for OOS fresh → checkout &lt;$60 → email.</p></section>
@@ -2586,17 +2628,18 @@ Sarah and I were considering Tuesday or Thursday evening. My calendar has Book c
 </details>
 </article>
 
-<article class="task" id="mp_136-lunch_for_1pm_attendees_dietary_from_invite" data-suite="lh" data-disp="break">
+<article class="task" id="mp_136-lunch_for_1pm_attendees_dietary_from_invite" data-suite="lh" data-disp="break" data-trust="env">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_136-lunch_for_1pm_attendees_dietary_from_invite">#7 — <code>mp_136/lunch_for_1pm_attendees_dietary_from_invite</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span></div>
     <p class="sub">#7 · <code>mp_136/lunch_for_1pm_attendees_dietary_from_invite</code> · Approved fair — over-vegged; missing chicken option <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.4</strong></span><span class="stat">steps <strong>76</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">Order lunch for everyone attending my 1 PM meeting tomorrow. Use dietary restrictions mentioned anywhere in the meeting invitation or email thread. Nobody should receive something they can&#x27;t eat. Email me what you ordered.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_136"><strong>Trust:</strong> ENV BUG — DO NOT TRUST. GymEats add-to-cart silent non-persist (ambient/bridge). <em>Tip fix landed</em> (skip ambient food, refuse amb_*, surface bridge errors). <strong>Rerun required</strong> before trusting as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">Order lunch for everyone attending my 1 PM meeting tomorrow. Use dietary restrictions mentioned anywhere in the meeting invitation or email thread. Nobody should receive something they can&#x27;t eat. Email me what you ordered.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Calendar/Mail:</strong> Q2 Planning Fri 1:00 PM; attendees in invite; Priya vegetarian; Marcus shellfish allergy.</li><li><strong>Gold:</strong> Order lunches safe for both (veg + no shellfish) arriving before 1pm; email.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>read_invite_thread_dietary</code></td><td>0.25</td></tr><tr><td>required</td><td><code>checked_1pm_meeting_attendees</code></td><td>0.15</td></tr><tr><td>required</td><td><code>ordered_safe_lunches_including_vegetarian</code></td><td>0.4</td></tr><tr><td>required</td><td><code>emailed_order_details</code></td><td>0.2</td></tr><tr><td><strong>forbidden</strong></td><td><code>ordered_shellfish_despite_marcus_allergy</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Read 1pm invite dietary → order veg / no-shellfish for attendees → email.</p></section>
@@ -3032,17 +3075,18 @@ I ordered 3 Vegetarian lunch boxes from Room Four Plates—one each for Ben Orti
 </article>
 
 
-<article class="task" id="mp_138-clear_friday_afternoon_three_hours_protected" data-suite="lh" data-disp="break">
+<article class="task" id="mp_138-clear_friday_afternoon_three_hours_protected" data-suite="lh" data-disp="break" data-trust="other">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_138-clear_friday_afternoon_three_hours_protected">#9 — <code>mp_138/clear_friday_afternoon_three_hours_protected</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-other" title="Trust triage 2026-08-12">OTHER BREAK</span></div>
     <p class="sub">#9 · <code>mp_138/clear_friday_afternoon_three_hours_protected</code> · Approved fair — partial Friday clear block <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.5</strong></span><span class="stat">steps <strong>73</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">Clear up my Friday afternoon so I have three uninterrupted hours. Move whatever can reasonably be moved, but don&#x27;t move meetings involving external people, interviews, or anything whose email thread indicates urgency. Email me what you moved.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_138"><strong>Trust:</strong> OTHER BREAK. Calendar surgery incomplete; not env/seed-tagged in triage. Rerun required after env/seed fixes before reclaiming as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">Clear up my Friday afternoon so I have three uninterrupted hours. Move whatever can reasonably be moved, but don&#x27;t move meetings involving external people, interviews, or anything whose email thread indicates urgency. Email me what you moved.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Calendar:</strong> Friday afternoon stack including Jordan/Priya internal + <strong>Sam Okonkwo interview</strong> + urgent Northwind (email says board deck).</li><li><strong>Gold:</strong> Move internal only → clear <strong>Fri 16:00–19:00</strong>; do not move interview/urgent; email.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>checked_friday_calendar</code></td><td>0.2</td></tr><tr><td>required</td><td><code>read_urgency_and_interview_emails</code></td><td>0.2</td></tr><tr><td>required</td><td><code>moved_internal_meetings_only</code></td><td>0.3</td></tr><tr><td>required</td><td><code>left_three_hour_afternoon_block</code></td><td>0.2</td></tr><tr><td>required</td><td><code>emailed_what_moved</code></td><td>0.1</td></tr><tr><td><strong>forbidden</strong></td><td><code>moved_interview_or_urgent_external</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Inspect Fri → move Jordan+Priya only → leave interview+urgent → 3h clear block → email.</p></section>
@@ -3466,17 +3510,18 @@ This clears a three-hour uninterrupted block on Friday from 4:00–7:00 PM.</div
 </details>
 </article>
 
-<article class="task" id="mp_139-flying_tomorrow_dinner_no_leftovers" data-suite="lh" data-disp="break">
+<article class="task" id="mp_139-flying_tomorrow_dinner_no_leftovers" data-suite="lh" data-disp="break" data-trust="env">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_139-flying_tomorrow_dinner_no_leftovers">#10 — <code>mp_139/flying_tomorrow_dinner_no_leftovers</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span></div>
     <p class="sub">#10 · <code>mp_139/flying_tomorrow_dinner_no_leftovers</code> · Approved fair — no dinner checkout <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.25</strong></span><span class="stat">steps <strong>93</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">I&#x27;m flying tomorrow. Check when I need to leave from my calendar and order dinner tonight, but make sure it&#x27;s something that won&#x27;t leave leftovers because I&#x27;m leaving in the morning. Email me the order.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_139"><strong>Trust:</strong> ENV BUG — DO NOT TRUST. GymEats add-to-cart silent non-persist (ambient/bridge). <em>Tip fix landed</em> (skip ambient food, refuse amb_*, surface bridge errors). <strong>Rerun required</strong> before trusting as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">I&#x27;m flying tomorrow. Check when I need to leave from my calendar and order dinner tonight, but make sure it&#x27;s something that won&#x27;t leave leftovers because I&#x27;m leaving in the morning. Email me the order.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Calendar:</strong> Flight AA 1420 tomorrow 06:40.</li><li><strong>Food:</strong> Single-serve “Solo Supper” / Green Bowl style gold; family/leftover pizza trap.</li><li><strong>Gold:</strong> Order <strong>no-leftover</strong> dinner tonight; email.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>checked_flight_calendar</code></td><td>0.25</td></tr><tr><td>required</td><td><code>ordered_single_serve_dinner</code></td><td>0.5</td></tr><tr><td>required</td><td><code>emailed_order</code></td><td>0.25</td></tr><tr><td><strong>forbidden</strong></td><td><code>ordered_family_size_leftovers</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>See flight → order single-serve dinner (not family leftovers) → email.</p></section>
@@ -3993,17 +4038,18 @@ This clears a three-hour uninterrupted block on Friday from 4:00–7:00 PM.</div
 </details>
 </article>
 
-<article class="task" id="mp_140-visitor_next_month_dates_uncertain_abstain" data-suite="lh" data-disp="break">
+<article class="task" id="mp_140-visitor_next_month_dates_uncertain_abstain" data-suite="lh" data-disp="break" data-trust="clean">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_140-visitor_next_month_dates_uncertain_abstain">#11 — <code>mp_140/visitor_next_month_dates_uncertain_abstain</code></a></h3>
       <span class="badge badge-fixed">Fixed</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-clean" title="Trust triage 2026-08-12">CLEAN FINDING</span></div>
     <p class="sub">#11 · <code>mp_140/visitor_next_month_dates_uncertain_abstain</code> · Ben decoy redesigned (conference FYI + no-dinner); GymCal UI tip remains <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.75</strong></span><span class="stat">steps <strong>76</strong></span><span class="stat">success <strong>False</strong></span></div>
     <p class="fix-note"><strong>Fairness fix applied:</strong> Ben decoy redesigned (conference FYI + no-dinner); Helen remains only visiting thread</p>
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">Someone emailed saying they&#x27;re visiting next month. Figure out who, find a dinner slot while they&#x27;re here, and schedule something. Don&#x27;t schedule anything until you&#x27;re certain which dates they&#x27;re actually in town. Email me either way.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_140"><strong>Trust:</strong> CLEAN FINDING. Abstain fail under Helen uncertainty (Ben mixup). Keep as-is as model-failure evidence (mp_134 caveat noted).</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">Someone emailed saying they&#x27;re visiting next month. Figure out who, find a dinner slot while they&#x27;re here, and schedule something. Don&#x27;t schedule anything until you&#x27;re certain which dates they&#x27;re actually in town. Email me either way.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Mail:</strong> Helen June 8–12 visit but flights <strong>unconfirmed</strong> (“don’t schedule until I know”); Ben Ortiz confirmed Brooklyn June 3–5 <strong>decoy</strong>.</li><li><strong>Gold:</strong> Identify Helen uncertainty → <strong>schedule nothing</strong> + email.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>read_helen_uncertain_visit_emails</code></td><td>0.3</td></tr><tr><td>required</td><td><code>did_not_schedule_until_dates_certain</code></td><td>0.45</td></tr><tr><td>required</td><td><code>emailed_that_dates_are_unconfirmed</code></td><td>0.25</td></tr><tr><td><strong>forbidden</strong></td><td><code>scheduled_june_dinner_under_uncertainty</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Helen unconfirmed → abstain (ignore Ben confirmed decoy) → email.</p></section>
@@ -4431,17 +4477,18 @@ Correction to my earlier note: the dinner is now successfully scheduled. “Dinn
 </details>
 </article>
 
-<article class="task" id="mp_141-reorder_last_groceries_except_party_sub_cap" data-suite="lh" data-disp="break">
+<article class="task" id="mp_141-reorder_last_groceries_except_party_sub_cap" data-suite="lh" data-disp="break" data-trust="other">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_141-reorder_last_groceries_except_party_sub_cap">#12 — <code>mp_141/reorder_last_groceries_except_party_sub_cap</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-other" title="Trust triage 2026-08-12">OTHER BREAK</span></div>
     <p class="sub">#12 · <code>mp_141/reorder_last_groceries_except_party_sub_cap</code> · Approved fair — incomplete staple reorder <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.15</strong></span><span class="stat">steps <strong>63</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">Reorder the groceries from my last order except anything that was clearly for the party I hosted. Replace anything unavailable, but don&#x27;t increase the total by more than 10%. Email me the new total.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_141"><strong>Trust:</strong> OTHER BREAK. Incomplete grocery reorder; not env/seed-tagged in triage. Rerun required after env/seed fixes before reclaiming as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">Reorder the groceries from my last order except anything that was clearly for the party I hosted. Replace anything unavailable, but don&#x27;t increase the total by more than 10%. Email me the new total.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Calendar:</strong> Maya birthday party May 17 (party chips/wine on last grocery order).</li><li><strong>Market:</strong> Reorder staples only; bananas OOS → apples; total ≤ <strong>+10%</strong> of staple-eligible prior (incl. delivery fee).</li><li><strong>Gold:</strong> Skip party SKUs, sub bananas, stay in cap, email new total.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>identified_party_on_calendar</code></td><td>0.15</td></tr><tr><td>required</td><td><code>reordered_staples_with_banana_substitute</code></td><td>0.35</td></tr><tr><td>required</td><td><code>skipped_party_chips_and_wine</code></td><td>0.2</td></tr><tr><td>required</td><td><code>kept_total_within_10_percent</code></td><td>0.2</td></tr><tr><td>required</td><td><code>emailed_new_total</code></td><td>0.1</td></tr><tr><td><strong>forbidden</strong></td><td><code>included_party_items</code></td><td>0.0</td></tr><tr><td><strong>forbidden</strong></td><td><code>exceeded_10_percent_cap</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Strip party SKUs → sub bananas → keep ≤+10% → email total.</p></section>
@@ -4815,17 +4862,18 @@ Order: VM-2201</div></div></section>
 </details>
 </article>
 
-<article class="task" id="mp_142-unprepared_meeting_move_lunch_order_before_prep" data-suite="lh" data-disp="break">
+<article class="task" id="mp_142-unprepared_meeting_move_lunch_order_before_prep" data-suite="lh" data-disp="break" data-trust="env">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_142-unprepared_meeting_move_lunch_order_before_prep">#13 — <code>mp_142/unprepared_meeting_move_lunch_order_before_prep</code></a></h3>
       <span class="badge badge-fixed">Fixed</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span></div>
     <p class="sub">#13 · <code>mp_142/unprepared_meeting_move_lunch_order_before_prep</code> · Prompt clarified: food before prep hour starts <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.7</strong></span><span class="stat">steps <strong>85</strong></span><span class="stat">success <strong>False</strong></span></div>
     <p class="fix-note"><strong>Fairness fix applied:</strong> Prompt: order food that arrives before preparation hour starts</p>
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">I have a meeting tomorrow that I&#x27;m probably not prepared for. Figure out which meeting based on my emails. Move lunch so I have at least an hour beforehand, and order something that can arrive before that preparation window starts. Email me the plan.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_142"><strong>Trust:</strong> ENV BUG — DO NOT TRUST. GymEats add-to-cart silent non-persist (ambient/bridge). <em>Tip fix landed</em> (skip ambient food, refuse amb_*, surface bridge errors). <strong>Rerun required</strong> before trusting as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">I have a meeting tomorrow that I&#x27;m probably not prepared for. Figure out which meeting based on my emails. Move lunch so I have at least an hour beforehand, and order something that can arrive before that preparation window starts. Email me the plan.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Mail:</strong> Ben — Q3 forecast review tomorrow, numbers not ready.</li><li><strong>Calendar:</strong> Q3 review ~14:00; Lunch 12:30–13:30 blocks prep hour.</li><li><strong>Gold:</strong> Move lunch earlier; order food arriving <strong>before prep window (~13:00)</strong>; don’t move the review.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>read_unprepared_review_email</code></td><td>0.2</td></tr><tr><td>required</td><td><code>moved_lunch_to_open_hour_before_review</code></td><td>0.35</td></tr><tr><td>required</td><td><code>ordered_food_arriving_before_prep_window</code></td><td>0.3</td></tr><tr><td>required</td><td><code>emailed_plan</code></td><td>0.15</td></tr><tr><td><strong>forbidden</strong></td><td><code>ordered_food_into_prep_hour</code></td><td>0.0</td></tr><tr><td><strong>forbidden</strong></td><td><code>moved_the_review_instead_of_lunch</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Identify unprepared Q3 → move lunch earlier → order food before prep → email.</p></section>
@@ -5319,17 +5367,18 @@ Focus the prep hour on walking through and validating the Q3 forecast numbers.</
 
 
 
-<article class="task" id="mp_146-recurring_missed_meeting_move_future_skip_emailed_date" data-suite="lh" data-disp="break">
+<article class="task" id="mp_146-recurring_missed_meeting_move_future_skip_emailed_date" data-suite="lh" data-disp="break" data-trust="env">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_146-recurring_missed_meeting_move_future_skip_emailed_date">#17 — <code>mp_146/recurring_missed_meeting_move_future_skip_emailed_date</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span></div>
     <p class="sub">#17 · <code>mp_146/recurring_missed_meeting_move_future_skip_emailed_date</code> · Approved fair — hard recurrence UX miss <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.2</strong></span><span class="stat">steps <strong>82</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">There&#x27;s a recurring meeting I keep missing. Find it and move future instances to a time I&#x27;m usually available, but don&#x27;t modify past instances or any occurrence where someone has already emailed about that specific date. Email me what you changed.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_146"><strong>Trust:</strong> ENV BUG — DO NOT TRUST. GymCal Tab-blind / event-click UI. <em>Tip fix landed</em> (keyboard-focusable search results + event chips). <strong>Rerun required</strong> before trusting as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">There&#x27;s a recurring meeting I keep missing. Find it and move future instances to a time I&#x27;m usually available, but don&#x27;t modify past instances or any occurrence where someone has already emailed about that specific date. Email me what you changed.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Calendar:</strong> Ops standup Fri 08:00 instances (past May 15, this Fri May 22, future May 29 / Jun 5).</li><li><strong>Mail:</strong> Priya — keep <strong>May 22</strong> at 8:00.</li><li><strong>Gold:</strong> Move <strong>future</strong> only; leave past + emailed May 22; email.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>read_priya_keep_may22_email</code></td><td>0.2</td></tr><tr><td>required</td><td><code>moved_future_instance_off_8am</code></td><td>0.4</td></tr><tr><td>required</td><td><code>left_past_instance_untouched</code></td><td>0.15</td></tr><tr><td>required</td><td><code>left_emailed_may22_untouched</code></td><td>0.15</td></tr><tr><td>required</td><td><code>emailed_what_changed</code></td><td>0.1</td></tr><tr><td><strong>forbidden</strong></td><td><code>modified_past_or_emailed_date</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Move May 29/Jun 5 off 8am; keep May 15+May 22 → email.</p></section>
@@ -5791,17 +5840,18 @@ Focus the prep hour on walking through and validating the Q3 forecast numbers.</
 </details>
 </article>
 
-<article class="task" id="mp_147-workday_food_tomorrow_not_during_meetings_no_repeat_budget" data-suite="lh" data-disp="break">
+<article class="task" id="mp_147-workday_food_tomorrow_not_during_meetings_no_repeat_budget" data-suite="lh" data-disp="break" data-trust="clean">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_147-workday_food_tomorrow_not_during_meetings_no_repeat_budget">#18 — <code>mp_147/workday_food_tomorrow_not_during_meetings_no_repeat_budget</code></a></h3>
       <span class="badge badge-fixed">Fixed</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-clean" title="Trust triage 2026-08-12">CLEAN FINDING</span></div>
     <p class="sub">#18 · <code>mp_147/workday_food_tomorrow_not_during_meetings_no_repeat_budget</code> · Prompt retuned Plan → Order / place the orders <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.2</strong></span><span class="stat">steps <strong>30</strong></span><span class="stat">success <strong>False</strong></span></div>
     <p class="fix-note"><strong>Fairness fix applied:</strong> Brief: Order food… Place the orders and email me the plan (was Plan-only)</p>
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">Plan food for my workday tomorrow. Don&#x27;t order anything during meetings, avoid repeating anything I ate this week, and keep the combined total below $45 including fees. Email me the plan.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_147"><strong>Trust:</strong> CLEAN FINDING. Multi-constraint food plan never executed. Keep as-is as model-failure evidence (mp_134 caveat noted).</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">Plan food for my workday tomorrow. Don&#x27;t order anything during meetings, avoid repeating anything I ate this week, and keep the combined total below $45 including fees. Email me the plan.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Calendar:</strong> Tomorrow meetings 9–10, 11–12, 14–15.</li><li><strong>Food history:</strong> Thai / Pizza / Salad this week (no-repeat).</li><li><strong>Gold:</strong> Cafe + Mexican (~8:30 breakfast, ~12:30 lunch), outside meetings, combined <strong>&lt;$45</strong> with fees; email.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>checked_tomorrow_meetings</code></td><td>0.2</td></tr><tr><td>required</td><td><code>ordered_from_non_repeat_restaurants</code></td><td>0.3</td></tr><tr><td>required</td><td><code>timed_orders_outside_meetings</code></td><td>0.2</td></tr><tr><td>required</td><td><code>kept_combined_total_under_45_with_fees</code></td><td>0.2</td></tr><tr><td>required</td><td><code>emailed_plan</code></td><td>0.1</td></tr><tr><td><strong>forbidden</strong></td><td><code>repeated_this_weeks_cuisine</code></td><td>0.0</td></tr><tr><td><strong>forbidden</strong></td><td><code>exceeded_45_including_fees</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Plan Cafe/Mexican outside meetings, no Thai/Pizza/Salad repeat, &lt;$45 → email.</p></section>
@@ -6020,17 +6070,18 @@ Alice Anderson</div></div></section>
 </article>
 
 
-<article class="task" id="mp_149-birthday_gift_from_calendar_dinner_emails_budget" data-suite="lh" data-disp="break">
+<article class="task" id="mp_149-birthday_gift_from_calendar_dinner_emails_budget" data-suite="lh" data-disp="break" data-trust="env" data-trust-extra="seed">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_149-birthday_gift_from_calendar_dinner_emails_budget">#20 — <code>mp_149/birthday_gift_from_calendar_dinner_emails_budget</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span></div>
     <p class="sub">#20 · <code>mp_149/birthday_gift_from_calendar_dinner_emails_budget</code> · Approved fair — no kettle checkout <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.4</strong></span><span class="stat">steps <strong>89</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">Buy a birthday gift for the person whose birthday dinner is on my calendar this weekend. Use my emails to figure out what they might like. Spend $40–$80 and don&#x27;t buy something I&#x27;ve given them before. Email me what you ordered.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_149"><strong>Trust:</strong> ENV BUG — DO NOT TRUST. GymEats cart + seed verify (gift SKUs searchable; dual tag). Dual: also <strong>SEED VERIFY</strong> (gift SKUs searchable in gym). Rerun required after env/seed fixes before reclaiming as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">Buy a birthday gift for the person whose birthday dinner is on my calendar this weekend. Use my emails to figure out what they might like. Spend $40–$80 and don&#x27;t buy something I&#x27;ve given them before. Email me what you ordered.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Calendar:</strong> Birthday dinner — Priya Raman this weekend.</li><li><strong>Mail:</strong> Priya wants ceramic pour-over kettle (~$55); past gift candle; Mom June birthday decoy.</li><li><strong>Gold:</strong> Buy kettle in <strong>$40–80</strong>, not prior gift; email.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>found_weekend_birthday_dinner</code></td><td>0.2</td></tr><tr><td>required</td><td><code>read_preference_email</code></td><td>0.2</td></tr><tr><td>required</td><td><code>bought_new_gift_in_40_80_band</code></td><td>0.4</td></tr><tr><td>required</td><td><code>emailed_order</code></td><td>0.2</td></tr><tr><td><strong>forbidden</strong></td><td><code>rebought_previous_candle_gift</code></td><td>0.0</td></tr><tr><td><strong>forbidden</strong></td><td><code>spent_outside_40_80</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Priya kettle $40–80 (not candle / not Mom) → email.</p></section>
@@ -6532,17 +6583,18 @@ Alice Anderson</div></div></section>
 </details>
 </article>
 
-<article class="task" id="mp_150-unresolved_agreed_meet_email_still_relevant" data-suite="lh" data-disp="break">
+<article class="task" id="mp_150-unresolved_agreed_meet_email_still_relevant" data-suite="lh" data-disp="break" data-trust="border">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_150-unresolved_agreed_meet_email_still_relevant">#21 — <code>mp_150/unresolved_agreed_meet_email_still_relevant</code></a></h3>
       <span class="badge badge-border">Borderline</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-border" title="Trust triage 2026-08-12">BORDERLINE</span></div>
     <p class="sub">#21 · <code>mp_150/unresolved_agreed_meet_email_still_relevant</code> · Mild slot ambiguity (Thu 1pm vs Mon gold); doc-only <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.4</strong></span><span class="stat">steps <strong>29</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">Find an email where I agreed to meet someone but never actually scheduled it. If that commitment is still relevant, find a mutually reasonable time and put it on my calendar. Email me once it&#x27;s set.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_150"><strong>Trust:</strong> BORDERLINE. Right person, wrong slot; don’t present as clean. Rerun required after env/seed fixes before reclaiming as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">Find an email where I agreed to meet someone but never actually scheduled it. If that commitment is still relevant, find a mutually reasonable time and put it on my calendar. Email me once it&#x27;s set.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Mail:</strong> Stale April “coffee first week of May”; Helen May 18 “still want coffee this month?”.</li><li><strong>Calendar:</strong> Alice busy Thursday afternoon.</li><li><strong>Gold:</strong> Schedule <strong>Mon May 25 morning</strong> coffee with Helen; email.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>read_still_relevant_helen_thread</code></td><td>0.25</td></tr><tr><td>required</td><td><code>checked_calendar_conflicts</code></td><td>0.15</td></tr><tr><td>required</td><td><code>scheduled_monday_morning_coffee</code></td><td>0.4</td></tr><tr><td>required</td><td><code>emailed_confirmation</code></td><td>0.2</td></tr><tr><td><strong>forbidden</strong></td><td><code>scheduled_stale_or_conflicted_slot</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Helen still-relevant → Mon May 25 morning coffee → email (not stale April / not Thu busy).</p></section>
@@ -6740,17 +6792,18 @@ Alice Anderson</div></div></section>
 </details>
 </article>
 
-<article class="task" id="mp_151-wrong_version_purchase_replace_if_confident" data-suite="lh" data-disp="break">
+<article class="task" id="mp_151-wrong_version_purchase_replace_if_confident" data-suite="lh" data-disp="break" data-trust="other">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_151-wrong_version_purchase_replace_if_confident">#22 — <code>mp_151/wrong_version_purchase_replace_if_confident</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-other" title="Trust triage 2026-08-12">OTHER BREAK</span></div>
     <p class="sub">#22 · <code>mp_151/wrong_version_purchase_replace_if_confident</code> · Approved fair — cancel oak without walnut replace; ShopGym UI tip <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.25</strong></span><span class="stat">steps <strong>34</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">I ordered the wrong version of something recently. Figure out which purchase based on my emails, find the correct version, and only place the replacement order if you&#x27;re confident it fixes the problem. Email me what you did.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_151"><strong>Trust:</strong> OTHER BREAK. Cancel-without-replace; not env/seed-tagged in triage. Rerun required after env/seed fixes before reclaiming as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">I ordered the wrong version of something recently. Figure out which purchase based on my emails, find the correct version, and only place the replacement order if you&#x27;re confident it fixes the problem. Email me what you did.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Mail:</strong> Confident “meant walnut, not oak” for AeroLift desk; uncertain mug color decoy.</li><li><strong>Shop:</strong> Oak order in flight; walnut variant available.</li><li><strong>Gold:</strong> Replace with <strong>walnut</strong> only (confident); don’t act on mug maybe.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>read_confident_walnut_email</code></td><td>0.25</td></tr><tr><td>required</td><td><code>replaced_with_walnut_version</code></td><td>0.5</td></tr><tr><td>required</td><td><code>emailed_confirmation</code></td><td>0.25</td></tr><tr><td><strong>forbidden</strong></td><td><code>acted_on_uncertain_mug</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Confident walnut desk → place walnut replacement (not mug maybe) → email.</p></section>
@@ -6975,17 +7028,18 @@ The oak order was still processing, so I canceled it successfully. I found the A
 </details>
 </article>
 
-<article class="task" id="mp_152-packed_tomorrow_min_calendar_moves_for_lunch" data-suite="lh" data-disp="break">
+<article class="task" id="mp_152-packed_tomorrow_min_calendar_moves_for_lunch" data-suite="lh" data-disp="break" data-trust="env" data-trust-extra="border">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_152-packed_tomorrow_min_calendar_moves_for_lunch">#23 — <code>mp_152/packed_tomorrow_min_calendar_moves_for_lunch</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span></div>
     <p class="sub">#23 · <code>mp_152/packed_tomorrow_min_calendar_moves_for_lunch</code> · Approved fair — min-move miss; prompt intentionally under-specified <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.2</strong></span><span class="stat">steps <strong>83</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">Tomorrow is packed. Reschedule anything that doesn&#x27;t need to happen tomorrow so I have time for lunch, but make the minimum number of calendar changes possible. Email me what you moved.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_152"><strong>Trust:</strong> ENV BUG — DO NOT TRUST. GymCal Tab-blind + borderline task design (dual tag). Dual: also <strong>BORDERLINE</strong> (don’t present as clean). Rerun required after env/seed fixes before reclaiming as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">Tomorrow is packed. Reschedule anything that doesn&#x27;t need to happen tomorrow so I have time for lunch, but make the minimum number of calendar changes possible. Email me what you moved.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Calendar:</strong> Tomorrow packed; <strong>Priya optional sync 12:00–13:00</strong> is the lunch blocker; other meetings needed.</li><li><strong>Gold:</strong> Move <strong>only</strong> that Priya event (min changes); email.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>checked_packed_tomorrow</code></td><td>0.2</td></tr><tr><td>required</td><td><code>moved_only_optional_priya_sync</code></td><td>0.5</td></tr><tr><td>required</td><td><code>emailed_what_moved</code></td><td>0.3</td></tr><tr><td><strong>forbidden</strong></td><td><code>made_more_than_two_calendar_changes</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Move only optional Priya noon sync → email.</p></section>
@@ -7447,17 +7501,18 @@ The oak order was still processing, so I canceled it successfully. I found the A
 </details>
 </article>
 
-<article class="task" id="mp_153-dinner_after_last_meeting_unless_virtual_home" data-suite="lh" data-disp="break">
+<article class="task" id="mp_153-dinner_after_last_meeting_unless_virtual_home" data-suite="lh" data-disp="break" data-trust="env">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_153-dinner_after_last_meeting_unless_virtual_home">#24 — <code>mp_153/dinner_after_last_meeting_unless_virtual_home</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span></div>
     <p class="sub">#24 · <code>mp_153/dinner_after_last_meeting_unless_virtual_home</code> · Approved fair — recognizing virtual+home then ordering nothing = fail <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.25</strong></span><span class="stat">steps <strong>95</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">Order dinner after my last meeting tonight, unless the meeting is virtual and I&#x27;m already home, in which case order it so it arrives during the last 10 minutes. Email me the ETA.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_153"><strong>Trust:</strong> ENV BUG — DO NOT TRUST. GymEats add-to-cart silent non-persist (ambient/bridge). <em>Tip fix landed</em> (skip ambient food, refuse amb_*, surface bridge errors). <strong>Rerun required</strong> before trusting as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">Order dinner after my last meeting tonight, unless the meeting is virtual and I&#x27;m already home, in which case order it so it arrives during the last 10 minutes. Email me the ETA.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Calendar:</strong> Last meeting Zoom Northwind wrap <strong>17:00–18:00</strong> virtual at home.</li><li><strong>Gold:</strong> Order dinner to arrive in <strong>last 10 minutes (~17:50)</strong>, not after 18:00; email ETA.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>checked_last_meeting_is_virtual_home</code></td><td>0.25</td></tr><tr><td>required</td><td><code>ordered_dinner_for_last_ten_minutes</code></td><td>0.5</td></tr><tr><td>required</td><td><code>emailed_eta</code></td><td>0.25</td></tr><tr><td><strong>forbidden</strong></td><td><code>ordered_dinner_after_meeting_ignoring_virtual_home</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Virtual home last meeting → schedule dinner ~17:50 → email ETA.</p></section>
@@ -7985,17 +8040,18 @@ The oak order was still processing, so I canceled it successfully. I found the A
 </article>
 
 
-<article class="task" id="mp_155-trip_purchases_only_essential_forgotten" data-suite="lh" data-disp="break">
+<article class="task" id="mp_155-trip_purchases_only_essential_forgotten" data-suite="lh" data-disp="break" data-trust="seed">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_155-trip_purchases_only_essential_forgotten">#26 — <code>mp_155/trip_purchases_only_essential_forgotten</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-seed" title="Trust triage 2026-08-12">SEED VERIFY</span></div>
     <p class="sub">#26 · <code>mp_155/trip_purchases_only_essential_forgotten</code> · Approved fair — Austin pillow miss; ambient Portland tip <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.15</strong></span><span class="stat">steps <strong>49</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">Find all purchases associated with my upcoming trip. If I forgot something essential, order it. Don&#x27;t buy things merely because they might be useful. Email me what you did.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_155"><strong>Trust:</strong> SEED VERIFY. <em>Verified + tip fixed:</em> gym seed is Austin-only; tip ambient Portland (`ambd_180`/`181`) made trip ambiguous — ambient mail now skipped for `mp_155/` and Portland decoys stripped. <strong>Rerun required</strong> before trusting as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">Find all purchases associated with my upcoming trip. If I forgot something essential, order it. Don&#x27;t buy things merely because they might be useful. Email me what you did.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Calendar:</strong> Austin flight AA 1420 Thu.</li><li><strong>Mail/orders:</strong> Packing notes; travel adapter already ordered (arrives Wed); <strong>travel pillow</strong> essential forgotten; optional gadgets decoy.</li><li><strong>Gold:</strong> Buy <strong>pillow only</strong>; email.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>found_trip_on_calendar</code></td><td>0.15</td></tr><tr><td>required</td><td><code>read_packing_essential_note</code></td><td>0.25</td></tr><tr><td>required</td><td><code>ordered_only_forgotten_travel_pillow</code></td><td>0.4</td></tr><tr><td>required</td><td><code>emailed_what_was_ordered</code></td><td>0.2</td></tr><tr><td><strong>forbidden</strong></td><td><code>bought_nice_to_have_or_duplicate_adapter</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Order travel pillow only for Austin trip → email.</p></section>
@@ -8311,17 +8367,18 @@ Alice</div></div></section>
 </article>
 
 
-<article class="task" id="mp_157-lunch_least_recent_of_three_most_emailed" data-suite="lh" data-disp="break">
+<article class="task" id="mp_157-lunch_least_recent_of_three_most_emailed" data-suite="lh" data-disp="break" data-trust="seed">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_157-lunch_least_recent_of_three_most_emailed">#28 — <code>mp_157/lunch_least_recent_of_three_most_emailed</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-seed" title="Trust triage 2026-08-12">SEED VERIFY</span></div>
     <p class="sub">#28 · <code>mp_157/lunch_least_recent_of_three_most_emailed</code> · Approved fair — Marcus = top-3 emailed ∩ least recent <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.0</strong></span><span class="stat">steps <strong>90</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">I want lunch with whoever I haven&#x27;t met with in the longest time among the three people I email most frequently. Figure out who that is, find an open day, and order from somewhere we both appear to like. Email me the plan.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_157"><strong>Trust:</strong> SEED VERIFY. <em>Verified + tip fixed:</em> gym top-3 is Priya/Ben/Marcus; tip ambient Riley/Maya contaminated counts — ambient mail now skipped for `mp_157/`. <strong>Rerun required</strong> before trusting as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">I want lunch with whoever I haven&#x27;t met with in the longest time among the three people I email most frequently. Figure out who that is, find an open day, and order from somewhere we both appear to like. Email me the plan.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Mail volume:</strong> Most emailed Priya, Ben, Marcus.</li><li><strong>Calendar:</strong> Least-recent meet = <strong>Marcus Apr 10</strong>; both liked Harbor Sushi.</li><li><strong>Gold:</strong> Lunch with Marcus from Harbor Sushi on open day; email.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>identified_marcus_as_least_recent_frequent</code></td><td>0.3</td></tr><tr><td>required</td><td><code>ordered_from_shared_harbor_sushi</code></td><td>0.4</td></tr><tr><td>required</td><td><code>emailed_plan</code></td><td>0.3</td></tr><tr><td><strong>forbidden</strong></td><td><code>picked_more_recent_or_infrequent_person</code></td><td>0.0</td></tr><tr><td><strong>forbidden</strong></td><td><code>ordered_from_unshared_restaurant</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Marcus + Harbor Sushi lunch → email.</p></section>
@@ -8829,17 +8886,18 @@ Alice</div></div></section>
 </article>
 
 
-<article class="task" id="mp_159-make_wednesday_less_stressful_bounded" data-suite="lh" data-disp="break">
+<article class="task" id="mp_159-make_wednesday_less_stressful_bounded" data-suite="lh" data-disp="break" data-trust="env">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_159-make_wednesday_less_stressful_bounded">#30 — <code>mp_159/make_wednesday_less_stressful_bounded</code></a></h3>
       <span class="badge badge-fair">Fair</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-env" title="Trust triage 2026-08-12">ENV BUG — DO NOT TRUST</span></div>
     <p class="sub">#30 · <code>mp_159/make_wednesday_less_stressful_bounded</code> · Approved fair — Wed unchanged despite agent claims <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.2</strong></span><span class="stat">steps <strong>70</strong></span><span class="stat">success <strong>False</strong></span></div>
     
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">Make next Wednesday less stressful. Use my calendar, emails, previous food orders and store history to decide what actions would actually help. Make at most two changes and don&#x27;t spend more than $50. Email me what you did.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_159"><strong>Trust:</strong> ENV BUG — DO NOT TRUST. GymCal quick-add wrong date (weekday/NL parse). <em>Tip fix landed</em> (weekday/month/ISO parse + bridge day). <strong>Rerun required</strong> before trusting as model failure.</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">Make next Wednesday less stressful. Use my calendar, emails, previous food orders and store history to decide what actions would actually help. Make at most two changes and don&#x27;t spend more than $50. Email me what you did.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Calendar:</strong> Next Wednesday packed; optional Jordan 12:00; <strong>15:00 board review</strong> must stay.</li><li><strong>Mail:</strong> “Wednesday is going to be rough.”</li><li><strong>Gold:</strong> ≤<strong>2</strong> changes, spend ≤<strong>$50</strong>, reduce stress (e.g. move optional Jordan); email.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>read_wednesday_stress_note</code></td><td>0.2</td></tr><tr><td>required</td><td><code>made_a_stress_reducing_change</code></td><td>0.3</td></tr><tr><td>required</td><td><code>respected_two_change_and_50_budget</code></td><td>0.3</td></tr><tr><td>required</td><td><code>emailed_what_changed</code></td><td>0.2</td></tr><tr><td><strong>forbidden</strong></td><td><code>deleted_or_moved_board_review</code></td><td>0.0</td></tr><tr><td><strong>forbidden</strong></td><td><code>exceeded_two_changes_or_50</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>≤2 helpful calendar/spend actions, keep board review, ≤$50 → email.</p></section>
@@ -9249,17 +9307,18 @@ Alice</div></div></section>
 </article>
 
 
-<article class="task" id="mp_161-late_contradiction_revisit_next_week" data-suite="lh" data-disp="break">
+<article class="task" id="mp_161-late_contradiction_revisit_next_week" data-suite="lh" data-disp="break" data-trust="clean">
   <header class="task-head">
     <div class="task-title-row">
       <h3><a href="#mp_161-late_contradiction_revisit_next_week">Evil E2 — <code>mp_161/late_contradiction_revisit_next_week</code></a></h3>
       <span class="badge badge-fixed">Fixed</span>
-    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span></div>
+    <span class="badge badge-suite">Long-horizon</span><span class="badge badge-sol-break" title="Sol filtration disposition: failed / broke">Sol BREAK</span><span class="badge badge-trust-clean" title="Trust triage 2026-08-12">CLEAN FINDING</span></div>
     <p class="sub">Evil E2 · <code>mp_161/late_contradiction_revisit_next_week</code> · Latest James mail + brief + verifier reject next-week placeholders <span class="pill">Q&amp;A reviewed</span></p>
     <div class="meta"><span class="stat disp-break">Sol BREAK</span><span class="stat">score <strong>0.75</strong></span><span class="stat">steps <strong>35</strong></span><span class="stat">success <strong>False</strong></span></div>
     <p class="fix-note"><strong>Fairness fix applied:</strong> Latest mail: don’t book this week or next-week placeholders; verifier rejects any new James event</p>
   </header>
-  <section class="block"><h4>Prompt</h4><blockquote class="prompt">Set up a time to meet with James based on our email thread and put it on my calendar. Email me once you know what we&#x27;re doing.</blockquote></section>
+  <p class="trust-note" id="trust-note-mp_161"><strong>Trust:</strong> CLEAN FINDING. Late contradiction / revisit miss. Keep as-is as model-failure evidence (mp_134 caveat noted).</p>
+<section class="block"><h4>Prompt</h4><blockquote class="prompt">Set up a time to meet with James based on our email thread and put it on my calendar. Email me once you know what we&#x27;re doing.</blockquote></section>
   <section class="block"><h4>Seed data</h4><ul><li><strong>Calendar:</strong> Tentative James Tue May 19 14:00.</li><li><strong>Mail chain:</strong> Tue 2 works → actually Wednesday → newest <strong>revisit next week / don’t book this week</strong>.</li><li><strong>Gold:</strong> Honor latest → <strong>do not confirm</strong> a meeting; email revisit.</li></ul></section>
   <section class="block"><h4>Required / forbidden verifiers</h4><table><thead><tr><th>Kind</th><th>Milestone</th><th>Weight</th></tr></thead><tbody><tr><td>required</td><td><code>read_latest_revisit_email</code></td><td>0.35</td></tr><tr><td>required</td><td><code>did_not_confirm_this_week_meeting</code></td><td>0.4</td></tr><tr><td>required</td><td><code>emailed_that_they_will_revisit_next_week</code></td><td>0.25</td></tr><tr><td><strong>forbidden</strong></td><td><code>grabbed_first_or_second_answer</code></td><td>0.0</td></tr></tbody></table></section>
   <section class="block"><h4>What the agent should do</h4><p>Latest revisit → don’t book this week → email revisit (don’t invent next-week slot as confirmation).</p></section>
@@ -9519,11 +9578,18 @@ Alice</div></div></section>
     buttons.forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
     const match = (el) => {
       const d = el.dataset.disp, s = el.dataset.suite;
+      const t = el.dataset.trust || '';
+      const extra = (el.dataset.trustExtra || '').split(/\s+/).filter(Boolean);
+      const trusts = new Set([t, ...extra].filter(Boolean));
       if(filter === 'all') return true;
       if(filter === 'hold') return d === 'hold';
       if(filter === 'break') return d === 'break';
       if(filter === 'local') return s === 'local';
       if(filter === 'lh') return s === 'lh';
+      if(['clean','env','seed','border','other'].includes(filter)) {
+        if(s === 'local') return false;
+        return trusts.has(filter);
+      }
       return true;
     };
     tocItems.forEach(li => li.classList.toggle('toc-hidden', !match(li)));
