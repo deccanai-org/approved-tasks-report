@@ -4,7 +4,9 @@ Static HTML gallery of approved BrowserGym breaker tasks (UI-oracle + Sol agent 
 
 ## View online
 
-Prefer the **GitHub Pages** URL for this repo (see the repo’s Pages settings / About → website). Relative image paths work there.
+**Live:** https://deccanai-org.github.io/approved-tasks-report/
+
+Relative image paths work there. Repo: https://github.com/deccanai-org/approved-tasks-report
 
 ## Local viewing
 
