@@ -4,7 +4,8 @@ Static HTML gallery of approved BrowserGym breaker tasks (UI-oracle + Sol agent 
 
 ## View online
 
-**Live:** https://deccanai-org.github.io/approved-tasks-report/
+**Hub (all tasks, three sections):** https://deccanai-org.github.io/approved-tasks-report/  
+same catalog: https://deccanai-org.github.io/approved-tasks-report/hub/
 
 **Dossier (breakers only):** https://deccanai-org.github.io/approved-tasks-report/dossier/
 
@@ -25,7 +26,7 @@ Relative image paths work there. Repo: https://github.com/deccanai-org/approved-
 Correct layout:
 
 ```text
-APPROVED_TASKS_REPORT_2026-08-11.html   # or index.html
+APPROVED_TASKS_REPORT_2026-08-11.html   # 11 Aug screenshot gallery (index.html is now the hub)
 APPROVED_TASKS_REPORT_2026-08-11_assets/
   mail_002/oracle/thumbs/...
   mail_002/oracle/full/...
