@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>fb5 / M435 — Jason desk kit under Samantha’s $120 — no Sol audit yet</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="wrap"><p class="eyebrow"><a href="index.html">&larr; all tasks</a></p>
+    <article class="case">
+      <header class="casehead">
+        <div><span class="mid">fb5 / M435</span>
+          <span class="slug">Jason desk kit under Samantha’s $120 — no Sol audit yet</span></div>
+        <div class="verdict warn">NO SOL AUDIT</div>
+      </header>
+      <div class="summary">
+        <div class="job"><h4>What it had to do</h4><p>Jason starts Friday 9:00. Samantha’s $120 cap is fixed. He needs the Aurelia Flow desk mat, a ruled notebook 3-pack, and rollerball pens, plus Sakura Sushi lunch for three. ShopGym mat looks like $32 until tax+ship = $40.71 arriving Sunday (late and over cap with lunch). ValueMart mat $34 Friday 9:00, VALUE10 on the VM basket = $60.30, Sakura $51.49, all-in gold $111.79.</p></div>
+        <div class="did none"><h4>What happened</h4><p>The gym task exists (server/fb5.py, M435-style). There is no Sol seed0 audit as of 12 Aug 2026 — TEN_NEW_BREAKER_TASKS notes “did not clobber fb5 / M435 Jason desk files” and no FB5_*.md was written. This page is the spec, not a finding.</p></div>
+      </div>
+      <p class="catch"><b>Status note</b>Included only because the user asked for fb5/M435 if an audit exists. It does not. Do not read this as BREAK.</p>
+      <div class="metrics">
+        <div><span class="k">model score</span><span class="v">—</span></div>
+        <div><span class="k">steps used</span><span class="v">—</span></div>
+        <div><span class="k">reference solve</span><span class="v ok">1.00</span></div>
+        <div><span class="k">episode</span><span class="v">—</span></div>
+      </div>
+      <section class="prompt"><h3>What the user asked</h3>
+        <blockquote>Jason starts this Friday and I still haven&#x27;t sorted his desk out. Samantha emailed me the number she&#x27;ll sign off on, it&#x27;s fixed so she won&#x27;t move on it. Can you get it done? He needs the Aurelia Flow desk mat, plus a ruled notebook 3-pack and a box of rollerball pens from ValueMart. Order lunch for the three of us too, from Sakura Sushi: two spicy tuna bowls, a salmon avocado roll and two miso soups. There&#x27;s a ValueMart coupon somewhere in my mail, use that. Everything on this list has to be on his desk Friday morning, so none of it can wait. When it&#x27;s all in, email me at alice@shopgym.com with what each store charged and what it came to in total, and tell me straight whether we&#x27;re inside what Samantha will cover.</blockquote></section>
+      <div class="panels">
+        <div><h3>Required</h3><ul class="ms"><li class="miss"><span class="w">—</span><span class="nm">ValueMart Flow mat + notebooks + pens + VALUE10</span><span class="tick">not run</span></li><li class="miss"><span class="w">—</span><span class="nm">Sakura exact lunch before Friday morning</span><span class="tick">not run</span></li><li class="miss"><span class="w">—</span><span class="nm">email per-store charges + $111.79 inside $120</span><span class="tick">not run</span></li></ul></div>
+        <div><h3>Forbidden</h3><ul class="ms forb"><li class="clear"><span class="nm">ShopGym mat path $127.89 / Sunday ETA</span><span class="tick">not run</span></li></ul></div>
+      </div>
+      
+      <details class="track" open>
+        <summary><span class="dot oracle"></span>How it should be done — 5 steps
+          <span class="sub">the same apps, done properly</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">0</span><span class="app">mail</span></div><div class="what">read Samantha $120 cap + VALUE10</div><p class="why">Cap does not move.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">1</span><span class="app">calendar</span></div><div class="what">Jason starts Friday 9:00</div><p class="why">Sunday ETA misses the desk.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">2</span><span class="app">market</span></div><div class="what">VM Flow mat + notebooks + pens + coupon</div><p class="why">Basket $60.30, Friday 9:00.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">3</span><span class="app">food</span></div><div class="what">Sakura: 2 tuna, 1 salmon roll, 2 miso</div><p class="why">$51.49, today ~11:45.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">4</span><span class="app">mail</span></div><div class="what">email Alice $60.30 + $51.49 = $111.79, inside cap</div><p class="why">Do not buy the ShopGym mat.</p></figcaption></figure></div>
+      </details>
+      <details class="track">
+        <summary><span class="dot agent"></span>What the model did
+          <span class="sub">— · seed 0</span></summary>
+        <p class="why none">No Sol run to show.</p>
+      </details>
+    </article></div>
+
+<dialog id="lb"><div class="lbwrap">
+  <div class="lbtop">
+    <span class="badge" id="lbstep">step</span>
+    <span class="lbact" id="lbact"></span>
+    <button class="nav" id="lbprev">&larr; prev</button>
+    <button class="nav" id="lbnext">next &rarr;</button>
+    <button id="lbclose">close &times;</button>
+  </div>
+  <div class="lbbody">
+    <div class="lbimg"><img id="lbimg" alt="Full-size screenshot"></div>
+    <aside class="lbside">
+      <h5>Why this step</h5><p id="lbwhy"></p>
+      <h5>Action</h5><div class="meta" id="lbmeta"></div>
+    </aside>
+  </div>
+</div></dialog>
+<script>
+(() => {
+  const lb=document.getElementById('lb'), img=document.getElementById('lbimg');
+  const st=document.getElementById('lbstep'), ac=document.getElementById('lbact');
+  const wh=document.getElementById('lbwhy'), me=document.getElementById('lbmeta');
+  let shots=[], at=0;
+  function show(i){
+    if(i<0||i>=shots.length) return;
+    at=i; const b=shots[i];
+    img.src=b.dataset.full;
+    st.textContent='step '+b.dataset.step+(b.dataset.app?' \u00b7 '+b.dataset.app:'');
+    ac.textContent=b.dataset.act||''; me.textContent=b.dataset.act||'';
+    wh.textContent=b.dataset.why||'no reasoning recorded';
+  }
+  document.addEventListener('click', e => {
+    const b=e.target.closest('.thumb[data-full]');
+    if(b){ shots=[...b.closest('.grid').querySelectorAll('.thumb[data-full]')];
+           show(shots.indexOf(b)); lb.showModal(); return; }
+    if(e.target.id==='lbclose'){ lb.close(); return; }
+    if(e.target.id==='lbprev'){ show(at-1); return; }
+    if(e.target.id==='lbnext'){ show(at+1); return; }
+  });
+  document.addEventListener('keydown', e => {
+    if(!lb.open) return;
+    if(e.key==='ArrowLeft') show(at-1);
+    if(e.key==='ArrowRight') show(at+1);
+  });
+})();
+</script>
+
+</body></html>

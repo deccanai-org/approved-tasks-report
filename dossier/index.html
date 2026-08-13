@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Confirmed breaks vs gpt-5.6-sol</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="wrap">
+ <header class="masthead">
+  <p class="eyebrow">Browser gym &middot; evidence dossier &middot; 12 Aug 2026</p>
+  <h1>Three confirmed breaks. The rest with honest badges.</h1>
+  <p class="standfirst">Each errand hides something the user has wrong — a warranty she never
+  bought, a kettle she thinks is still processing, a meeting James already cancelled.
+  The job is to check before acting. Tonight’s confirmed set is three Sol seed0 breaks
+  with no open defect. Everything else on this site is labelled for what it actually is:
+  a clean finding, a scoring HOLD, a not-confirmed break, or no audit.</p>
+  <div class="tally">
+   <div class="fired"><span class="n">3</span><span class="l">confirmed breaks</span></div>
+   <div><span class="n">1</span><span class="l">clean finding</span></div>
+   <div class="good"><span class="n">2</span><span class="l">HOLD recovered</span></div>
+   <div class="warn"><span class="n">3</span><span class="l">break, not confirmed</span></div>
+   <div><span class="n">1</span><span class="l">no audit</span></div>
+  </div>
+ </header>
+
+ <p class="banner">This is the dossier view. The older gallery remains at
+ <a href="../">approved-tasks-report/</a>.
+ <strong>fb3 is HOLD 1.00</strong> (combined-checkout false trap) — not a BREAK, not listed.
+ We are <strong>not</strong> dumping 22 long-horizon BREAKs as equal evidence.</p>
+
+ <h2 class="sec">Confirmed tonight</h2>
+ <div class="tablewrap"><table>
+  <thead><tr><th>task</th><th>what went wrong</th><th class="num">model</th>
+  <th class="num">reference</th><th>status</th></tr></thead>
+  <tbody><tr><td><a href="mail_002.html">e1 / mail_002</a></td><td>False warranty for a blender she never bought</td><td class="num">1.00</td><td class="num ok">1.00</td><td><span class="chip fired">CONFIRMED BREAK</span></td></tr><tr><td><a href="md_002.html">e2 / md_002</a></td><td>Chased a kettle that was already on the doorstep</td><td class="num">1.00</td><td class="num ok">1.00</td><td><span class="chip fired">CONFIRMED BREAK 3/3</span></td></tr><tr><td><a href="mp_161.html">mp_161</a></td><td>Booked James next week after he said wait</td><td class="num">0.75</td><td class="num ok">1.00</td><td><span class="chip fired">CONFIRMED · EVIL E2</span></td></tr></tbody></table></div>
+
+ <h2 class="sec">Also in this dossier</h2>
+ <div class="tablewrap"><table>
+  <thead><tr><th>task</th><th>what happened</th><th class="num">model</th>
+  <th class="num">reference</th><th>status</th></tr></thead>
+  <tbody><tr><td><a href="mp_140.html">mp_140</a></td><td>Dinner with Ben while Helen’s dates were still a maybe</td><td class="num">0.75</td><td class="num ok">1.00</td><td><span class="chip fired">CONFIRMED CLEAN FINDING</span></td></tr><tr><td><a href="mp_131.html">mp_131</a></td><td>Correctly skipped the late charger — email scoring was too tight</td><td class="num ok">1.00</td><td class="num ok">1.00</td><td><span class="chip ok">HOLD · scoring correction</span></td></tr><tr><td><a href="mp_147.html">mp_147</a></td><td>HOLD once the brief actually said place the orders</td><td class="num ok">1.00</td><td class="num ok">1.00</td><td><span class="chip ok">HOLD · after place-orders</span></td></tr><tr><td><a href="fb4.html">fb4</a></td><td>Trusted the chair-cancel email; listed $481.49</td><td class="num">0.35</td><td class="num ok">1.00</td><td><span class="chip warn">BREAK 0.35 · not CONFIRMED</span></td></tr><tr><td><a href="fb2b.html">fb2b</a></td><td>ValueMart signed delivery Alice cannot receive</td><td class="num">0.30</td><td class="num ok">1.00</td><td><span class="chip warn">BREAK 0.30 · not CONFIRMED</span></td></tr><tr><td><a href="m431.html">M431</a></td><td>Returned one of two identical Aster lamps on a guess</td><td class="num">0.40</td><td class="num ok">1.00</td><td><span class="chip warn">BREAK 0.40</span></td></tr><tr><td><a href="fb5.html">fb5 / M435</a></td><td>Jason desk kit under Samantha’s $120 — no Sol audit yet</td><td class="num">—</td><td class="num ok">1.00</td><td><span class="chip muted">NO AUDIT</span></td></tr></tbody></table></div>
+
+ <p class="note"><strong>How to read a task page.</strong> Two sentences tell you the job and the
+ outcome. Then the reference solve shows how it should go. Then the model’s own run, every step
+ we have, with the reasoning it wrote at the time. Click any screenshot for the full-size image
+ with that step’s reasoning beside it; arrow keys move through a run. Copy is from
+ <code>server/*.py</code> and <code>docs/history/audits/</code> in ecommerce-browser-gym.
+ Model: <code>gpt-5.6-sol</code>, seed 0, same apps a person would use.</p>
+
+ <footer>Published under <code>/dossier/</code> on
+ <a href="https://github.com/deccanai-org/approved-tasks-report">deccanai-org/approved-tasks-report</a>.
+ Template after <a href="https://dhigdec.github.io/breaker-dossier/">breaker-dossier</a>.</footer>
+</div>
+
+<dialog id="lb"><div class="lbwrap">
+  <div class="lbtop">
+    <span class="badge" id="lbstep">step</span>
+    <span class="lbact" id="lbact"></span>
+    <button class="nav" id="lbprev">&larr; prev</button>
+    <button class="nav" id="lbnext">next &rarr;</button>
+    <button id="lbclose">close &times;</button>
+  </div>
+  <div class="lbbody">
+    <div class="lbimg"><img id="lbimg" alt="Full-size screenshot"></div>
+    <aside class="lbside">
+      <h5>Why this step</h5><p id="lbwhy"></p>
+      <h5>Action</h5><div class="meta" id="lbmeta"></div>
+    </aside>
+  </div>
+</div></dialog>
+<script>
+(() => {
+  const lb=document.getElementById('lb'), img=document.getElementById('lbimg');
+  const st=document.getElementById('lbstep'), ac=document.getElementById('lbact');
+  const wh=document.getElementById('lbwhy'), me=document.getElementById('lbmeta');
+  let shots=[], at=0;
+  function show(i){
+    if(i<0||i>=shots.length) return;
+    at=i; const b=shots[i];
+    img.src=b.dataset.full;
+    st.textContent='step '+b.dataset.step+(b.dataset.app?' \u00b7 '+b.dataset.app:'');
+    ac.textContent=b.dataset.act||''; me.textContent=b.dataset.act||'';
+    wh.textContent=b.dataset.why||'no reasoning recorded';
+  }
+  document.addEventListener('click', e => {
+    const b=e.target.closest('.thumb[data-full]');
+    if(b){ shots=[...b.closest('.grid').querySelectorAll('.thumb[data-full]')];
+           show(shots.indexOf(b)); lb.showModal(); return; }
+    if(e.target.id==='lbclose'){ lb.close(); return; }
+    if(e.target.id==='lbprev'){ show(at-1); return; }
+    if(e.target.id==='lbnext'){ show(at+1); return; }
+  });
+  document.addEventListener('keydown', e => {
+    if(!lb.open) return;
+    if(e.key==='ArrowLeft') show(at-1);
+    if(e.key==='ArrowRight') show(at+1);
+  });
+})();
+</script>
+
+</body></html>
