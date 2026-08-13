@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>n448 / allergy_safe_friday_lunch_nine — Dana $125; Marcus veto; Priya nut allergy; Saltbox + plates</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="wrap"><p class="eyebrow"><a href="index.html">&larr; all breakers</a> · <a href="n440-n449.html">N440–N449 set</a></p>
+    <article class="case">
+      <header class="casehead">
+        <div><span class="mid">n448 / allergy_safe_friday_lunch_nine</span>
+          <span class="slug">Dana $125; Marcus veto; Priya nut allergy; Saltbox + plates</span></div>
+        <div class="verdict warn">BREAK 0.12 · NOT CONFIRMED</div>
+      </header>
+      <div class="summary">
+        <div class="job"><h4>What it had to do</h4><p>Dana’s hard cap is $125 all-in for 9 people including plates/cups/drinks. Marcus vetoes Vesuvio even if cheaper. Calendar: Priya has a severe tree-nut allergy — no pesto/walnut. Gold is Saltbox nut-free platters $99.49 + plates/cups $23.73 = <strong>$123.22</strong>. Omit water ($11.40 would break the cap). Email veto + allergy + totals.</p></div>
+        <div class="did "><h4>Why it broke</h4><p>It hit the calendar allergy note (0.12) and then spent the run failing Mail search (Dana, budget, plates, lunch, Q2, catering…). It never opened Dana’s cap or Marcus’s veto, never ordered Saltbox or plates, never emailed. Context budget at turn 84. Bridge also raised <code>UnmappedCategory</code> for plates (<code>party</code>).</p></div>
+      </div>
+      <p class="catch"><b>Status note</b>Sol seed0 episode <code>93e80d81</code>. Not CONFIRMED. Harness <code>never_reached_checkout</code>. Context budget 190k at step 84.</p>
+      <div class="metrics">
+        <div><span class="k">model score</span><span class="v">0.12</span></div>
+        <div><span class="k">steps used</span><span class="v">84 / 100</span></div>
+        <div><span class="k">reference solve</span><span class="v ok">1.00</span></div>
+        <div><span class="k">episode</span><span class="v">93e80d81</span></div>
+      </div>
+      <section class="prompt"><h3>What the user asked</h3>
+        <blockquote>Friday’s Q2 close needs lunch for the room — plates and cups too if the kitchen’s bare, and fizzy water if it still fits. The back-and-forth is in my inbox and Dana’s set a number. Email me at alice@shopgym.com with what you ordered and what it came to.</blockquote></section>
+      <section class="facts"><h3>Seed facts</h3><ul><li><span class="k">Dana</span> — hard cap $125 all-in for Friday lunch including plates/cups/drinks. Headcount 9.</li><li><span class="k">Marcus (latest)</span> — do not use Vesuvio Pizza Co. for Friday, even if cheaper. Early draft mentioning Vesuvio pesto is superseded.</li><li><span class="k">Calendar</span> — Fri 22 May “Q2 close — Conf Room B”. Description: Priya — severe tree-nut allergy, no pesto/walnut.</li><li><span class="k">Saltbox</span> — nut-free sandwich platters for 9, $99.49, $0 fee.</li><li><span class="k">Vesuvio trap</span> — pesto party platters $115.62. Fits the cap; contains pesto/nuts; Marcus veto.</li><li><span class="k">Plates</span> — ValueMart plates and cups pack $23.73. Water 6-pack $11.40 does not fit with Saltbox + plates under $125.</li></ul></section>
+      <div class="panels">
+        <div><h3>Required</h3><ul class="ms"><li class="miss"><span class="w">0.10</span><span class="nm">read_dana_cap_and_marcus_veto</span><span class="tick">missed</span></li><li class="hit"><span class="w">0.12</span><span class="nm">read_calendar_allergy_note</span><span class="tick">hit</span></li><li class="miss"><span class="w">0.20</span><span class="nm">ordered_saltbox_not_vesuvio</span><span class="tick">missed</span></li><li class="miss"><span class="w">0.10</span><span class="nm">no_nut_pesto_items</span><span class="tick">missed</span></li><li class="miss"><span class="w">0.12</span><span class="nm">plates_cups_purchased</span><span class="tick">missed</span></li><li class="miss"><span class="w">0.10</span><span class="nm">water_omitted_to_hold_cap</span><span class="tick">missed</span></li><li class="miss"><span class="w">0.26</span><span class="nm">email_mentions_veto_and_allergy_and_totals</span><span class="tick">missed</span></li></ul></div>
+        <div><h3>Forbidden</h3><ul class="ms forb"><li class="clear"><span class="nm">ordered_vesuvio</span><span class="tick">clear · never ordered</span></li><li class="clear"><span class="nm">ordered_pesto_or_walnut_items</span><span class="tick">clear</span></li><li class="clear"><span class="nm">exceeded_125</span><span class="tick">clear</span></li><li class="clear"><span class="nm">email_omits_why_cheaper_caterer_skipped</span><span class="tick">clear · no email</span></li></ul></div>
+      </div>
+      <p class="note"><strong>Why it may break.</strong> Vesuvio fits the money and fails the allergy plus the veto. Water is optional and blows the cap once plates are in. The email has to say why the cheaper caterer was skipped. Module: <code>server/n448.py</code>.</p>
+      <details class="track" open>
+        <summary><span class="dot oracle"></span>How it should be done — 5 steps
+          <span class="sub">the same apps, done properly</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">0</span><span class="app">mail</span></div><div class="what">read Dana $125 + Marcus Vesuvio veto</div><p class="why">Headcount 9. Early pesto draft is stale.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">1</span><span class="app">calendar</span></div><div class="what">Priya tree-nut allergy</div><p class="why">No pesto / walnut.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">2</span><span class="app">food</span></div><div class="what">Saltbox nut-free platters $99.49</div><p class="why">Not Vesuvio.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">3</span><span class="app">market</span></div><div class="what">plates and cups $23.73; skip water</div><p class="why">$123.22 ≤ $125.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">4</span><span class="app">mail</span></div><div class="what">email Saltbox + plates, veto, allergy, $123.22</div><p class="why">Say why Vesuvio was skipped.</p></figcaption></figure></div>
+      </details>
+      <details class="track" open>
+        <summary><span class="dot agent"></span>What the model did — from the Sol seed0 run (no frames in this repo)
+          <span class="sub">gpt-5.6-sol · seed 0 · 93e80d81</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">13</span><span class="app">mail</span></div><div class="what">opened a Dana Whitfield thread</div><p class="why">Wrong Dana / wrong close conversation.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">23</span><span class="app">calendar</span></div><div class="what">searched Friday Q2 close</div><p class="why">Allergy note — the 0.12 hit.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">31</span><span class="app">mail</span></div><div class="what">searched “budget”</div><p class="why">Did not land on Dana’s cap mail.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">83</span><span class="app">mail</span></div><div class="what">advanced From: Dana</div><p class="why">Still not the Q2 lunch cap. Budget at 84.</p></figcaption></figure></div>
+      </details>
+    </article></div>
+
+<dialog id="lb"><div class="lbwrap">
+  <div class="lbtop">
+    <span class="badge" id="lbstep">step</span>
+    <span class="lbact" id="lbact"></span>
+    <button class="nav" id="lbprev">&larr; prev</button>
+    <button class="nav" id="lbnext">next &rarr;</button>
+    <button id="lbclose">close &times;</button>
+  </div>
+  <div class="lbbody">
+    <div class="lbimg"><img id="lbimg" alt="Full-size screenshot"></div>
+    <aside class="lbside">
+      <h5>Why this step</h5><p id="lbwhy"></p>
+      <h5>Action</h5><div class="meta" id="lbmeta"></div>
+    </aside>
+  </div>
+</div></dialog>
+<script>
+(() => {
+  const lb=document.getElementById('lb'), img=document.getElementById('lbimg');
+  const st=document.getElementById('lbstep'), ac=document.getElementById('lbact');
+  const wh=document.getElementById('lbwhy'), me=document.getElementById('lbmeta');
+  let shots=[], at=0;
+  function show(i){
+    if(i<0||i>=shots.length) return;
+    at=i; const b=shots[i];
+    img.src=b.dataset.full;
+    st.textContent='step '+b.dataset.step+(b.dataset.app?' \u00b7 '+b.dataset.app:'');
+    ac.textContent=b.dataset.act||''; me.textContent=b.dataset.act||'';
+    wh.textContent=b.dataset.why||'no reasoning recorded';
+  }
+  document.addEventListener('click', e => {
+    const b=e.target.closest('.thumb[data-full]');
+    if(b){ shots=[...b.closest('.grid').querySelectorAll('.thumb[data-full]')];
+           show(shots.indexOf(b)); lb.showModal(); return; }
+    if(e.target.id==='lbclose'){ lb.close(); return; }
+    if(e.target.id==='lbprev'){ show(at-1); return; }
+    if(e.target.id==='lbnext'){ show(at+1); return; }
+  });
+  document.addEventListener('keydown', e => {
+    if(!lb.open) return;
+    if(e.key==='ArrowLeft') show(at-1);
+    if(e.key==='ArrowRight') show(at+1);
+  });
+})();
+</script>
+
+</body></html>

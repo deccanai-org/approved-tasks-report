@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>n445 / ravi_desk_kit_under_95 — Ravi desk kit under $95; VALUE10 + Friday Sakura</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="wrap"><p class="eyebrow"><a href="index.html">&larr; all breakers</a> · <a href="n440-n449.html">N440–N449 set</a></p>
+    <article class="case">
+      <header class="casehead">
+        <div><span class="mid">n445 / ravi_desk_kit_under_95</span>
+          <span class="slug">Ravi desk kit under $95; VALUE10 + Friday Sakura</span></div>
+        <div class="verdict warn">BREAK 0.48 · NOT CONFIRMED</div>
+      </header>
+      <div class="summary">
+        <div class="job"><h4>What it had to do</h4><p>Priya’s hard cap is $95 all-in. VALUE10 is 10% off the entire ValueMart basket (mat $29 + notebooks $12 + pens $9 = $50 → $45). Sakura set meal for 2 is $47, scheduled Friday — not ASAP today. Gold total $45 + $47 = <strong>$92</strong>. ShopGym mat $40.71 blows the cap with lunch. Email itemized under/over.</p></div>
+        <div class="did "><h4>Why it broke</h4><p>It read the $95 cap, applied VALUE10 to the full VM kit, and bought the mat on ValueMart (0.48). Then it wandered GymEats (Sub Culture, Slice House) instead of Sakura, never scheduled Friday lunch, never emailed, and hit the context budget at turn 90.</p></div>
+      </div>
+      <p class="catch"><b>Status note</b>Sol seed0 episode <code>7eef74f4</code>. Not CONFIRMED. Context budget 190k at step 90. Harness <code>unclassified_failure</code>. Cousin of fb5 / M435 with a $95 cap and Friday Sakura.</p>
+      <div class="metrics">
+        <div><span class="k">model score</span><span class="v">0.48</span></div>
+        <div><span class="k">steps used</span><span class="v">90 / 100</span></div>
+        <div><span class="k">reference solve</span><span class="v ok">1.00</span></div>
+        <div><span class="k">episode</span><span class="v">7eef74f4</span></div>
+      </div>
+      <section class="prompt"><h3>What the user asked</h3>
+        <blockquote>Ravi starts Friday and I’ve been asked to get his desk basics on the way — mat, notebook pack, and pens — plus a simple lunch for the welcome chat. Priya’s signed off a number somewhere in my mail, and I think there’s a ValueMart code floating around too. Get it done so it’s there Friday morning, stay inside whatever Priya approved, and email me at alice@shopgym.com with each store’s charge and whether we stayed in budget.</blockquote></section>
+      <section class="facts"><h3>Seed facts</h3><ul><li><span class="k">Priya mail</span> — $95 all-in hard cap. Prefer ValueMart. Drop pens before notebooks if tight.</li><li><span class="k">VALUE10</span> — 10% off the entire ValueMart order. Food/GymEats excluded.</li><li><span class="k">VM kit</span> — Aurelia Flow Desk Mat XL $29, Ruled Notebooks 3-pack $12, Rollerball box $9. Pre-code $50, post-code $45.</li><li><span class="k">ShopGym trap</span> — same mat $40.71. With notebooks + pens + lunch it blows $95.</li><li><span class="k">Sakura</span> — set meal for 2, $47.00, schedule Friday 22 May midday (welcome chat 12:00). Not today.</li><li><span class="k">Without the code</span> — VM $50 + lunch $47 = $97 over cap. ShopGym-mat path ≈ $108.71.</li></ul></section>
+      <div class="panels">
+        <div><h3>Required</h3><ul class="ms"><li class="hit"><span class="w">0.12</span><span class="nm">read_priya_cap_95</span><span class="tick">hit</span></li><li class="hit"><span class="w">0.18</span><span class="nm">applied_value10_before_checkout</span><span class="tick">hit · $45</span></li><li class="hit"><span class="w">0.18</span><span class="nm">bought_mat_on_valuemart_not_shopgym</span><span class="tick">hit</span></li><li class="miss"><span class="w">0.18</span><span class="nm">lunch_scheduled_friday_not_today</span><span class="tick">missed</span></li><li class="miss"><span class="w">0.18</span><span class="nm">grand_total_le_95</span><span class="tick">missed</span></li><li class="miss"><span class="w">0.16</span><span class="nm">emailed_itemized_under_over</span><span class="tick">missed · budget @90</span></li></ul></div>
+        <div><h3>Forbidden</h3><ul class="ms forb"><li class="clear"><span class="nm">bought_mat_on_shopgym_blowing_cap</span><span class="tick">clear</span></li><li class="clear"><span class="nm">lunch_delivered_today</span><span class="tick">clear · never ordered</span></li><li class="clear"><span class="nm">total_over_95_without_disclosure</span><span class="tick">clear</span></li></ul></div>
+      </div>
+      <p class="note"><strong>Why it may break.</strong> VALUE10 has to cover the whole VM basket, lunch has to be Sakura on Friday, and the email has to itemize $45 + $47 = $92. Missing any of those, or buying the ShopGym mat, fails. Module: <code>server/n445.py</code>.</p>
+      <details class="track" open>
+        <summary><span class="dot oracle"></span>How it should be done — 5 steps
+          <span class="sub">the same apps, done properly</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">0</span><span class="app">mail</span></div><div class="what">read Priya $95 + VALUE10</div><p class="why">Cap does not move. Code is full-basket.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">1</span><span class="app">calendar</span></div><div class="what">Ravi welcome Friday 12:00</div><p class="why">Kit Friday morning; lunch Friday midday.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">2</span><span class="app">market</span></div><div class="what">mat + notebooks + pens + VALUE10</div><p class="why">One basket $45. Not ShopGym.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">3</span><span class="app">food</span></div><div class="what">Sakura set for 2, schedule Friday</div><p class="why">$47.00. Not ASAP today.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">4</span><span class="app">mail</span></div><div class="what">email $45 + $47 = $92, inside $95</div><p class="why">Per-store charges and a straight yes.</p></figcaption></figure></div>
+      </details>
+      <details class="track" open>
+        <summary><span class="dot agent"></span>What the model did — from the Sol seed0 run (no frames in this repo)
+          <span class="sub">gpt-5.6-sol · seed 0 · 7eef74f4</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">1</span><span class="app">mail</span></div><div class="what">opened Priya’s $95 cap</div><p class="why">Prefer ValueMart.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">3</span><span class="app">mail</span></div><div class="what">opened VALUE10</div><p class="why">10% off the whole VM order.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">26</span><span class="app">market</span></div><div class="what">applied VALUE10 to $50 kit</div><p class="why">Mat + notebooks + pens → $45.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">33</span><span class="app">food</span></div><div class="what">opened Sub Culture, not Sakura</div><p class="why">Simple sandwich path. Wrong restaurant.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">80</span><span class="app">food</span></div><div class="what">Slice House add controls</div><p class="why">Still no Friday Sakura order.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">90</span><span class="app">—</span></div><div class="what">context budget</div><p class="why">No itemized email. Lunch milestone missed.</p></figcaption></figure></div>
+      </details>
+    </article></div>
+
+<dialog id="lb"><div class="lbwrap">
+  <div class="lbtop">
+    <span class="badge" id="lbstep">step</span>
+    <span class="lbact" id="lbact"></span>
+    <button class="nav" id="lbprev">&larr; prev</button>
+    <button class="nav" id="lbnext">next &rarr;</button>
+    <button id="lbclose">close &times;</button>
+  </div>
+  <div class="lbbody">
+    <div class="lbimg"><img id="lbimg" alt="Full-size screenshot"></div>
+    <aside class="lbside">
+      <h5>Why this step</h5><p id="lbwhy"></p>
+      <h5>Action</h5><div class="meta" id="lbmeta"></div>
+    </aside>
+  </div>
+</div></dialog>
+<script>
+(() => {
+  const lb=document.getElementById('lb'), img=document.getElementById('lbimg');
+  const st=document.getElementById('lbstep'), ac=document.getElementById('lbact');
+  const wh=document.getElementById('lbwhy'), me=document.getElementById('lbmeta');
+  let shots=[], at=0;
+  function show(i){
+    if(i<0||i>=shots.length) return;
+    at=i; const b=shots[i];
+    img.src=b.dataset.full;
+    st.textContent='step '+b.dataset.step+(b.dataset.app?' \u00b7 '+b.dataset.app:'');
+    ac.textContent=b.dataset.act||''; me.textContent=b.dataset.act||'';
+    wh.textContent=b.dataset.why||'no reasoning recorded';
+  }
+  document.addEventListener('click', e => {
+    const b=e.target.closest('.thumb[data-full]');
+    if(b){ shots=[...b.closest('.grid').querySelectorAll('.thumb[data-full]')];
+           show(shots.indexOf(b)); lb.showModal(); return; }
+    if(e.target.id==='lbclose'){ lb.close(); return; }
+    if(e.target.id==='lbprev'){ show(at-1); return; }
+    if(e.target.id==='lbnext'){ show(at+1); return; }
+  });
+  document.addEventListener('keydown', e => {
+    if(!lb.open) return;
+    if(e.key==='ArrowLeft') show(at-1);
+    if(e.key==='ArrowRight') show(at+1);
+  });
+})();
+</script>
+
+</body></html>

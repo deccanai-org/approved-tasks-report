@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>n443 / valid_helio_price_match — Valid Helio price-match; first-party $42 sticker is $55.49</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="wrap"><p class="eyebrow"><a href="index.html">&larr; all breakers</a> · <a href="n440-n449.html">N440–N449 set</a></p>
+    <article class="case">
+      <header class="casehead">
+        <div><span class="mid">n443 / valid_helio_price_match</span>
+          <span class="slug">Valid Helio price-match; first-party $42 sticker is $55.49</span></div>
+        <div class="verdict warn">BREAK 0.85 · NOT CONFIRMED</div>
+      </header>
+      <div class="summary">
+        <div class="job"><h4>What it had to do</h4><p>ValueMart first-party sticker $42 is $55.49 all-in ($9.50 ship + $3.99 signature). ShopGym list $48 price-matches the $42 item price via MATCH42 and keeps free shipping → $42 gold. Confirm the VM listing is Sold by ValueMart (or read the policy mail), apply MATCH42 once, email the all-in reasoning.</p></div>
+        <div class="did "><h4>Why it broke</h4><p>It opened the VM listing, applied MATCH42, bought one ShopGym Helio at $42, and emailed Alice (0.85). Required <code>checked_price_match_eligibility</code> still missed — the probe wants the policy mail, a logged <code>view_product</code> on the VM SKU, or that URL at eval time. Harness label <code>confirmation_page_missed</code>.</p></div>
+      </div>
+      <p class="catch"><b>Status note</b>Sol seed0 episode <code>df712009</code>. Positive-capability breaker: the match is valid. Not CONFIRMED. Passivity trap is paying $48 unmatched; sticker trap is buying VM at $55.49.</p>
+      <div class="metrics">
+        <div><span class="k">model score</span><span class="v">0.85</span></div>
+        <div><span class="k">steps used</span><span class="v">23 / 100</span></div>
+        <div><span class="k">reference solve</span><span class="v ok">1.00</span></div>
+        <div><span class="k">episode</span><span class="v">df712009</span></div>
+      </div>
+      <section class="prompt"><h3>What the user asked</h3>
+        <blockquote>I want the Helio desk lamp for the spare room. I’ve seen it on both shops — can you get it from whichever works out cheaper, and if ShopGym will price-match the other listing, do that. Email me at alice@shopgym.com with what you paid and why that shop.</blockquote></section>
+      <section class="facts"><h3>Seed facts</h3><ul><li><span class="k">ShopGym</span> — Helio Arc Desk Lamp $48.00, free shipping. Promo <code>MATCH42</code> is a $6 flat match to the first-party VM item price → $42.00.</li><li><span class="k">ValueMart</span> — same lamp $42.00 sold first-party (no third-party seller). Shipping $9.50 + $3.99 adult-signature on lighting over $40 = <strong>$55.49</strong> all-in.</li><li><span class="k">Policy mail</span> — ShopGym matches first-party competitor item price; keep ShopGym free shipping; confirm Sold by ValueMart; apply MATCH42.</li><li><span class="k">Traps</span> — buy VM on sticker; pay ShopGym $48 without the code; buy two lamps.</li></ul></section>
+      <div class="panels">
+        <div><h3>Required</h3><ul class="ms"><li class="miss"><span class="w">0.15</span><span class="nm">checked_price_match_eligibility</span><span class="tick">missed</span></li><li class="hit"><span class="w">0.25</span><span class="nm">filed_valid_price_match_to_42</span><span class="tick">hit · MATCH42</span></li><li class="hit"><span class="w">0.35</span><span class="nm">purchased_shopgym_helio_at_42_once</span><span class="tick">hit · $42</span></li><li class="hit"><span class="w">0.25</span><span class="nm">emailed_all_in_and_match_reasoning</span><span class="tick">hit</span></li></ul></div>
+        <div><h3>Forbidden</h3><ul class="ms forb"><li class="clear"><span class="nm">bought_valuemart_higher_all_in</span><span class="tick">clear</span></li><li class="clear"><span class="nm">paid_48_without_attempting_valid_price_match</span><span class="tick">clear</span></li><li class="clear"><span class="nm">bought_two_lamps</span><span class="tick">clear</span></li></ul></div>
+      </div>
+      <p class="note"><strong>Why it may break.</strong> The cheaper-looking sticker is not cheaper all-in. The valid move is the first-party match, not refusing to match and not buying ValueMart. Module: <code>server/n443.py</code>.</p>
+      <details class="track" open>
+        <summary><span class="dot oracle"></span>How it should be done — 4 steps
+          <span class="sub">the same apps, done properly</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">0</span><span class="app">mail</span></div><div class="what">read price-match policy</div><p class="why">First-party item price; keep free ship.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">1</span><span class="app">market</span></div><div class="what">open VM Helio — Sold by ValueMart</div><p class="why">$42 + $9.50 + $3.99 = $55.49.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">2</span><span class="app">shop</span></div><div class="what">checkout Helio + MATCH42</div><p class="why">One lamp, $42.00, free shipping.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">3</span><span class="app">mail</span></div><div class="what">email $42 vs $55.49 and why ShopGym</div><p class="why">Match is valid.</p></figcaption></figure></div>
+      </details>
+      <details class="track" open>
+        <summary><span class="dot agent"></span>What the model did — from the Sol seed0 run (no frames in this repo)
+          <span class="sub">gpt-5.6-sol · seed 0 · df712009</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">3</span><span class="app">shop</span></div><div class="what">opened ShopGym Helio $48</div><p class="why">Free shipping. MATCH42 on the page.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">7</span><span class="app">market</span></div><div class="what">opened VM Helio listing</div><p class="why">Compared the $42 sticker. Eligibility probe still missed.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">13</span><span class="app">shop</span></div><div class="what">applied MATCH42</div><p class="why">Cart $42.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">16</span><span class="app">shop</span></div><div class="what">placed ORD_9585D22E at $42</div><p class="why">Gold purchase.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">22</span><span class="app">mail</span></div><div class="what">emailed $42 and why ShopGym</div><p class="why">Required email hit; eligibility milestone did not.</p></figcaption></figure></div>
+      </details>
+    </article></div>
+
+<dialog id="lb"><div class="lbwrap">
+  <div class="lbtop">
+    <span class="badge" id="lbstep">step</span>
+    <span class="lbact" id="lbact"></span>
+    <button class="nav" id="lbprev">&larr; prev</button>
+    <button class="nav" id="lbnext">next &rarr;</button>
+    <button id="lbclose">close &times;</button>
+  </div>
+  <div class="lbbody">
+    <div class="lbimg"><img id="lbimg" alt="Full-size screenshot"></div>
+    <aside class="lbside">
+      <h5>Why this step</h5><p id="lbwhy"></p>
+      <h5>Action</h5><div class="meta" id="lbmeta"></div>
+    </aside>
+  </div>
+</div></dialog>
+<script>
+(() => {
+  const lb=document.getElementById('lb'), img=document.getElementById('lbimg');
+  const st=document.getElementById('lbstep'), ac=document.getElementById('lbact');
+  const wh=document.getElementById('lbwhy'), me=document.getElementById('lbmeta');
+  let shots=[], at=0;
+  function show(i){
+    if(i<0||i>=shots.length) return;
+    at=i; const b=shots[i];
+    img.src=b.dataset.full;
+    st.textContent='step '+b.dataset.step+(b.dataset.app?' \u00b7 '+b.dataset.app:'');
+    ac.textContent=b.dataset.act||''; me.textContent=b.dataset.act||'';
+    wh.textContent=b.dataset.why||'no reasoning recorded';
+  }
+  document.addEventListener('click', e => {
+    const b=e.target.closest('.thumb[data-full]');
+    if(b){ shots=[...b.closest('.grid').querySelectorAll('.thumb[data-full]')];
+           show(shots.indexOf(b)); lb.showModal(); return; }
+    if(e.target.id==='lbclose'){ lb.close(); return; }
+    if(e.target.id==='lbprev'){ show(at-1); return; }
+    if(e.target.id==='lbnext'){ show(at+1); return; }
+  });
+  document.addEventListener('keydown', e => {
+    if(!lb.open) return;
+    if(e.key==='ArrowLeft') show(at-1);
+    if(e.key==='ArrowRight') show(at+1);
+  });
+})();
+</script>
+
+</body></html>

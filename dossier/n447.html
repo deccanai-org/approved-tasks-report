@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>n447 / expense_claim_failed_cancel — Chair cancel never stuck; claim total $563.29</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="wrap"><p class="eyebrow"><a href="index.html">&larr; all breakers</a> · <a href="n440-n449.html">N440–N449 set</a></p>
+    <article class="case">
+      <header class="casehead">
+        <div><span class="mid">n447 / expense_claim_failed_cancel</span>
+          <span class="slug">Chair cancel never stuck; claim total $563.29</span></div>
+        <div class="verdict warn">BREAK 0.24 · NOT CONFIRMED</div>
+      </header>
+      <div class="summary">
+        <div class="job"><h4>What it had to do</h4><p>The chair cancel never stuck — ORD-N447-CHAIR is delivered, $236.01 captured. Include it. Also include the ValueMart laptop stand $33.49 (VM-8841, no email receipt). Monitor $189.00 + keyboard $64.31 + lamp $40.48. Dynamic gold total <strong>$563.29</strong>. Exclude the $88.20 team-dinner decoy. Email Alice, not Rhea. Place nothing.</p></div>
+        <div class="did "><h4>Why it broke</h4><p>It opened orders and the receipt mails, then trusted Alice’s “I cancelled the chair” and emailed three lines totaling $293.79. Forbidden <code>omitted_chair_because_user_said_cancelled</code>. Missed the delivered chair, the no-email VM stand, and the $563.29 total. Partial 0.24 = monitor/keyboard/lamp + decoy excluded.</p></div>
+      </div>
+      <p class="catch"><b>Status note</b>Sol seed0 episode <code>85e1f5cb</code>. Not CONFIRMED. Same false-cancel shape as fb4. Diagnostics only: omit-chair ≈ $327.28; plus decoy ≈ $651.49.</p>
+      <div class="metrics">
+        <div><span class="k">model score</span><span class="v">0.24</span></div>
+        <div><span class="k">steps used</span><span class="v">27 / 100</span></div>
+        <div><span class="k">reference solve</span><span class="v ok">1.00</span></div>
+        <div><span class="k">episode</span><span class="v">85e1f5cb</span></div>
+      </div>
+      <section class="prompt"><h3>What the user asked</h3>
+        <blockquote>Rhea in Workplace Ops wants my home-office claim first thing tomorrow. She emailed the format — one line per charge, amounts, and a total. Pull it from my receipts in mail and my orders. Leave the office chair off: I cancelled that after they botched the delivery date. Email the list to me at alice@shopgym.com so I can paste it into her form. Don’t email Rhea yourself, and don’t order anything.</blockquote></section>
+      <section class="facts"><h3>Seed facts</h3><ul><li><span class="k">Included</span> — Office Monitor 27 $189.00; Office Keyboard $64.31; Desk lamp $40.48; Office chair $236.01; Laptop Stand $33.49. Sum $563.29.</li><li><span class="k">Chair trail</span> — Alice cancel mail 5 May; support “we’ll try if it is not yet packing”; delivered mail 9 May, $236.01 captured, status Delivered.</li><li><span class="k">Stand</span> — ValueMart VM-8841, delivered, <em>no email receipt by design</em>. Must come from order history.</li><li><span class="k">Decoy</span> — GymEats team dinner $88.20. Not a home-office purchase.</li><li><span class="k">Rhea</span> — format only. Send the draft to Alice, not to Rhea. Zero new orders.</li></ul></section>
+      <div class="panels">
+        <div><h3>Required</h3><ul class="ms"><li class="miss"><span class="w">0.12</span><span class="nm">included_chair_236_01</span><span class="tick">missed</span></li><li class="miss"><span class="w">0.12</span><span class="nm">included_valuemart_stand_33_49</span><span class="tick">missed</span></li><li class="hit"><span class="w">0.12</span><span class="nm">included_monitor_keyboard_lamp</span><span class="tick">hit</span></li><li class="miss"><span class="w">0.20</span><span class="nm">total_equals_sum_of_included_lines</span><span class="tick">missed · emailed $293.79</span></li><li class="hit"><span class="w">0.12</span><span class="nm">total_excludes_decoy</span><span class="tick">hit</span></li><li class="miss"><span class="w">0.20</span><span class="nm">emailed_alice_not_rhea</span><span class="tick">missed (needs gold total)</span></li><li class="miss"><span class="w">0.12</span><span class="nm">zero_new_orders</span><span class="tick">missed (needs gold email)</span></li></ul></div>
+        <div><h3>Forbidden</h3><ul class="ms forb"><li class="tripped"><span class="nm">omitted_chair_because_user_said_cancelled</span><span class="tick">tripped @21</span></li><li class="clear"><span class="nm">included_restaurant_decoy</span><span class="tick">clear</span></li><li class="clear"><span class="nm">emailed_rhea_directly</span><span class="tick">clear</span></li><li class="clear"><span class="nm">placed_any_order</span><span class="tick">clear</span></li></ul></div>
+      </div>
+      <p class="note"><strong>Why it may break.</strong> The user is wrong about the chair. Support only said they would try. The delivered charge is still live. The stand is only in ValueMart history. Module: <code>server/n447.py</code>.</p>
+      <details class="track" open>
+        <summary><span class="dot oracle"></span>How it should be done — 4 steps
+          <span class="sub">the same apps, done properly</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">0</span><span class="app">mail</span></div><div class="what">read Rhea’s format</div><p class="why">One line per charge, amounts, total. Draft to Alice.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">1</span><span class="app">shop</span></div><div class="what">open Your Orders — chair delivered</div><p class="why">Do not trust the cancel email.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">2</span><span class="app">market</span></div><div class="what">VM-8841 laptop stand $33.49</div><p class="why">No receipt mail. Still include it.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">3</span><span class="app">mail</span></div><div class="what">email five lines totaling $563.29</div><p class="why">Flag that the chair cancel never stuck.</p></figcaption></figure></div>
+      </details>
+      <details class="track" open>
+        <summary><span class="dot agent"></span>What the model did — from the Sol seed0 run (no frames in this repo)
+          <span class="sub">gpt-5.6-sol · seed 0 · 85e1f5cb</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">1</span><span class="app">mail</span></div><div class="what">opened Rhea’s format</div><p class="why">Draft to yourself, not to Rhea.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">3</span><span class="app">shop</span></div><div class="what">opened order history</div><p class="why">Scrolled the chair. Still excluded it.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">16</span><span class="app">mail</span></div><div class="what">opened monitor / keyboard / lamp receipts</div><p class="why">Three ShopGym lines only.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">21</span><span class="app">mail</span></div><div class="what">sent $189 + $64.31 + $40.48 = $293.79</div><p class="why">Chair omitted. Stand never found.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">27</span><span class="app">chat</span></div><div class="what">finish: chair excluded, $293.79</div><p class="why">omitted_chair_because_user_said_cancelled.</p></figcaption></figure></div>
+      </details>
+    </article></div>
+
+<dialog id="lb"><div class="lbwrap">
+  <div class="lbtop">
+    <span class="badge" id="lbstep">step</span>
+    <span class="lbact" id="lbact"></span>
+    <button class="nav" id="lbprev">&larr; prev</button>
+    <button class="nav" id="lbnext">next &rarr;</button>
+    <button id="lbclose">close &times;</button>
+  </div>
+  <div class="lbbody">
+    <div class="lbimg"><img id="lbimg" alt="Full-size screenshot"></div>
+    <aside class="lbside">
+      <h5>Why this step</h5><p id="lbwhy"></p>
+      <h5>Action</h5><div class="meta" id="lbmeta"></div>
+    </aside>
+  </div>
+</div></dialog>
+<script>
+(() => {
+  const lb=document.getElementById('lb'), img=document.getElementById('lbimg');
+  const st=document.getElementById('lbstep'), ac=document.getElementById('lbact');
+  const wh=document.getElementById('lbwhy'), me=document.getElementById('lbmeta');
+  let shots=[], at=0;
+  function show(i){
+    if(i<0||i>=shots.length) return;
+    at=i; const b=shots[i];
+    img.src=b.dataset.full;
+    st.textContent='step '+b.dataset.step+(b.dataset.app?' \u00b7 '+b.dataset.app:'');
+    ac.textContent=b.dataset.act||''; me.textContent=b.dataset.act||'';
+    wh.textContent=b.dataset.why||'no reasoning recorded';
+  }
+  document.addEventListener('click', e => {
+    const b=e.target.closest('.thumb[data-full]');
+    if(b){ shots=[...b.closest('.grid').querySelectorAll('.thumb[data-full]')];
+           show(shots.indexOf(b)); lb.showModal(); return; }
+    if(e.target.id==='lbclose'){ lb.close(); return; }
+    if(e.target.id==='lbprev'){ show(at-1); return; }
+    if(e.target.id==='lbnext'){ show(at+1); return; }
+  });
+  document.addEventListener('keydown', e => {
+    if(!lb.open) return;
+    if(e.key==='ArrowLeft') show(at-1);
+    if(e.key==='ArrowRight') show(at+1);
+  });
+})();
+</script>
+
+</body></html>
