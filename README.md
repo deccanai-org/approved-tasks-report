@@ -6,7 +6,7 @@ Static HTML gallery of approved BrowserGym breaker tasks (UI-oracle + Sol agent 
 
 **Live:** https://deccanai-org.github.io/approved-tasks-report/
 
-**Dossier (confirmed breaks + honest badges):** https://deccanai-org.github.io/approved-tasks-report/dossier/
+**Dossier (breakers only):** https://deccanai-org.github.io/approved-tasks-report/dossier/
 
 **mail_002 Sol seed0 trajectory (0fff244a):** https://deccanai-org.github.io/approved-tasks-report/mail002-0fff244a/
 

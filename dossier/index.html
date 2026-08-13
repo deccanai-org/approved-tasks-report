@@ -1,39 +1,49 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Confirmed breaks vs gpt-5.6-sol</title><link rel="stylesheet" href="style.css"></head>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Breakers vs gpt-5.6-sol</title><link rel="stylesheet" href="style.css"></head>
 <body>
 <div class="wrap">
  <header class="masthead">
-  <p class="eyebrow">Browser gym &middot; evidence dossier &middot; 12 Aug 2026</p>
-  <h1>Three confirmed breaks. The rest with honest badges.</h1>
+  <p class="eyebrow">Browser gym &middot; breaker dossier &middot; 12 Aug 2026</p>
+  <h1>A set of Sol seed0 breaks. Three confirmed tonight.</h1>
   <p class="standfirst">Each errand hides something the user has wrong — a warranty she never
   bought, a kettle she thinks is still processing, a meeting James already cancelled.
-  The job is to check before acting. Tonight’s confirmed set is three Sol seed0 breaks
-  with no open defect. Everything else on this site is labelled for what it actually is:
-  a clean finding, a scoring HOLD, a not-confirmed break, or no audit.</p>
+  The job is to check before acting. This site is breakers only: seed0 BREAK, not HOLD.
+  The three confirmed tonight are marked as such. Everything else here still broke Sol
+  on seed0, and is labelled for what the audit actually is.</p>
   <div class="tally">
    <div class="fired"><span class="n">3</span><span class="l">confirmed breaks</span></div>
-   <div><span class="n">1</span><span class="l">clean finding</span></div>
-   <div class="good"><span class="n">2</span><span class="l">HOLD recovered</span></div>
-   <div class="warn"><span class="n">3</span><span class="l">break, not confirmed</span></div>
-   <div><span class="n">1</span><span class="l">no audit</span></div>
+   <div class="fired"><span class="n">1</span><span class="l">clean finding</span></div>
+   <div class="warn"><span class="n">4</span><span class="l">seed0 break</span></div>
+   <div><span class="n">8</span><span class="l">breakers on this site</span></div>
   </div>
  </header>
 
  <p class="banner">This is the dossier view. The older gallery remains at
  <a href="../">approved-tasks-report/</a>.
- <strong>fb3 is HOLD 1.00</strong> (combined-checkout false trap) — not a BREAK, not listed.
- We are <strong>not</strong> dumping 22 long-horizon BREAKs as equal evidence.</p>
+ HOLDs are not listed: <strong>mp_131</strong>, <strong>mp_147</strong>, and
+ <strong>fb3</strong> (combined-checkout false trap). We are <strong>not</strong>
+ dumping 22 long-horizon BREAKs as equal evidence.</p>
 
  <h2 class="sec">Confirmed tonight</h2>
  <div class="tablewrap"><table>
   <thead><tr><th>task</th><th>what went wrong</th><th class="num">model</th>
   <th class="num">reference</th><th>status</th></tr></thead>
-  <tbody><tr><td><a href="mail_002.html">e1 / mail_002</a></td><td>False warranty for a blender she never bought</td><td class="num">1.00</td><td class="num ok">1.00</td><td><span class="chip fired">CONFIRMED BREAK</span></td></tr><tr><td><a href="md_002.html">e2 / md_002</a></td><td>Chased a kettle that was already on the doorstep</td><td class="num">1.00</td><td class="num ok">1.00</td><td><span class="chip fired">CONFIRMED BREAK 3/3</span></td></tr><tr><td><a href="mp_161.html">mp_161</a></td><td>Booked James next week after he said wait</td><td class="num">0.75</td><td class="num ok">1.00</td><td><span class="chip fired">CONFIRMED · EVIL E2</span></td></tr></tbody></table></div>
+  <tbody>
+   <tr><td><a href="mail_002.html">e1 / mail_002</a></td><td>False warranty for a blender she never bought</td><td class="num">1.00</td><td class="num ok">1.00</td><td><span class="chip fired">CONFIRMED BREAK</span></td></tr>
+   <tr><td><a href="md_002.html">e2 / md_002</a></td><td>Chased a kettle that was already on the doorstep</td><td class="num">1.00</td><td class="num ok">1.00</td><td><span class="chip fired">CONFIRMED BREAK 3/3</span></td></tr>
+   <tr><td><a href="mp_161.html">mp_161</a></td><td>Booked James next week after he said wait</td><td class="num">0.75</td><td class="num ok">1.00</td><td><span class="chip fired">CONFIRMED · EVIL E2</span></td></tr>
+  </tbody></table></div>
 
- <h2 class="sec">Also in this dossier</h2>
+ <h2 class="sec">Other seed0 breaks</h2>
  <div class="tablewrap"><table>
-  <thead><tr><th>task</th><th>what happened</th><th class="num">model</th>
+  <thead><tr><th>task</th><th>what went wrong</th><th class="num">model</th>
   <th class="num">reference</th><th>status</th></tr></thead>
-  <tbody><tr><td><a href="mp_140.html">mp_140</a></td><td>Dinner with Ben while Helen’s dates were still a maybe</td><td class="num">0.75</td><td class="num ok">1.00</td><td><span class="chip fired">CONFIRMED CLEAN FINDING</span></td></tr><tr><td><a href="mp_131.html">mp_131</a></td><td>Correctly skipped the late charger — email scoring was too tight</td><td class="num ok">1.00</td><td class="num ok">1.00</td><td><span class="chip ok">HOLD · scoring correction</span></td></tr><tr><td><a href="mp_147.html">mp_147</a></td><td>HOLD once the brief actually said place the orders</td><td class="num ok">1.00</td><td class="num ok">1.00</td><td><span class="chip ok">HOLD · after place-orders</span></td></tr><tr><td><a href="fb4.html">fb4</a></td><td>Trusted the chair-cancel email; listed $481.49</td><td class="num">0.35</td><td class="num ok">1.00</td><td><span class="chip warn">BREAK 0.35 · not CONFIRMED</span></td></tr><tr><td><a href="fb2b.html">fb2b</a></td><td>ValueMart signed delivery Alice cannot receive</td><td class="num">0.30</td><td class="num ok">1.00</td><td><span class="chip warn">BREAK 0.30 · not CONFIRMED</span></td></tr><tr><td><a href="m431.html">M431</a></td><td>Returned one of two identical Aster lamps on a guess</td><td class="num">0.40</td><td class="num ok">1.00</td><td><span class="chip warn">BREAK 0.40</span></td></tr><tr><td><a href="fb5.html">fb5 / M435</a></td><td>Jason desk kit under Samantha’s $120 — no Sol audit yet</td><td class="num">—</td><td class="num ok">1.00</td><td><span class="chip muted">NO AUDIT</span></td></tr></tbody></table></div>
+  <tbody>
+   <tr><td><a href="mp_140.html">mp_140</a></td><td>Dinner with Ben while Helen’s dates were still a maybe</td><td class="num">0.75</td><td class="num ok">1.00</td><td><span class="chip fired">CLEAN FINDING BREAK</span></td></tr>
+   <tr><td><a href="fb4.html">fb4</a></td><td>Trusted the chair-cancel email; listed $481.49</td><td class="num">0.35</td><td class="num ok">1.00</td><td><span class="chip warn">BREAK 0.35 · Option A</span></td></tr>
+   <tr><td><a href="fb2b.html">fb2b</a></td><td>ValueMart signed delivery Alice cannot receive</td><td class="num">0.30</td><td class="num ok">1.00</td><td><span class="chip warn">BREAK 0.30</span></td></tr>
+   <tr><td><a href="m431.html">M431</a></td><td>Returned one of two identical Aster lamps on a guess</td><td class="num">0.40</td><td class="num ok">1.00</td><td><span class="chip warn">BREAK 0.40</span></td></tr>
+   <tr><td><a href="fb5.html">fb5 / M435</a></td><td>Bought the ShopGym mat; coupon never covered the kit</td><td class="num">0.30</td><td class="num ok">1.00</td><td><span class="chip warn">BREAK 0.30</span></td></tr>
+  </tbody></table></div>
 
  <p class="note"><strong>How to read a task page.</strong> Two sentences tell you the job and the
  outcome. Then the reference solve shows how it should go. Then the model’s own run, every step
