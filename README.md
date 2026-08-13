@@ -10,6 +10,8 @@ Static HTML gallery of approved BrowserGym breaker tasks (UI-oracle + Sol agent 
 
 **QA prompt-review set (13 Aug, env-audited):** https://deccanai-org.github.io/approved-tasks-report/dossier-qa/
 
+Each QA task page has an **Oracle path** (tip gold-path film) and an **Agent/Sol path** (every seed0 step, thumbnail + lightbox + model reasoning). Assets live under `dossier-qa/assets/` (relative URLs). Raw PNG/tars in `dossier-qa/_raw/` are not published.
+
 **N440–N449 Sol seed0 set:** https://deccanai-org.github.io/approved-tasks-report/dossier/n440-n449.html
 
 **mail_002 Sol seed0 trajectory (0fff244a):** https://deccanai-org.github.io/approved-tasks-report/mail002-0fff244a/

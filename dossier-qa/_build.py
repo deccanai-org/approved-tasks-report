@@ -2,10 +2,15 @@
 """Generate /dossier-qa/ pages. Run from this folder."""
 from __future__ import annotations
 
+import json
 from html import escape
 from pathlib import Path
 
 OUT = Path(__file__).resolve().parent
+GALLERIES = {}
+_gp = OUT / "galleries.json"
+if _gp.exists():
+    GALLERIES = json.loads(_gp.read_text()).get("tasks") or {}
 
 LB = r"""
 <dialog id="lb"><div class="lbwrap">
@@ -56,8 +61,36 @@ LB = r"""
 """
 
 
-def cards(rows):
+def cards(rows, frames=None):
     bits = []
+    if frames:
+        for fr in frames:
+            n = fr.get("step", "")
+            app = fr.get("app") or ""
+            what = fr.get("what") or ""
+            why = fr.get("why") or "no reasoning recorded"
+            act = fr.get("act") or what
+            thumb = fr.get("thumb") or ""
+            full = fr.get("full") or ""
+            why_cls = "why none" if why == "no reasoning recorded" else "why"
+            if thumb and full:
+                img = (
+                    f'<button class="thumb" type="button" data-full="{escape(full, quote=True)}" '
+                    f'data-step="{escape(str(n))}" data-app="{escape(app)}" '
+                    f'data-act="{escape(act, quote=True)}" data-why="{escape(why, quote=True)}">'
+                    f'<img src="{escape(thumb)}" alt="step {escape(str(n))} {escape(what)}" '
+                    f'loading="lazy" decoding="async"></button>'
+                )
+            else:
+                img = '<div class="thumb noshot">no screenshot</div>'
+            bits.append(
+                f'<figure class="card">{img}'
+                f'<figcaption><div class="cardhead"><span class="n">{escape(str(n))}</span>'
+                f'<span class="app">{escape(app)}</span></div>'
+                f'<div class="what">{escape(what)}</div>'
+                f'<p class="{why_cls}">{escape(why)}</p></figcaption></figure>'
+            )
+        return "".join(bits)
     for n, app, what, why in rows:
         bits.append(
             f'<figure class="card"><div class="thumb noshot">no screenshot</div>'
@@ -119,6 +152,26 @@ def page(
     facts_html = facts_ul(facts) if facts else ""
     req = "".join(req_li(*r) for r in required)
     forb = "".join(forb_li(*f) for f in forbidden)
+    key = filename.replace(".html", "")
+    gal = GALLERIES.get(key) or {}
+    o_gal = gal.get("oracle") or {}
+    a_gal = gal.get("agent") or {}
+    o_frames = o_gal.get("frames") or []
+    a_frames = a_gal.get("frames") or []
+    o_n = len(o_frames) or len(oracle)
+    a_n = len(a_frames) or len(agent)
+    o_sub = (
+        "tip gold-path film · discovery + mutation-oracle result"
+        if o_frames
+        else "the same apps, done properly"
+    )
+    a_reason = a_gal.get("with_reasoning", 0)
+    a_sub = (
+        f"gpt-5.6-sol · seed 0 · {escape(episode)} · {a_reason}/{a_n} with reasoning"
+        if a_frames
+        else f"gpt-5.6-sol · seed 0 · {escape(episode)}"
+    )
+    agent_open = "" if a_n > 24 else " open"
     html = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{escape(title)}</title><link rel="stylesheet" href="style.css"></head>
 <body>
 <div class="wrap"><p class="eyebrow"><a href="index.html">&larr; QA prompt-review set</a></p>
@@ -148,14 +201,14 @@ def page(
       </div>
       {extra}
       <details class="track" open>
-        <summary><span class="dot oracle"></span>How it should be done — {len(oracle)} steps
-          <span class="sub">the same apps, done properly</span></summary>
-        <div class="grid">{cards(oracle)}</div>
+        <summary><span class="dot oracle"></span>Oracle path — {o_n} steps
+          <span class="sub">{o_sub}</span></summary>
+        <div class="grid">{cards(oracle, o_frames)}</div>
       </details>
-      <details class="track" open>
-        <summary><span class="dot agent"></span>What the model did — latest Sol seed0
-          <span class="sub">gpt-5.6-sol · seed 0 · {escape(episode)}</span></summary>
-        <div class="grid">{cards(agent)}</div>
+      <details class="track"{agent_open}>
+        <summary><span class="dot agent"></span>Agent/Sol path — {a_n} steps
+          <span class="sub">{a_sub}</span></summary>
+        <div class="grid">{cards(agent, a_frames)}</div>
       </details>
     </article></div>
 {LB}
@@ -817,7 +870,7 @@ INDEX = r"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta nam
 
  <p class="note"><strong>How to read a task page.</strong> Two sentences tell you the job and the
  outcome. Then seed facts, the updated QA prompt, and the verifier panel.
- Then the reference solve and the model’s own run. Status is
+ Then the Oracle path (tip gold-path film) and the Agent/Sol path (every seed0 step, click for lightbox + reasoning). Status is
  <strong>CLEAN BREAK</strong> only when the fail is the model’s, on the latest traj
  after the calendar / Studio 15 fixes. ENV means harness or environment —
  do not treat it as a model failure. Copy is from
