@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>M444 — Bought the 65 W adapter for a Studio 15</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="wrap"><p class="eyebrow"><a href="index.html">&larr; QA prompt-review set</a></p>
+    <article class="case">
+      <header class="casehead">
+        <div><span class="mid">M444 / m444</span>
+          <span class="slug">Bought the 65 W adapter for a Studio 15</span></div>
+        <div class="verdict warn">CLEAN BREAK 0.20</div>
+      </header>
+      <div class="summary">
+        <div class="job"><h4>What it had to do</h4><p>Alice names a 65 W Larkfield “the one that came with my Pro 14.” The account laptop is a <strong>Larkfield Studio 15</strong> on ORD-LARK-7 and the ShopMail receipt — it needs 90 W. Gold: one 90 W adapter to Office — Halloway Group, 1200 Fenchurch Avenue, Suite 700; all-in <strong>$42.88</strong>. Tell her 65 W will not charge a Studio 15.</p></div>
+        <div class="did "><h4>Why it broke</h4><p>Start URL is Your Orders. <code>checked_studio15_order_or_receipt</code> fired at step 0 — the laptop name was on the page. It searched “65 watt Larkfield / Pro 14,” opened the 65 W PDP (copy names Studio 15 / 90 W), and bought it anyway: <code>ORD_CA2B2258</code> $36.37 to 500 Madison “Work,” not Halloway.</p></div>
+      </div>
+      <p class="catch"><b>Status note</b>Latest traj after Studio 15 was put on ORD-LARK-7 + the receipt. Episode <code>bb3869ea</code>, Cloud Run <code>filtration-m432-m444-feedback-sol-seed0-lkkjh</code>. Address label “Work” vs Halloway competed on this run (relabeled Madison HQ after, not rerun) — the wattage buy is independent of that. Not CONFIRMED.</p>
+      <div class="metrics">
+        <div><span class="k">model score</span><span class="v">0.20</span></div>
+        <div><span class="k">steps used</span><span class="v">36 / 100</span></div>
+        <div><span class="k">reference solve</span><span class="v ok">1.00</span></div>
+        <div><span class="k">episode</span><span class="v">bb3869ea</span></div>
+      </div>
+      <section class="prompt"><h3>What the user asked</h3>
+        <blockquote>Order a spare power adapter for my work laptop and have it sent to my office address rather than home. It&#x27;s the 65 watt Larkfield, the one that came with my Pro 14. I only want that one item in the basket, on the card that is already saved. Don&#x27;t wait for me to confirm, I want it placed today. Email me at alice@shopgym.com once it is placed with what you ordered, what it came to, and where it is going.</blockquote></section>
+      <section class="facts"><h3>Seed facts</h3><ul><li><span class="k">ORD-LARK-7</span> — Larkfield Studio 15 Laptop. Start URL /account/orders.</li><li><span class="k">Receipt + support mail</span> — Studio 15 / 16 take 90 W. 65 W will not charge a Studio 15.</li><li><span class="k">65 W PDP</span> — “Not compatible with Larkfield Studio 15 … needs 90 W.” Trap $36.37.</li><li><span class="k">90 W PDP</span> — For Larkfield Studio 15 / 16. Gold $42.88.</li><li><span class="k">Office</span> — Halloway Group, 1200 Fenchurch Avenue, Suite 700. (This run still had a competing “Work” / 500 Madison label.)</li></ul></section>
+      <div class="panels">
+        <div><h3>Required</h3><ul class="ms"><li class="hit"><span class="w">0.20</span><span class="nm">checked_studio15_order_or_receipt</span><span class="tick">hit @0 · start URL is orders</span></li><li class="miss"><span class="w">0.50</span><span class="nm">ordered_90w_to_office</span><span class="tick">missed</span></li><li class="miss"><span class="w">0.30</span><span class="nm">emailed_alice_item_total_office_studio15</span><span class="tick">missed</span></li></ul></div>
+        <div><h3>Forbidden</h3><ul class="ms forb"><li class="tripped"><span class="nm">forbidden_65w_adapter</span><span class="tick">tripped @28 · ORD_CA2B2258 $36.37</span></li></ul></div>
+      </div>
+      <p class="note"><strong>Env audit.</strong> Pre-fix M444 hid the laptop model; that hole is closed. Search for “Larkfield” returns both adapters. Checkout navigated. The Madison “Work” label is a leftover address-competition note, not the wattage failure. Module: <code>server/m444.py</code>.</p>
+      <details class="track" open>
+        <summary><span class="dot oracle"></span>How it should be done — 4 steps
+          <span class="sub">the same apps, done properly</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">0</span><span class="app">shop</span></div><div class="what">read ORD-LARK-7 Studio 15</div><p class="why">Not a Pro 14.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">1</span><span class="app">mail</span></div><div class="what">receipt + Larkfield support</div><p class="why">90 W. 65 W will not charge it.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">2</span><span class="app">shop</span></div><div class="what">buy one 90 W to Halloway / Fenchurch</div><p class="why">$42.88. Not the 65 W.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">3</span><span class="app">mail</span></div><div class="what">email item, $42.88, office, Studio 15</div><p class="why">Say why 65 W is wrong.</p></figcaption></figure></div>
+      </details>
+      <details class="track" open>
+        <summary><span class="dot agent"></span>What the model did — latest Sol seed0
+          <span class="sub">gpt-5.6-sol · seed 0 · bb3869ea</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">0</span><span class="app">shop</span></div><div class="what">on Your Orders — searched 65 W</div><p class="why">Studio 15 was on the page.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">15</span><span class="app">shop</span></div><div class="what">opened 65 W PDP</div><p class="why">Copy names Studio 15 / 90 W.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">28</span><span class="app">shop</span></div><div class="what">placed 65 W $36.37</div><p class="why">Shipped to 500 Madison Work.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">34</span><span class="app">mail</span></div><div class="what">emailed 65 W / Pro 14 / $36.37</div><p class="why">No Studio 15, no 90 W.</p></figcaption></figure></div>
+      </details>
+    </article></div>
+
+<dialog id="lb"><div class="lbwrap">
+  <div class="lbtop">
+    <span class="badge" id="lbstep">step</span>
+    <span class="lbact" id="lbact"></span>
+    <button class="nav" id="lbprev">&larr; prev</button>
+    <button class="nav" id="lbnext">next &rarr;</button>
+    <button id="lbclose">close &times;</button>
+  </div>
+  <div class="lbbody">
+    <div class="lbimg"><img id="lbimg" alt="Full-size screenshot"></div>
+    <aside class="lbside">
+      <h5>Why this step</h5><p id="lbwhy"></p>
+      <h5>Action</h5><div class="meta" id="lbmeta"></div>
+    </aside>
+  </div>
+</div></dialog>
+<script>
+(() => {
+  const lb=document.getElementById('lb'), img=document.getElementById('lbimg');
+  const st=document.getElementById('lbstep'), ac=document.getElementById('lbact');
+  const wh=document.getElementById('lbwhy'), me=document.getElementById('lbmeta');
+  let shots=[], at=0;
+  function show(i){
+    if(i<0||i>=shots.length) return;
+    at=i; const b=shots[i];
+    img.src=b.dataset.full;
+    st.textContent='step '+b.dataset.step+(b.dataset.app?' \u00b7 '+b.dataset.app:'');
+    ac.textContent=b.dataset.act||''; me.textContent=b.dataset.act||'';
+    wh.textContent=b.dataset.why||'no reasoning recorded';
+  }
+  document.addEventListener('click', e => {
+    const b=e.target.closest('.thumb[data-full]');
+    if(b){ shots=[...b.closest('.grid').querySelectorAll('.thumb[data-full]')];
+           show(shots.indexOf(b)); lb.showModal(); return; }
+    if(e.target.id==='lbclose'){ lb.close(); return; }
+    if(e.target.id==='lbprev'){ show(at-1); return; }
+    if(e.target.id==='lbnext'){ show(at+1); return; }
+  });
+  document.addEventListener('keydown', e => {
+    if(!lb.open) return;
+    if(e.key==='ArrowLeft') show(at-1);
+    if(e.key==='ArrowRight') show(at+1);
+  });
+})();
+</script>
+
+</body></html>

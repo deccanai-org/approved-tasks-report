@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>M432 / fb2b — ValueMart signed delivery to an empty house</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="wrap"><p class="eyebrow"><a href="index.html">&larr; QA prompt-review set</a></p>
+    <article class="case">
+      <header class="casehead">
+        <div><span class="mid">M432 / fb2b</span>
+          <span class="slug">ValueMart signed delivery to an empty house</span></div>
+        <div class="verdict warn">CLEAN BREAK 0.30</div>
+      </header>
+      <div class="summary">
+        <div class="job"><h4>What it had to do</h4><p>Nadia’s list: candles, plates, napkins, juice, in the house by tomorrow evening. ShopGym has no candles. ValueMart has the full list but <strong>signed delivery only</strong>, Friday 12:00–16:00 — overlapping the all-day “12-4 NO SIGN” banner and Dad’s 70th (house empty, nobody can sign). Gold is GymEats Party Pantry today ~11:45, $18.95.</p></div>
+        <div class="did "><h4>Why it broke</h4><p>It opened Party Pantry at step 3, abandoned it, never opened the calendar, and checked out ValueMart <code>VM-2201</code> for $22.95. The signed window is on the navbar, PDP, and cart. Email milestone 0.30; forbidden signed-delivery fired at 37. Harness <code>never_reached_checkout</code> is a mislabel — checkout happened.</p></div>
+      </div>
+      <p class="catch"><b>Status note</b>Latest traj after the calendar-visibility fix (all-day 12-4 NO SIGN + Dad’s 70th 10:30–17:30). Episode <code>0c4b89d8</code>, Cloud Run <code>filtration-m432-m444-feedback-sol-seed0-lkkjh</code>. Stale prompt-review run <code>ec8af6de</code> (score 1.00, VM then GymEats recovery) is not the card. Calendar events were in the seed and project in Week view. Not CONFIRMED.</p>
+      <div class="metrics">
+        <div><span class="k">model score</span><span class="v">0.30</span></div>
+        <div><span class="k">steps used</span><span class="v">46 / 100</span></div>
+        <div><span class="k">reference solve</span><span class="v ok">1.00</span></div>
+        <div><span class="k">episode</span><span class="v">0c4b89d8</span></div>
+      </div>
+      <section class="prompt"><h3>What the user asked</h3>
+        <blockquote>Nadia has emailed me a list of items I need for Dad&#x27;s birthday cake at my place tomorrow evening. Order everything on that list today. I have no preference about which store or service it comes from, but the items need to be in the house by tomorrow evening. Email me at alice@shopgym.com when it is done with what you ordered and the total.</blockquote></section>
+      <section class="facts"><h3>Seed facts</h3><ul><li><span class="k">Calendar</span> — All-day Fri 22 May: “12-4 NO SIGN — house empty.” Timed: Dad’s 70th 10:30–17:30 (empty 12:00–16:00). Cake 19:00–21:00.</li><li><span class="k">ValueMart</span> — Full list. Signed delivery only, Fri 12:00 PM – 4:00 PM. Alice cannot receive.</li><li><span class="k">ShopGym</span> — No birthday candles. Incomplete vs the list.</li><li><span class="k">GymEats</span> — Party Pantry has all four. ETA today ~11:45. Gold $18.95.</li></ul></section>
+      <div class="panels">
+        <div><h3>Required</h3><ul class="ms"><li class="miss"><span class="w">0.70</span><span class="nm">gymeats_full_list_before_nadia</span><span class="tick">missed</span></li><li class="hit"><span class="w">0.30</span><span class="nm">emailed_alice_done_and_total</span><span class="tick">hit @45</span></li></ul></div>
+        <div><h3>Forbidden</h3><ul class="ms forb"><li class="tripped"><span class="nm">forbidden_valuemart_signed_delivery</span><span class="tick">tripped @37 · VM-2201 $22.95</span></li><li class="clear"><span class="nm">forbidden_incomplete_shopgym</span><span class="tick">clear</span></li></ul></div>
+      </div>
+      <p class="note"><strong>Env audit.</strong> After the 13 Aug calendar fix, events exist and the all-day banner projects. Cart, search, and checkout all worked. This is the same failure class as the site M432 card — signed delivery to an empty house — not a silent-cart or missing-seed issue. Module: <code>server/fb2_common.py</code> BRIEF_B.</p>
+      <details class="track" open>
+        <summary><span class="dot oracle"></span>How it should be done — 5 steps
+          <span class="sub">the same apps, done properly</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">0</span><span class="app">mail</span></div><div class="what">read Nadia’s list</div><p class="why">Candles, plates, napkins, juice.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">1</span><span class="app">calendar</span></div><div class="what">read 12-4 NO SIGN + Dad’s 70th</div><p class="why">House empty. Cannot sign.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">2</span><span class="app">market</span></div><div class="what">see signed window 12:00–16:00</div><p class="why">Overlaps the empty-house block.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">3</span><span class="app">food</span></div><div class="what">order Party Pantry full list</div><p class="why">ETA ~11:45 today. $18.95.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">4</span><span class="app">mail</span></div><div class="what">email Alice what + total</div><p class="why">GymEats, receivable tonight.</p></figcaption></figure></div>
+      </details>
+      <details class="track" open>
+        <summary><span class="dot agent"></span>What the model did — latest Sol seed0
+          <span class="sub">gpt-5.6-sol · seed 0 · 0c4b89d8</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">1</span><span class="app">mail</span></div><div class="what">opened Nadia’s list</div><p class="why">Four exact items.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">3</span><span class="app">food</span></div><div class="what">opened Party Pantry</div><p class="why">Then left without ordering.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">11–34</span><span class="app">market</span></div><div class="what">added all four on ValueMart</div><p class="why">Cart persisted. Search worked.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">37</span><span class="app">market</span></div><div class="what">checked out VM-2201 $22.95</div><p class="why">Signed delivery. Calendar never opened.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">45</span><span class="app">mail</span></div><div class="what">emailed items + $22.95</div><p class="why">Partial 0.30.</p></figcaption></figure></div>
+      </details>
+    </article></div>
+
+<dialog id="lb"><div class="lbwrap">
+  <div class="lbtop">
+    <span class="badge" id="lbstep">step</span>
+    <span class="lbact" id="lbact"></span>
+    <button class="nav" id="lbprev">&larr; prev</button>
+    <button class="nav" id="lbnext">next &rarr;</button>
+    <button id="lbclose">close &times;</button>
+  </div>
+  <div class="lbbody">
+    <div class="lbimg"><img id="lbimg" alt="Full-size screenshot"></div>
+    <aside class="lbside">
+      <h5>Why this step</h5><p id="lbwhy"></p>
+      <h5>Action</h5><div class="meta" id="lbmeta"></div>
+    </aside>
+  </div>
+</div></dialog>
+<script>
+(() => {
+  const lb=document.getElementById('lb'), img=document.getElementById('lbimg');
+  const st=document.getElementById('lbstep'), ac=document.getElementById('lbact');
+  const wh=document.getElementById('lbwhy'), me=document.getElementById('lbmeta');
+  let shots=[], at=0;
+  function show(i){
+    if(i<0||i>=shots.length) return;
+    at=i; const b=shots[i];
+    img.src=b.dataset.full;
+    st.textContent='step '+b.dataset.step+(b.dataset.app?' \u00b7 '+b.dataset.app:'');
+    ac.textContent=b.dataset.act||''; me.textContent=b.dataset.act||'';
+    wh.textContent=b.dataset.why||'no reasoning recorded';
+  }
+  document.addEventListener('click', e => {
+    const b=e.target.closest('.thumb[data-full]');
+    if(b){ shots=[...b.closest('.grid').querySelectorAll('.thumb[data-full]')];
+           show(shots.indexOf(b)); lb.showModal(); return; }
+    if(e.target.id==='lbclose'){ lb.close(); return; }
+    if(e.target.id==='lbprev'){ show(at-1); return; }
+    if(e.target.id==='lbnext'){ show(at+1); return; }
+  });
+  document.addEventListener('keydown', e => {
+    if(!lb.open) return;
+    if(e.key==='ArrowLeft') show(at-1);
+    if(e.key==='ArrowRight') show(at+1);
+  });
+})();
+</script>
+
+</body></html>

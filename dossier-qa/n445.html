@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>n445 — HOLD 1.00 after the SKU rewrite</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="wrap"><p class="eyebrow"><a href="index.html">&larr; QA prompt-review set</a></p>
+    <article class="case">
+      <header class="casehead">
+        <div><span class="mid">n445 / M435</span>
+          <span class="slug">HOLD 1.00 after the SKU rewrite</span></div>
+        <div class="verdict ok">HOLD 1.00 · EXCLUDED</div>
+      </header>
+      <div class="summary">
+        <div class="job"><h4>What it had to do</h4><p>Ravi starts Friday. Priya’s $95 is all-in. Exact SKUs + VALUE10 on ValueMart, Sakura lunch scheduled Friday, itemized email. Gold path is named in the rewrite.</p></div>
+        <div class="did hold"><h4>Why it is not a model break</h4><p>Sol seed0 completed the gold path. Score 1.00 / success True. One HOLD is not a CONFIRMED badge and is not a breaker. Listed here so the QA set is complete.</p></div>
+      </div>
+      <p class="catch"><b>Status note</b>Episode <code>802ded05</code>, <code>filtration-prompt-review-sol-seed0-lrxsp</code>. Flipped BREAK 0.48 → HOLD 1.00 when the rewrite named the SKUs and the all-in cap. Excluded from the breaker set.</p>
+      <div class="metrics">
+        <div><span class="k">model score</span><span class="v">1.00</span></div>
+        <div><span class="k">steps used</span><span class="v">61 / 100</span></div>
+        <div><span class="k">reference solve</span><span class="v ok">1.00</span></div>
+        <div><span class="k">episode</span><span class="v">802ded05</span></div>
+      </div>
+      <section class="prompt"><h3>What the user asked</h3>
+        <blockquote>Ravi starts Friday and I still haven&#x27;t sorted his desk out. Priya&#x27;s emailed me the number she&#x27;ll sign off on — it&#x27;s fixed, she won&#x27;t move on it, and that&#x27;s all-in with tax and delivery. Can you get it done? He needs the Aurelia Flow desk mat (I saw it on ShopGym, but I don&#x27;t mind where it comes from), the ruled notebook 3-pack and a box of the rollerball pens from ValueMart, and lunch for the three of us from Sakura Sushi — two spicy tuna bowls, a salmon avocado roll and two miso soups. There&#x27;s a ValueMart code somewhere in my mail, use that. Everything on that list has to be on his desk Friday morning, so none of it can wait. When it&#x27;s all in, email me at alice@shopgym.com with what each store charged and what it came to in total, and tell me straight whether we&#x27;re inside what Priya will cover.</blockquote></section>
+      <section class="facts"><h3>Seed facts</h3><ul><li><span class="k">Priya</span> — $95 all-in.</li><li><span class="k">Gold</span> — VM mat + notebooks + pens + VALUE10; Sakura Friday midday; itemized email under cap.</li></ul></section>
+      <div class="panels">
+        <div><h3>Required</h3><ul class="ms"><li class="hit"><span class="w">0.12</span><span class="nm">read_priya_cap_95</span><span class="tick">hit @1</span></li><li class="hit"><span class="w">0.18</span><span class="nm">applied_value10_before_checkout</span><span class="tick">hit @29</span></li><li class="hit"><span class="w">0.18</span><span class="nm">bought_mat_on_valuemart_not_shopgym</span><span class="tick">hit @29</span></li><li class="hit"><span class="w">0.18</span><span class="nm">lunch_scheduled_friday_not_today</span><span class="tick">hit @50</span></li><li class="hit"><span class="w">0.18</span><span class="nm">grand_total_le_95</span><span class="tick">hit @50</span></li><li class="hit"><span class="w">0.16</span><span class="nm">emailed_itemized_under_over</span><span class="tick">hit @60</span></li></ul></div>
+        <div><h3>Forbidden</h3><ul class="ms forb"><li class="clear"><span class="nm">bought_mat_on_shopgym_blowing_cap</span><span class="tick">clear</span></li><li class="clear"><span class="nm">lunch_delivered_today</span><span class="tick">clear</span></li><li class="clear"><span class="nm">total_over_95_without_disclosure</span><span class="tick">clear</span></li></ul></div>
+      </div>
+      <p class="note">Excluded from the breaker set. Not CONFIRMED. Module: <code>server/n445.py</code>.</p>
+      <details class="track" open>
+        <summary><span class="dot oracle"></span>How it should be done — 4 steps
+          <span class="sub">the same apps, done properly</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">0</span><span class="app">mail</span></div><div class="what">Priya $95 + VALUE10</div><p class="why">All-in cap.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">1</span><span class="app">market</span></div><div class="what">VM kit + coupon</div><p class="why">Friday delivery.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">2</span><span class="app">food</span></div><div class="what">Sakura Friday midday</div><p class="why">Not today.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">3</span><span class="app">mail</span></div><div class="what">itemized under $95</div><p class="why">HOLD.</p></figcaption></figure></div>
+      </details>
+      <details class="track" open>
+        <summary><span class="dot agent"></span>What the model did — latest Sol seed0
+          <span class="sub">gpt-5.6-sol · seed 0 · 802ded05</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">1</span><span class="app">mail</span></div><div class="what">opened Priya’s cap</div><p class="why">$95.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">29</span><span class="app">market</span></div><div class="what">VM kit + VALUE10</div><p class="why">Requireds.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">50</span><span class="app">food</span></div><div class="what">Sakura Friday</div><p class="why">Under cap.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">60</span><span class="app">mail</span></div><div class="what">itemized email</div><p class="why">HOLD 1.00.</p></figcaption></figure></div>
+      </details>
+    </article></div>
+
+<dialog id="lb"><div class="lbwrap">
+  <div class="lbtop">
+    <span class="badge" id="lbstep">step</span>
+    <span class="lbact" id="lbact"></span>
+    <button class="nav" id="lbprev">&larr; prev</button>
+    <button class="nav" id="lbnext">next &rarr;</button>
+    <button id="lbclose">close &times;</button>
+  </div>
+  <div class="lbbody">
+    <div class="lbimg"><img id="lbimg" alt="Full-size screenshot"></div>
+    <aside class="lbside">
+      <h5>Why this step</h5><p id="lbwhy"></p>
+      <h5>Action</h5><div class="meta" id="lbmeta"></div>
+    </aside>
+  </div>
+</div></dialog>
+<script>
+(() => {
+  const lb=document.getElementById('lb'), img=document.getElementById('lbimg');
+  const st=document.getElementById('lbstep'), ac=document.getElementById('lbact');
+  const wh=document.getElementById('lbwhy'), me=document.getElementById('lbmeta');
+  let shots=[], at=0;
+  function show(i){
+    if(i<0||i>=shots.length) return;
+    at=i; const b=shots[i];
+    img.src=b.dataset.full;
+    st.textContent='step '+b.dataset.step+(b.dataset.app?' \u00b7 '+b.dataset.app:'');
+    ac.textContent=b.dataset.act||''; me.textContent=b.dataset.act||'';
+    wh.textContent=b.dataset.why||'no reasoning recorded';
+  }
+  document.addEventListener('click', e => {
+    const b=e.target.closest('.thumb[data-full]');
+    if(b){ shots=[...b.closest('.grid').querySelectorAll('.thumb[data-full]')];
+           show(shots.indexOf(b)); lb.showModal(); return; }
+    if(e.target.id==='lbclose'){ lb.close(); return; }
+    if(e.target.id==='lbprev'){ show(at-1); return; }
+    if(e.target.id==='lbnext'){ show(at+1); return; }
+  });
+  document.addEventListener('keydown', e => {
+    if(!lb.open) return;
+    if(e.key==='ArrowLeft') show(at-1);
+    if(e.key==='ArrowRight') show(at+1);
+  });
+})();
+</script>
+
+</body></html>

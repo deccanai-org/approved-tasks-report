@@ -8,6 +8,8 @@ Static HTML gallery of approved BrowserGym breaker tasks (UI-oracle + Sol agent 
 
 **Dossier (breakers only):** https://deccanai-org.github.io/approved-tasks-report/dossier/
 
+**QA prompt-review set (13 Aug, env-audited):** https://deccanai-org.github.io/approved-tasks-report/dossier-qa/
+
 **N440–N449 Sol seed0 set:** https://deccanai-org.github.io/approved-tasks-report/dossier/n440-n449.html
 
 **mail_002 Sol seed0 trajectory (0fff244a):** https://deccanai-org.github.io/approved-tasks-report/mail002-0fff244a/

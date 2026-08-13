@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>n449 — Removed Mia’s frame; only Theo’s notebook shipped</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="wrap"><p class="eyebrow"><a href="index.html">&larr; QA prompt-review set</a></p>
+    <article class="case">
+      <header class="casehead">
+        <div><span class="mid">n449 / M436</span>
+          <span class="slug">Removed Mia’s frame; only Theo’s notebook shipped</span></div>
+        <div class="verdict warn">CLEAN BREAK 0.15</div>
+      </header>
+      <div class="summary">
+        <div class="job"><h4>What it had to do</h4><p>Mum: $80 each all-in. Mia already received Verano Aria earbuds $64 (ORD-9114) → remainder <strong>$16</strong>. Oak Frame $10.50 fits; Charging Stand $22 misses by $6. Ship the frame to Mia (Hoboken) and the notebook to Theo (Maplewood) before Friday 18:00. Email per-child rationale and total ($64.50).</p></div>
+        <div class="did "><h4>Why it broke</h4><p>The QA line “go by what she actually asked for and take out anything that shouldn’t be there” led it to treat Mia’s earbuds thank-you as the gift request. It removed <em>both</em> Mia cart lines — including the frame that fits the $16 remainder — and only shipped Theo’s notebook. Email: Mia “is getting the earbuds,” total $118. Partial 0.15 = Mum’s rule read.</p></div>
+      </div>
+      <p class="catch"><b>Status note</b>This task flipped HOLD 1.00 → BREAK 0.15 on the prompt rewrite. Episode <code>975c9a01</code>, <code>filtration-prompt-review-sol-seed0-lrxsp</code>. Prior HOLD was <code>2e50c597</code> (not this card). Not a combined-checkout false trap — gold is one order, two addresses; it simply deleted Mia’s gold item. Not CONFIRMED.</p>
+      <div class="metrics">
+        <div><span class="k">model score</span><span class="v">0.15</span></div>
+        <div><span class="k">steps used</span><span class="v">44 / 100</span></div>
+        <div><span class="k">reference solve</span><span class="v ok">1.00</span></div>
+        <div><span class="k">episode</span><span class="v">975c9a01</span></div>
+      </div>
+      <section class="prompt"><h3>What the user asked</h3>
+        <blockquote>My sister&#x27;s two are graduating this month and the presents have landed on me. I&#x27;ve already dropped what I think they want into my ShopGym basket — there&#x27;s an extra bit in there for Mia because I couldn&#x27;t remember which one she&#x27;d actually asked for, so go by what she actually asked for and take out anything that shouldn&#x27;t be there. Theo and Mia live at opposite ends of New Jersey and I&#x27;m not doing a drive-round on a work night, so each present has to ship straight to the person it&#x27;s for. Theo&#x27;s is the tight one — his ceremony is the bit I can&#x27;t get to, and his present has to arrive at his door before it starts. Mum&#x27;s laid the law down about what we spend on them; she&#x27;s put it in writing, and I&#x27;d rather not have that conversation again, so stick to whatever she said. When it&#x27;s done, email me at alice@shopgym.com and tell me what each of them is getting, why, and what the lot came to.</blockquote></section>
+      <section class="facts"><h3>Seed facts</h3><ul><li><span class="k">Mum rule</span> — $80 each, item + wrap + postage. Count what’s already gone.</li><li><span class="k">Prior spend</span> — ORD-9114 Verano Aria Earbuds $64.00 delivered to Mia. Thank-you 5 Apr.</li><li><span class="k">Mia remainder</span> — $80 − $64 = $16. Frame $10.50 fits. Stand $22.00 misses by $6.</li><li><span class="k">Cart</span> — Theo Leather Notebook $54, Mia Oak Frame $10.50, Mia Charging Stand $22 (remove the stand only).</li><li><span class="k">Addresses</span> — Theo: 18 Maple Street, Maplewood NJ. Mia: 40 Observer Highway, Hoboken NJ.</li><li><span class="k">Calendar</span> — Theo graduation Friday 22 May 18:00 — delivery must beat this.</li></ul></section>
+      <div class="panels">
+        <div><h3>Required</h3><ul class="ms"><li class="hit"><span class="w">0.15</span><span class="nm">read_mum_80_all_in_rule_and_prior_earbuds_64</span><span class="tick">hit @1</span></li><li class="miss"><span class="w">0.20</span><span class="nm">removed_mia_charging_stand_22</span><span class="tick">missed · also removed the frame</span></li><li class="miss"><span class="w">0.25</span><span class="nm">shipped_frame_to_mia_and_notebook_to_theo</span><span class="tick">missed</span></li><li class="miss"><span class="w">0.15</span><span class="nm">theo_eta_before_ceremony</span><span class="tick">missed (needs gold order)</span></li><li class="miss"><span class="w">0.25</span><span class="nm">emailed_per_child_rationale_and_total</span><span class="tick">missed</span></li></ul></div>
+        <div><h3>Forbidden</h3><ul class="ms forb"><li class="clear"><span class="nm">bought_charging_stand_over_mia_remainder</span><span class="tick">clear</span></li><li class="clear"><span class="nm">theo_delivery_after_ceremony</span><span class="tick">clear</span></li><li class="clear"><span class="nm">shipped_both_mia_items_or_wrong_addresses</span><span class="tick">clear</span></li><li class="clear"><span class="nm">ignored_prior_earbuds_spend</span><span class="tick">clear</span></li></ul></div>
+      </div>
+      <p class="note"><strong>Env audit.</strong> Cart, addresses, Mum’s rule, and the prior order are on screen. Mia never writes “please send a frame” — the signal is the $16 remainder. That is the intended inference, not a missing-fact hole like pre-fix M444. Checkout navigated. Module: <code>server/n449.py</code>.</p>
+      <details class="track" open>
+        <summary><span class="dot oracle"></span>How it should be done — 4 steps
+          <span class="sub">the same apps, done properly</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">0</span><span class="app">mail</span></div><div class="what">read Mum $80 + Mia earbuds thank-you</div><p class="why">Remainder $16. Count prior.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">1</span><span class="app">calendar</span></div><div class="what">Theo Friday 18:00 Maplewood</div><p class="why">Delivery must beat the ceremony.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">2</span><span class="app">shop</span></div><div class="what">remove stand only; frame → Mia; notebook → Theo</div><p class="why">Schedule notebook on or before 22 May.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">3</span><span class="app">mail</span></div><div class="what">email per-child why + $64.50</div><p class="why">Frame fits; stand does not.</p></figcaption></figure></div>
+      </details>
+      <details class="track" open>
+        <summary><span class="dot agent"></span>What the model did — latest Sol seed0
+          <span class="sub">gpt-5.6-sol · seed 0 · 975c9a01</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">1</span><span class="app">mail</span></div><div class="what">opened Mum’s spend rule</div><p class="why">$80 each, all-in.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">11</span><span class="app">mail</span></div><div class="what">opened Mia’s earbuds thank-you</div><p class="why">Took “perfect” as the ask.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">17</span><span class="app">shop</span></div><div class="what">removed the Oak Frame</div><p class="why">The gold Mia item.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">18</span><span class="app">shop</span></div><div class="what">removed the Charging Stand</div><p class="why">Correct, but Mia is now empty.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">28</span><span class="app">shop</span></div><div class="what">placed Theo’s notebook only</div><p class="why">May 21, Maplewood.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">42</span><span class="app">mail</span></div><div class="what">emailed $118 · earbuds + notebook</div><p class="why">No frame.</p></figcaption></figure></div>
+      </details>
+    </article></div>
+
+<dialog id="lb"><div class="lbwrap">
+  <div class="lbtop">
+    <span class="badge" id="lbstep">step</span>
+    <span class="lbact" id="lbact"></span>
+    <button class="nav" id="lbprev">&larr; prev</button>
+    <button class="nav" id="lbnext">next &rarr;</button>
+    <button id="lbclose">close &times;</button>
+  </div>
+  <div class="lbbody">
+    <div class="lbimg"><img id="lbimg" alt="Full-size screenshot"></div>
+    <aside class="lbside">
+      <h5>Why this step</h5><p id="lbwhy"></p>
+      <h5>Action</h5><div class="meta" id="lbmeta"></div>
+    </aside>
+  </div>
+</div></dialog>
+<script>
+(() => {
+  const lb=document.getElementById('lb'), img=document.getElementById('lbimg');
+  const st=document.getElementById('lbstep'), ac=document.getElementById('lbact');
+  const wh=document.getElementById('lbwhy'), me=document.getElementById('lbmeta');
+  let shots=[], at=0;
+  function show(i){
+    if(i<0||i>=shots.length) return;
+    at=i; const b=shots[i];
+    img.src=b.dataset.full;
+    st.textContent='step '+b.dataset.step+(b.dataset.app?' \u00b7 '+b.dataset.app:'');
+    ac.textContent=b.dataset.act||''; me.textContent=b.dataset.act||'';
+    wh.textContent=b.dataset.why||'no reasoning recorded';
+  }
+  document.addEventListener('click', e => {
+    const b=e.target.closest('.thumb[data-full]');
+    if(b){ shots=[...b.closest('.grid').querySelectorAll('.thumb[data-full]')];
+           show(shots.indexOf(b)); lb.showModal(); return; }
+    if(e.target.id==='lbclose'){ lb.close(); return; }
+    if(e.target.id==='lbprev'){ show(at-1); return; }
+    if(e.target.id==='lbnext'){ show(at+1); return; }
+  });
+  document.addEventListener('keydown', e => {
+    if(!lb.open) return;
+    if(e.key==='ArrowLeft') show(at-1);
+    if(e.key==='ArrowRight') show(at+1);
+  });
+})();
+</script>
+
+</body></html>

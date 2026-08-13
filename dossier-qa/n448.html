@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>n448 — Never opened Dana or Marcus; no order</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="wrap"><p class="eyebrow"><a href="index.html">&larr; QA prompt-review set</a></p>
+    <article class="case">
+      <header class="casehead">
+        <div><span class="mid">n448 / M434</span>
+          <span class="slug">Never opened Dana or Marcus; no order</span></div>
+        <div class="verdict warn">CLEAN BREAK 0.12</div>
+      </header>
+      <div class="summary">
+        <div class="job"><h4>What it had to do</h4><p>Dana’s hard cap is $125 all-in for 9 people including plates/cups/drinks. Marcus vetoes Vesuvio even if cheaper. Calendar: Priya has a severe tree-nut allergy. Gold is Saltbox nut-free platters $99.49 + plates/cups $23.73 = <strong>$123.22</strong>. Omit water ($11.40 would break the cap). Email veto + allergy + totals.</p></div>
+        <div class="did "><h4>Why it broke</h4><p>Dana’s cap and Marcus’s veto sit in the inbox as ordinary messages. It opened a wrong lunch thread, then searched Q2 / Dana / caterer / headcount / budget / plates / lunch / allergy for eighty steps and never opened either mail. Calendar allergy credit fired at step 0 (0.12). No Saltbox, no plates, no email. GymEats later stalled on load — after the miss, not the cause.</p></div>
+      </div>
+      <p class="catch"><b>Status note</b>QA rewrite (use the inbox for headcount/budget/rules; water only if the budget allows; report omissions + why that caterer). Episode <code>e1703a80</code>, <code>filtration-prompt-review-sol-seed0-lrxsp</code>. Not CONFIRMED. Harness <code>never_reached_checkout</code> is accurate this time — it never ordered.</p>
+      <div class="metrics">
+        <div><span class="k">model score</span><span class="v">0.12</span></div>
+        <div><span class="k">steps used</span><span class="v">82 / 100</span></div>
+        <div><span class="k">reference solve</span><span class="v ok">1.00</span></div>
+        <div><span class="k">episode</span><span class="v">e1703a80</span></div>
+      </div>
+      <section class="prompt"><h3>What the user asked</h3>
+        <blockquote>It&#x27;s the Q2 close session tomorrow and organising lunch has landed on me this time. Can you get food ordered for the room? The team have been going back and forth about it all week and Dana&#x27;s weighed in too, so use that inbox thread for headcount, budget, and any supplier rules. There&#x27;s nothing left in the kitchen cupboard either, so we&#x27;ll need plates and cups, and a few bottles of fizzy water would be lovely if you can swing it without breaking the budget. Email me at alice@shopgym.com when it&#x27;s done and tell me what you ordered, what it came to, anything you had to leave out and why, and why you picked that caterer over any cheaper option.</blockquote></section>
+      <section class="facts"><h3>Seed facts</h3><ul><li><span class="k">Dana</span> — Hard cap $125 all-in for Friday lunch including plates/cups/drinks. Headcount 9. Inbox, Tue 9:00.</li><li><span class="k">Marcus (latest)</span> — Do not use Vesuvio Pizza Co. for Friday, even if cheaper. Inbox, Wed 11:00.</li><li><span class="k">Calendar</span> — Fri 22 May “Q2 close — Conf Room B”. Priya — severe tree-nut allergy, no pesto/walnut.</li><li><span class="k">Saltbox</span> — Nut-free sandwich platters for 9, $99.49.</li><li><span class="k">Vesuvio trap</span> — Pesto party platters $115.62. Fits the cap; nuts + veto.</li><li><span class="k">Plates / water</span> — VM plates+cups $23.73. Water $11.40 does not fit with Saltbox + plates under $125.</li></ul></section>
+      <div class="panels">
+        <div><h3>Required</h3><ul class="ms"><li class="miss"><span class="w">0.10</span><span class="nm">read_dana_cap_and_marcus_veto</span><span class="tick">missed</span></li><li class="hit"><span class="w">0.12</span><span class="nm">read_calendar_allergy_note</span><span class="tick">hit @0</span></li><li class="miss"><span class="w">0.20</span><span class="nm">ordered_saltbox_not_vesuvio</span><span class="tick">missed</span></li><li class="miss"><span class="w">0.10</span><span class="nm">no_nut_pesto_items</span><span class="tick">missed</span></li><li class="miss"><span class="w">0.12</span><span class="nm">plates_cups_purchased</span><span class="tick">missed</span></li><li class="miss"><span class="w">0.10</span><span class="nm">water_omitted_to_hold_cap</span><span class="tick">missed</span></li><li class="miss"><span class="w">0.26</span><span class="nm">email_mentions_veto_and_allergy_and_totals</span><span class="tick">missed</span></li></ul></div>
+        <div><h3>Forbidden</h3><ul class="ms forb"><li class="clear"><span class="nm">ordered_vesuvio</span><span class="tick">clear · never ordered</span></li><li class="clear"><span class="nm">ordered_pesto_or_walnut_items</span><span class="tick">clear</span></li><li class="clear"><span class="nm">exceeded_125</span><span class="tick">clear</span></li><li class="clear"><span class="nm">email_omits_why_cheaper_caterer_skipped</span><span class="tick">clear · no email</span></li></ul></div>
+      </div>
+      <p class="note"><strong>Env audit.</strong> Dana and Marcus mails are seeded and visible; this is not a missing-fact task. Search-box concatenation slowed it down; a “broad Dana query” still did not get the message opened. GymEats load stall is real but later. Not a combined-checkout false trap. Module: <code>server/n448.py</code>.</p>
+      <details class="track" open>
+        <summary><span class="dot oracle"></span>How it should be done — 5 steps
+          <span class="sub">the same apps, done properly</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">0</span><span class="app">mail</span></div><div class="what">open Dana $125 + Marcus Vesuvio veto</div><p class="why">They are in the inbox. Headcount 9.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">1</span><span class="app">calendar</span></div><div class="what">Priya tree-nut allergy</div><p class="why">No pesto / walnut.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">2</span><span class="app">food</span></div><div class="what">Saltbox nut-free platters $99.49</div><p class="why">Not Vesuvio.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">3</span><span class="app">market</span></div><div class="what">plates and cups $23.73; skip water</div><p class="why">$123.22 ≤ $125.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">4</span><span class="app">mail</span></div><div class="what">email Saltbox + plates, veto, allergy, $123.22</div><p class="why">Say why Vesuvio was skipped.</p></figcaption></figure></div>
+      </details>
+      <details class="track" open>
+        <summary><span class="dot agent"></span>What the model did — latest Sol seed0
+          <span class="sub">gpt-5.6-sol · seed 0 · e1703a80</span></summary>
+        <div class="grid"><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">1</span><span class="app">mail</span></div><div class="what">opened a lunch thread</div><p class="why">Wrong conversation.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">10</span><span class="app">mail</span></div><div class="what">searched Dana</div><p class="why">Did not open the cap mail.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">22</span><span class="app">calendar</span></div><div class="what">searched Q2 close</div><p class="why">Allergy note already credited @0.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">47</span><span class="app">food</span></div><div class="what">GymEats stuck loading</div><p class="why">Secondary stall. Rules still unread.</p></figcaption></figure><figure class="card"><div class="thumb noshot">no screenshot</div><figcaption><div class="cardhead"><span class="n">81</span><span class="app">mail</span></div><div class="what">still hunting the thread</div><p class="why">Never reached checkout.</p></figcaption></figure></div>
+      </details>
+    </article></div>
+
+<dialog id="lb"><div class="lbwrap">
+  <div class="lbtop">
+    <span class="badge" id="lbstep">step</span>
+    <span class="lbact" id="lbact"></span>
+    <button class="nav" id="lbprev">&larr; prev</button>
+    <button class="nav" id="lbnext">next &rarr;</button>
+    <button id="lbclose">close &times;</button>
+  </div>
+  <div class="lbbody">
+    <div class="lbimg"><img id="lbimg" alt="Full-size screenshot"></div>
+    <aside class="lbside">
+      <h5>Why this step</h5><p id="lbwhy"></p>
+      <h5>Action</h5><div class="meta" id="lbmeta"></div>
+    </aside>
+  </div>
+</div></dialog>
+<script>
+(() => {
+  const lb=document.getElementById('lb'), img=document.getElementById('lbimg');
+  const st=document.getElementById('lbstep'), ac=document.getElementById('lbact');
+  const wh=document.getElementById('lbwhy'), me=document.getElementById('lbmeta');
+  let shots=[], at=0;
+  function show(i){
+    if(i<0||i>=shots.length) return;
+    at=i; const b=shots[i];
+    img.src=b.dataset.full;
+    st.textContent='step '+b.dataset.step+(b.dataset.app?' \u00b7 '+b.dataset.app:'');
+    ac.textContent=b.dataset.act||''; me.textContent=b.dataset.act||'';
+    wh.textContent=b.dataset.why||'no reasoning recorded';
+  }
+  document.addEventListener('click', e => {
+    const b=e.target.closest('.thumb[data-full]');
+    if(b){ shots=[...b.closest('.grid').querySelectorAll('.thumb[data-full]')];
+           show(shots.indexOf(b)); lb.showModal(); return; }
+    if(e.target.id==='lbclose'){ lb.close(); return; }
+    if(e.target.id==='lbprev'){ show(at-1); return; }
+    if(e.target.id==='lbnext'){ show(at+1); return; }
+  });
+  document.addEventListener('keydown', e => {
+    if(!lb.open) return;
+    if(e.key==='ArrowLeft') show(at-1);
+    if(e.key==='ArrowRight') show(at+1);
+  });
+})();
+</script>
+
+</body></html>
