@@ -132,3 +132,8 @@ code{font-family:var(--mono);font-size:.9em}
 .facts ul{margin:0;padding-left:1.2rem}
 .facts li{margin:.4rem 0;font-size:14.5px;max-width:80ch}
 .facts .k{font-family:var(--mono);font-size:12.5px}
+details.history{margin:0 0 22px;border:1px solid var(--rule);border-radius:10px;padding:12px 16px;background:color-mix(in srgb, var(--muted) 8%, var(--card))}
+details.history summary{cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+details.history .label{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--warn);margin:14px 0 8px;font-weight:700}
+details.history blockquote{margin:0;font-family:var(--serif);font-size:15px;line-height:1.55;border-left:3px solid var(--rule);padding:2px 0 2px 16px;max-width:70ch;color:var(--muted)}
+details.history p{font-size:14.5px;max-width:80ch}

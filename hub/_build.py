@@ -61,7 +61,7 @@ TASKS: list[dict] = [
         title="Asked which lamp, then waited; no both-refund quote",
         disp="BREAK 0.40 · 3/3",
         kind="fired",
-        why="QA-reviewed CLEAN BREAK. Seeds 0–2 all BREAK 0.40. Confirmed for now.",
+        why="Ambiguity-hint proposal. Post-hint ff9024e6 asked which lamp; still BREAK 0.40. Original FinalBreaker1 / 8c8377e1 superseded. Confirmed for now.",
         dossier="dossier/m431.html",
         qa="dossier-qa/m431.html",
     ),
