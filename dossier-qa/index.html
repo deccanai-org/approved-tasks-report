@@ -3,15 +3,15 @@
 <div class="wrap">
  <header class="masthead">
   <p class="eyebrow">Browser gym &middot; QA prompt-review dossier &middot; 13 Aug 2026</p>
-  <h1>Eight clean seed0 breaks after the prompt-review rewrite.</h1>
+  <h1>Nine seed0 breaks after the four-prompt rerun.</h1>
   <p class="standfirst">New site for the QA prompt-review set — not tacked onto the mixed
   <a href="../dossier/">/dossier/</a> pages. Each errand was audited against the latest
   traj for silent cart, search mangling, checkout navigation, missing calendar seed,
   combined-checkout false traps, verifier flicker, and facts-not-on-screen.
   Env and harness hits are dropped or badged ENV. Nothing here is CONFIRMED.</p>
   <div class="tally">
-   <div class="warn"><span class="n">8</span><span class="l">clean breaks</span></div>
-   <div class="env"><span class="n">1</span><span class="l">dropped env</span></div>
+   <div class="warn"><span class="n">9</span><span class="l">breaks</span></div>
+   <div class="env"><span class="n">0</span><span class="l">dropped env</span></div>
    <div class="good"><span class="n">1</span><span class="l">hold excluded</span></div>
    <div><span class="n">0</span><span class="l">confirmed</span></div>
   </div>
@@ -20,11 +20,9 @@
  <p class="banner">Three-section catalog of every task: <a href="../hub/">/hub/</a>
  (also the <a href="../">site root</a>). Nothing in this QA set is CONFIRMED.
  Sol <code>gpt-5.6-sol</code> &middot; seed 0 &middot; frozen clock Thu 21 May 2026 11:00 ET.
- Prompt-review job <code>filtration-prompt-review-sol-seed0-lrxsp</code>
- (RUN_ID <code>prompt-review-sol-seed0-20260813T180117Z</code>).
- M432 / M444 latest from <code>filtration-m432-m444-feedback-sol-seed0-lkkjh</code>
- after the calendar-visible and Larkfield Studio 15 seed fixes.
- n445 HOLD excluded. fb5 dropped as harness flicker.
+ Four-prompt rerun job <code>filtration-four-prompt-rerun-sol-seed0-cphkf</code>
+ (RUN_ID <code>four-prompt-rerun-sol-seed0-20260813T233413Z</code>)
+ for mail_002 / n446 / fb4 / fb5. n445 HOLD excluded, BRIEF synced only.
  Template after <a href="https://dhigdec.github.io/breaker-dossier/">breaker-dossier</a>.</p>
 
  <h2 class="sec">Clean breaks</h2>
@@ -39,6 +37,7 @@
    <tr><td><a href="n448.html">n448 / M434</a></td><td>Never opened Dana or Marcus; no order</td><td class="num">0.12</td><td class="num ok">1.00</td><td><span class="chip warn">CLEAN BREAK 0.12</span></td></tr>
    <tr><td><a href="n449.html">n449 / M436</a></td><td>Removed Mia’s frame; only Theo’s notebook shipped</td><td class="num">0.15</td><td class="num ok">1.00</td><td><span class="chip warn">CLEAN BREAK 0.15</span></td></tr>
    <tr><td><a href="fb4.html">fb4 / M438 twin</a></td><td>Trusted the chair-cancel email; listed $481.49</td><td class="num">0.35</td><td class="num ok">1.00</td><td><span class="chip warn">CLEAN BREAK 0.35</span></td></tr>
+   <tr><td><a href="fb5.html">fb5 / M435</a></td><td>ShopGym mat first; later VM kit + Sakura; never emailed Alice</td><td class="num">0.75</td><td class="num ok">1.00</td><td><span class="chip warn">BREAK 0.75</span></td></tr>
    <tr><td><a href="m444.html">M444 / m444</a></td><td>Bought the 65 W adapter for a Studio 15</td><td class="num">0.20</td><td class="num ok">1.00</td><td><span class="chip warn">CLEAN BREAK 0.20</span></td></tr>
   </tbody></table></div>
 
@@ -47,8 +46,7 @@
   <thead><tr><th>task</th><th>why it is out</th><th class="num">model</th>
   <th class="num">reference</th><th>status</th></tr></thead>
   <tbody>
-   <tr><td><a href="fb5.html">fb5 / M435</a></td><td>All requireds fired; <code>forbidden_missing_items</code> latched at the first store order while lunch was next</td><td class="num">1.00</td><td class="num ok">1.00</td><td><span class="chip env">DROPPED · ENV</span></td></tr>
-   <tr><td><a href="n445.html">n445 / M435</a></td><td>HOLD after the rewrite named the SKUs and all-in cap</td><td class="num">1.00</td><td class="num ok">1.00</td><td><span class="chip ok">HOLD · EXCLUDED</span></td></tr>
+   <tr><td><a href="n445.html">n445 / M435</a></td><td>HOLD after the rewrite named the SKUs and all-in cap. BRIEF synced to fb5 four-prompt rewrite; not rerun.</td><td class="num">1.00</td><td class="num ok">1.00</td><td><span class="chip ok">HOLD · EXCLUDED</span></td></tr>
   </tbody></table></div>
 
  <p class="note"><strong>How to read a task page.</strong> Two sentences tell you the job and the

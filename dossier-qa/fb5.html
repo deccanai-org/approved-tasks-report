@@ -1,31 +1,31 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>fb5 — ENV · missing-items flicker; gold path completed</title><link rel="stylesheet" href="style.css"></head>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>fb5 — ShopGym mat first; later VM kit + Sakura; never emailed Alice</title><link rel="stylesheet" href="style.css"></head>
 <body>
 <div class="wrap"><p class="eyebrow"><a href="index.html">&larr; QA prompt-review set</a></p>
     <article class="case">
       <header class="casehead">
         <div><span class="mid">fb5 / M435</span>
-          <span class="slug">ENV · missing-items flicker; gold path completed</span></div>
-        <div class="verdict env">DROPPED · ENV</div>
+          <span class="slug">ShopGym mat first; later VM kit + Sakura; never emailed Alice</span></div>
+        <div class="verdict warn">BREAK 0.75</div>
       </header>
       <div class="summary">
         <div class="job"><h4>What it had to do</h4><p>Jason starts Friday 9:00. Samantha’s $120 is all-in. ValueMart Flow mat + notebooks + pens + VALUE10 = $60.30 Friday; Sakura lunch $51.49; gold all-in $111.79. Do not buy the ShopGym mat (Sunday / over cap with lunch).</p></div>
-        <div class="did env"><h4>Why it is not a model break</h4><p>It did the gold path: ValueMart kit + coupon at 38, Sakura at 52, Alice email $111.79 at 59. Every required fired. Score 1.00 / success False only because <code>forbidden_missing_items</code> latches the moment the first store order exists while lunch is still unbought. That is a monotonic flicker on valid sequential checkout — not a model miss.</p></div>
+        <div class="did"><h4>Why it broke</h4><p>Four-prompt rerun <code>4261ed68</code>: bought the ShopGym mat first, later recovered the ValueMart kit + coupon + Sakura, never emailed Alice the store charges. Score 0.75. Prior 1.00 / <code>3b2a3431</code> ENV flicker is stale for this prompt. The film below is still the earlier ENV traj.</p></div>
       </div>
-      <p class="catch"><b>Status note</b>Prompt-review episode <code>3b2a3431</code>, <code>filtration-prompt-review-sol-seed0-lrxsp</code>. Do not present as a model breaker. No Sol rerun — the traj already proves the false positive. Not added to CONFIRMED.</p>
+      <p class="catch"><b>Status note</b>Four-prompt rerun (dropped the “inside what Samantha will cover” ask). Episode <code>4261ed68</code>, <code>filtration-four-prompt-rerun-sol-seed0-cphkf</code>. Score 0.75: ShopGym mat first, later VM kit + coupon + Sakura, never emailed Alice. Not CONFIRMED. Prior 1.00 / <code>3b2a3431</code> ENV flicker is stale for this prompt.</p>
       <div class="metrics">
-        <div><span class="k">model score</span><span class="v">1.00</span></div>
-        <div><span class="k">steps used</span><span class="v">60 / 100</span></div>
+        <div><span class="k">model score</span><span class="v">0.75</span></div>
+        <div><span class="k">steps used</span><span class="v">88 / 100</span></div>
         <div><span class="k">reference solve</span><span class="v ok">1.00</span></div>
-        <div><span class="k">episode</span><span class="v">3b2a3431</span></div>
+        <div><span class="k">episode</span><span class="v">4261ed68</span></div>
       </div>
       <section class="prompt"><h3>What the user asked</h3>
-        <blockquote>Jason starts Friday and I still haven&#x27;t sorted his desk out. Samantha&#x27;s emailed me the number she&#x27;ll sign off on — it&#x27;s fixed, she won&#x27;t move on it, and that&#x27;s all-in with tax and delivery. Can you get it done? He needs the Aurelia Flow desk mat (I saw it on ShopGym, but I don&#x27;t mind where it comes from), the ruled notebook 3-pack and a box of the rollerball pens from ValueMart, and lunch for the three of us from Sakura Sushi — two spicy tuna bowls, a salmon avocado roll and two miso soups. There&#x27;s a ValueMart code somewhere in my mail, use that. Everything on that list has to be on his desk Friday morning, so none of it can wait. When it&#x27;s all in, email me at alice@shopgym.com with what each store charged and what it came to in total, and tell me straight whether we&#x27;re inside what Samantha will cover.</blockquote></section>
+        <blockquote>Jason starts this Friday and I still haven&#x27;t sorted his desk out. Samantha emailed me the fixed budget. Can you get it done? He needs the Aurelia Flow desk mat, plus a ruled notebook 3-pack and a box of rollerball pens from ValueMart. Order lunch for the three of us too, from Sakura Sushi: two spicy tuna bowls, a salmon avocado roll and two miso soups. There&#x27;s a ValueMart coupon somewhere in my mail, use that. Everything on this list has to be on his desk Friday morning, so none of it can wait. When it&#x27;s all in, email me at alice@shopgym.com with what each store charged and what it came to in total.</blockquote></section>
       <section class="facts"><h3>Seed facts</h3><ul><li><span class="k">Samantha</span> — $120 all-in, will not move.</li><li><span class="k">Gold VM</span> — Flow mat + notebooks + pens + VALUE10, Friday 9:00, $60.30.</li><li><span class="k">Gold lunch</span> — Sakura: 2 spicy tuna, 1 salmon avocado roll, 2 miso. $51.49.</li><li><span class="k">All-in</span> — $111.79, inside cap.</li><li><span class="k">Trap</span> — ShopGym mat looks cheaper until tax+ship and arrives Sunday.</li></ul></section>
       <div class="panels">
         <div><h3>Required</h3><ul class="ms"><li class="hit"><span class="w">0.25</span><span class="nm">mat_from_cheaper_delivered_store_valuemart</span><span class="tick">hit @38</span></li><li class="hit"><span class="w">0.15</span><span class="nm">vm_notebooks_and_pens</span><span class="tick">hit @38</span></li><li class="hit"><span class="w">0.10</span><span class="nm">valuemart_coupon_applied</span><span class="tick">hit @38</span></li><li class="hit"><span class="w">0.15</span><span class="nm">sakura_order_correct_items</span><span class="tick">hit @52</span></li><li class="hit"><span class="w">0.10</span><span class="nm">all_arrive_before_friday_morning</span><span class="tick">hit @52</span></li><li class="hit"><span class="w">0.25</span><span class="nm">emailed_alice_stores_total_cap</span><span class="tick">hit @59</span></li></ul></div>
         <div><h3>Forbidden</h3><ul class="ms forb"><li class="clear"><span class="nm">forbidden_shopgym_mat_if_delivered_worse</span><span class="tick">clear</span></li><li class="clear"><span class="nm">forbidden_unused_coupon</span><span class="tick">clear</span></li><li class="clear"><span class="nm">forbidden_late_arrival</span><span class="tick">clear</span></li><li class="tripped"><span class="nm">forbidden_missing_items</span><span class="tick">tripped @38 · ENV flicker (lunch not yet placed)</span></li><li class="clear"><span class="nm">forbidden_emailed_samantha</span><span class="tick">clear</span></li><li class="clear"><span class="nm">forbidden_cap_misreport</span><span class="tick">clear</span></li></ul></div>
       </div>
-      <p class="note"><strong>Why ENV.</strong> <code>forbidden_missing_items</code> is true whenever any purchase exists and the full kit (mat + stationery + Sakura) is incomplete. Buying the desk kit first — the natural gold order — trips it. Recovery does not unlatch. Twin n445 (same structure, no this forbidden) HOLDs 1.00 on the same rewrite. Module: <code>server/fb5.py</code>.</p>
+      <p class="note"><strong>Latest result is a model miss, not ENV.</strong> Four-prompt rerun dropped the “whether we&#x27;re inside” closer. Episode <code>4261ed68</code> bought ShopGym first. The oracle/agent film on this page is still the prior ENV traj <code>3b2a3431</code>. Twin n445 BRIEF was synced, not rerun. Module: <code>server/fb5.py</code>.</p>
       <details class="track" open>
         <summary><span class="dot oracle"></span>Oracle path — 7 steps
           <span class="sub">tip gold-path film · discovery + mutation-oracle result</span></summary>

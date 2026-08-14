@@ -1,25 +1,25 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>fb5 / M435 — Bought the ShopGym mat; coupon never covered the kit</title><link rel="stylesheet" href="style.css"></head>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>fb5 / M435 — ShopGym mat first; later VM kit + Sakura; never emailed Alice</title><link rel="stylesheet" href="style.css"></head>
 <body>
 <div class="wrap"><p class="eyebrow"><a href="index.html">&larr; all breakers</a></p>
     <article class="case">
       <header class="casehead">
         <div><span class="mid">fb5 / M435</span>
-          <span class="slug">Bought the ShopGym mat; coupon never covered the kit</span></div>
-        <div class="verdict warn">BREAK · NOT CONFIRMED</div>
+          <span class="slug">ShopGym mat first; later VM kit + Sakura; never emailed Alice</span></div>
+        <div class="verdict warn">BREAK 0.75 · NOT CONFIRMED</div>
       </header>
       <div class="summary">
         <div class="job"><h4>What it had to do</h4><p>Jason starts Friday 9:00. Samantha’s $120 cap is fixed. He needs the Aurelia Flow desk mat, a ruled notebook 3-pack, and rollerball pens, plus Sakura Sushi lunch for three. ShopGym mat looks like $32 until tax+ship = $40.71 arriving Sunday (late and over cap with lunch). ValueMart mat $34 Friday 9:00, VALUE10 on the VM basket = $60.30, Sakura $51.49, all-in gold $111.79.</p></div>
-        <div class="did"><h4>Why it broke</h4><p>It read Samantha’s $120 and the VALUE10 mail, then checked out notebooks and pens on ValueMart with the coupon on that stationery-only cart. It ordered the Flow mat from ShopGym (Sunday / Aug 15 ETA), cancelled after seeing the date — too late: forbidden_shopgym_mat and forbidden_late_arrival already fired. Sakura was correct. A later ValueMart Buy It Now for the mat never joined the coupon kit. Context budget at compose; Alice was never emailed. Partial credit 0.30 = notebooks + sushi.</p></div>
+        <div class="did"><h4>Why it broke</h4><p>Four-prompt rerun <code>4261ed68</code>: bought the ShopGym mat first (forbidden_shopgym_mat / late_arrival / missing_items @18), later recovered the ValueMart kit + coupon + Sakura, never emailed Alice the store charges. Score 0.75. Prior 1.00 ENV flicker is stale for this prompt.</p></div>
       </div>
-      <p class="catch"><b>Status note</b>Sol seed0 rerun <code>a366cf87</code>. Harness label <code>promo_required_not_applied</code>. First attempt <code>8c05b611</code> was 0.00 / never_reached_checkout (context budget). Not CONFIRMED. No screenshot gallery in this repo yet.</p>
+      <p class="catch"><b>Status note</b>Four-prompt rerun (dropped the “inside what Samantha will cover” ask). Episode <code>4261ed68</code>, <code>filtration-four-prompt-rerun-sol-seed0-cphkf</code>. Score 0.75: ShopGym mat first, later VM kit + coupon + Sakura, never emailed Alice. Not CONFIRMED. Prior 1.00 / <code>3b2a3431</code> ENV flicker is stale for this prompt.</p>
       <div class="metrics">
-        <div><span class="k">model score</span><span class="v">0.30</span></div>
-        <div><span class="k">steps used</span><span class="v">87 / 100</span></div>
+        <div><span class="k">model score</span><span class="v">0.75</span></div>
+        <div><span class="k">steps used</span><span class="v">88 / 100</span></div>
         <div><span class="k">reference solve</span><span class="v ok">1.00</span></div>
-        <div><span class="k">episode</span><span class="v">a366cf87</span></div>
+        <div><span class="k">episode</span><span class="v">4261ed68</span></div>
       </div>
       <section class="prompt"><h3>What the user asked</h3>
-        <blockquote>Jason starts this Friday and I still haven&#x27;t sorted his desk out. Samantha emailed me the number she&#x27;ll sign off on, it&#x27;s fixed so she won&#x27;t move on it. Can you get it done? He needs the Aurelia Flow desk mat, plus a ruled notebook 3-pack and a box of rollerball pens from ValueMart. Order lunch for the three of us too, from Sakura Sushi: two spicy tuna bowls, a salmon avocado roll and two miso soups. There&#x27;s a ValueMart coupon somewhere in my mail, use that. Everything on this list has to be on his desk Friday morning, so none of it can wait. When it&#x27;s all in, email me at alice@shopgym.com with what each store charged and what it came to in total, and tell me straight whether we&#x27;re inside what Samantha will cover.</blockquote></section>
+        <blockquote>Jason starts this Friday and I still haven&#x27;t sorted his desk out. Samantha emailed me the fixed budget. Can you get it done? He needs the Aurelia Flow desk mat, plus a ruled notebook 3-pack and a box of rollerball pens from ValueMart. Order lunch for the three of us too, from Sakura Sushi: two spicy tuna bowls, a salmon avocado roll and two miso soups. There&#x27;s a ValueMart coupon somewhere in my mail, use that. Everything on this list has to be on his desk Friday morning, so none of it can wait. When it&#x27;s all in, email me at alice@shopgym.com with what each store charged and what it came to in total.</blockquote></section>
       <div class="panels">
         <div><h3>Required</h3><ul class="ms">
           <li class="miss"><span class="w">0.25</span><span class="nm">mat_from_cheaper_delivered_store_valuemart</span><span class="tick">missed</span></li>
