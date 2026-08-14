@@ -7,6 +7,8 @@ Static HTML gallery of approved BrowserGym breaker tasks (UI-oracle + Sol agent 
 **Hub (all tasks, three sections):** https://deccanai-org.github.io/approved-tasks-report/  
 same catalog: https://deccanai-org.github.io/approved-tasks-report/hub/
 
+**ui_031–ui_060 Excel bank (Tentative, Sol seed0 14 Aug):** https://deccanai-org.github.io/approved-tasks-report/dossier/ui031-ui060.html
+
 **Dossier (breakers only):** https://deccanai-org.github.io/approved-tasks-report/dossier/
 
 **QA prompt-review set (13 Aug, env-audited):** https://deccanai-org.github.io/approved-tasks-report/dossier-qa/

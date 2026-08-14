@@ -3,10 +3,15 @@
 from __future__ import annotations
 
 import html
+import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
 HUB = Path(__file__).resolve().parent
+if str(HUB) not in sys.path:
+    sys.path.insert(0, str(HUB))
+from _ui031_ui060 import TASKS_UI031_UI060, write_set_page
+
+ROOT = HUB.parent
 
 # Link prefixes: hub pages live one level down; root catalog uses "".
 # Values are relative prefixes to repo root.
@@ -173,6 +178,8 @@ TASKS: list[dict] = [
         extra=[("N440–N449 set", "dossier/n440-n449.html")],
     ),
     # ── TENTATIVE ─────────────────────────────────────────────────────────
+    # ui_031–ui_060 Excel bank — Sol seed0 14 Aug. ALL Tentative, including HOLDs.
+    *TASKS_UI031_UI060,
     # D460–D481 Mixed Errands — Sol seed0 13 Aug. ALL Tentative, including HOLDs.
     dict(
         section="tentative",
@@ -911,11 +918,13 @@ def _check() -> None:
     assert len(ids) == len(set(ids)), "duplicate ids"
     c, t, r = _ids("confirmed"), _ids("tentative"), _ids("rejected")
     assert len(c) == 13, len(c)
-    assert len(t) == 55, len(t)
+    assert len(t) == 85, len(t)
     assert len(r) == 17, len(r)
+    ui_ids = [f"ui_{i:03d}" for i in range(31, 61)]
+    assert t[:30] == ui_ids, t[:30]
     d_ids = [f"d{i}" for i in range(460, 482)]
-    assert t[:22] == d_ids, t[:22]
-    for did in d_ids:
+    assert t[30:52] == d_ids, t[30:52]
+    for did in ui_ids + d_ids:
         assert did not in c and did not in r
     for bad in ("mp_131", "mp_147", "mp_140"):
         assert not any(bad in i for i in c)
@@ -997,15 +1006,15 @@ def page(prefix: str, css: str, canonical_note: str) -> str:
 <body>
 <div class="wrap">
 <header class="masthead">
-  <p class="eyebrow">Browser gym · task hub · 13 Aug 2026</p>
+  <p class="eyebrow">Browser gym · task hub · 14 Aug 2026</p>
   <h1>Every scored task so far, in three buckets.</h1>
   <p class="standfirst">Confirmed is the two QuietBreaks, mp_161, and every card on
   <a href="{prefix}dossier-qa/">/dossier-qa/</a> (eight CLEAN BREAKs plus fb5 and n445).
-  Tentative is a Sol result that still needs review — Mixed Errands D460–D481 sit at
-  the top (including the 6 HOLDs; none of those 22 are Confirmed), then mp_140 and
-  scoring-correction HOLDs. Rejected is env, harness, false trap, or an agent success
-  that is not a breaker. One card per task id; latest episode only. No CONFIRMED
-  inflation beyond this set; the 22 long-horizon BREAKs are not dumped as equal evidence.</p>
+  Tentative is a Sol result that still needs review — Excel bank ui_031–ui_060 sits
+  at the top (18 HOLD / 12 BREAK; none Confirmed), then Mixed Errands D460–D481
+  (including those 6 HOLDs), then mp_140 and scoring-correction HOLDs. Rejected is
+  env, harness, false trap, or an agent success that is not a breaker. One card per
+  task id; latest episode only. No CONFIRMED inflation beyond this set.</p>
   <div class="tally">
     <a class="fired" href="#confirmed"><span class="n">{n_c}</span><span class="l">confirmed / reviewed</span></a>
     <a class="warn" href="#tentative"><span class="n">{n_t}</span><span class="l">tentative / need review</span></a>
@@ -1017,11 +1026,13 @@ def page(prefix: str, css: str, canonical_note: str) -> str:
 <p class="banner">{canonical_note}
  Old paths stay live: <a href="{prefix}dossier/">/dossier/</a>,
  <a href="{prefix}dossier-qa/">/dossier-qa/</a>,
+ <a href="{prefix}dossier/ui031-ui060.html">ui_031–ui_060 set</a>,
  <a href="{prefix}dossier/n440-n449.html">N440–N449</a>,
  <a href="{prefix}mail002-0fff244a/">mail_002 traj</a>,
  <a href="{prefix}APPROVED_TASKS_REPORT_2026-08-11.html">11&nbsp;Aug screenshot gallery</a>.</p>
 
 <p class="sources">Sources (read-only): gym audits under <code>docs/history/audits/</code> ·
+ ui_031–ui_060 Excel bank Sol seed0 14&nbsp;Aug ·
  D460–D481 Mixed Errands Sol seed0 13&nbsp;Aug · four-prompt rerun 13&nbsp;Aug ·
  prompt-review apply 13&nbsp;Aug · LH trust triage 12&nbsp;Aug.
  No laptop Sol for this page.</p>
@@ -1035,16 +1046,19 @@ def page(prefix: str, css: str, canonical_note: str) -> str:
 <p class="sec-lead">{n_c} tasks. Two QuietBreaks, mp_161, and every card listed on
 <a href="{prefix}dossier-qa/">/dossier-qa/</a> — the eight CLEAN BREAKs plus fb5
 (BREAK 0.75 after the four-prompt rerun) and n445 (HOLD). mp_140 is not here.
-Scoring-correction HOLDs are not here. D460–D481 are not here.</p>
+Scoring-correction HOLDs are not here. D460–D481 are not here.
+ui_031–ui_060 are not here.</p>
 {block("confirmed")}
 
 <h2 class="sec" id="tentative">Tentative / need reviewing</h2>
-<p class="sec-lead">D460–D481 Mixed Errands (22 tasks, Sol seed0 13&nbsp;Aug) sit at the
-top — 6 HOLD / 16 BREAK, all Tentative, none Confirmed. Then: mp_140 (not treated as a
-breaker), scoring-correction HOLDs (mp_131, mp_147), the rest of n440–n449 after
-prompt-review apply (n445 is in Confirmed with the dossier-qa set), fb2a/fb2c successes,
-scored br_* BREAKs, and remaining mp_130–162 that are not confirmed or rejected.
-Latest score wins where a task is still here.</p>
+<p class="sec-lead"><a href="{prefix}dossier/ui031-ui060.html">ui_031–ui_060</a> Excel
+bank (30 tasks, Sol seed0 14&nbsp;Aug) sit at the top — 18 HOLD / 12 BREAK, all
+Tentative, none Confirmed. Then D460–D481 Mixed Errands (22 tasks, 6 HOLD / 16 BREAK,
+also Tentative). Then: mp_140 (not treated as a breaker), scoring-correction HOLDs
+(mp_131, mp_147), the rest of n440–n449 after prompt-review apply (n445 is in
+Confirmed with the dossier-qa set), fb2a/fb2c successes, scored br_* BREAKs, and
+remaining mp_130–162 that are not confirmed or rejected. Latest score wins where a
+task is still here.</p>
 {block("tentative")}
 
 <h2 class="sec" id="rejected">Rejected</h2>
@@ -1104,6 +1118,7 @@ def main() -> None:
     )
     (HUB / "index.html").write_text(hub, encoding="utf-8")
     (ROOT / "index.html").write_text(root, encoding="utf-8")
+    write_set_page(ROOT / "dossier" / "ui031-ui060.html")
     print(f"wrote hub/index.html + index.html  confirmed={n_c} tentative={n_t} rejected={n_r} total={n_c+n_t+n_r}")
 
 
