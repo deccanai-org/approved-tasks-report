@@ -263,10 +263,13 @@ TASKS_UI031_UI060: list[dict] = [
 
 
 def write_set_page(path) -> None:
-    """Write dossier/ui031-ui060.html — bank table + briefs. No screenshot gallery."""
+    """Write dossier/ui031-ui060.html — bank table + briefs + step trajs."""
     from html import escape
     from pathlib import Path
 
+    from _traj import case_article_html, load_catalog
+
+    catalog = load_catalog()
     rows = []
     briefs = []
     for t in TASKS_UI031_UI060:
@@ -288,17 +291,7 @@ def write_set_page(path) -> None:
             f'<td><span class="chip {chip}">{escape(status)}</span></td>'
             f"</tr>"
         )
-        briefs.append(
-            f'<article class="case" id="{escape(tid)}-brief">'
-            f'<header class="casehead"><div><span class="mid">{escape(tid)}</span>'
-            f'<span class="slug">{escape(t["slug"])}</span></div>'
-            f'<div class="verdict {chip}">{escape(t["disp"])} · TENTATIVE</div></header>'
-            f'<p class="catch"><b>Seed0</b> episode <code>{escape(t["episode"])}</code> · '
-            f'{t["steps"]} steps · {escape(t["why"])}</p>'
-            f'<section class="prompt"><h3>Excel BRIEF</h3>'
-            f'<blockquote>{escape(t["brief"])}</blockquote></section>'
-            f"</article>"
-        )
+        briefs.append(case_article_html(t, catalog.get(tid)))
 
     html = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ui_031–ui_060 — Excel bank Sol seed0</title><link rel="stylesheet" href="style.css"></head>
 <body>
@@ -325,9 +318,9 @@ def write_set_page(path) -> None:
  <code>ui_060.py</code>. Job
  <a href="https://console.cloud.google.com/run/jobs/executions/details/us-central1/filtration-ui031-ui060-sol-seed0-945wt?project=gemini-503300">filtration-ui031-ui060-sol-seed0-945wt</a>.
  GCS <code>gs://gemini-503300-filtration-runs/filtration/ui031_ui060_20260814/ui031-ui060-sol-seed0-20260814T184710Z/</code>.
- Traj JSONL + screenshot tars live under that prefix <code>artifacts/</code> — not
- published here (same as D460–D481; keeps the repo under size limits).
- Cards also sit at the top of <a href="../">Tentative on the hub</a>.</p>
+ Each case below has the verbatim Excel BRIEF, eval gold/forbidden, and an
+ expandable Sol seed0 step log (action + page + reasoning). Screenshot tars stay
+ on GCS. Cards also sit at the top of <a href="../">Tentative on the hub</a>.</p>
  <h2 class="sec">ui_031–ui_060 · Sol seed0</h2>
  <div class="tablewrap"><table>
   <thead><tr><th>task</th><th>short plot</th><th class="num">score</th>
@@ -338,9 +331,9 @@ def write_set_page(path) -> None:
  <p class="note"><strong>How to read this set.</strong> Short plot is the seed0
  outcome, not a Confirmed finding. Excel BRIEFs are verbatim from
  <code>tasks_updated</code>. Episode hashes are the Cloud Run seed0 rollouts.
- No screenshot gallery in this repo — agent + oracle frames stay on GCS.
- Nothing here is CONFIRMED.</p>
- <h2 class="sec">Excel BRIEFs</h2>
+ Step lists are the agent action log, not a Confirmed film. Screenshot tars stay
+ on GCS. Nothing here is CONFIRMED.</p>
+ <h2 class="sec">Excel BRIEFs + seed0 trajectories</h2>
  {"".join(briefs)}
  <footer>Published under <code>/dossier/ui031-ui060.html</code> on
  <a href="https://github.com/deccanai-org/approved-tasks-report">deccanai-org/approved-tasks-report</a>.

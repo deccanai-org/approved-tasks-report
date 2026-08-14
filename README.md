@@ -9,6 +9,10 @@ same catalog: https://deccanai-org.github.io/approved-tasks-report/hub/
 
 **ui_031–ui_060 Excel bank (Tentative, Sol seed0 14 Aug):** https://deccanai-org.github.io/approved-tasks-report/dossier/ui031-ui060.html
 
+**D460–D481 Mixed Errands (Tentative, Sol seed0 13 Aug):** https://deccanai-org.github.io/approved-tasks-report/dossier/d460-d481.html
+
+Hub cards and both set pages include expandable **text step trajectories** (action / page / reasoning) plus eval gold/forbidden. Screenshots stay optional and are not required.
+
 **Dossier (breakers only):** https://deccanai-org.github.io/approved-tasks-report/dossier/
 
 **QA prompt-review set (13 Aug, env-audited):** https://deccanai-org.github.io/approved-tasks-report/dossier-qa/

@@ -137,3 +137,20 @@ details.history summary{cursor:pointer;font-family:var(--mono);font-size:11px;le
 details.history .label{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--warn);margin:14px 0 8px;font-weight:700}
 details.history blockquote{margin:0;font-family:var(--serif);font-size:15px;line-height:1.55;border-left:3px solid var(--rule);padding:2px 0 2px 16px;max-width:70ch;color:var(--muted)}
 details.history p{font-size:14.5px;max-width:80ch}
+details.traj{margin-top:14px;border:1px solid var(--rule);border-radius:8px;padding:10px 14px;background:color-mix(in srgb, var(--accent) 4%, var(--card))}
+details.traj summary{cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+details.traj summary .sub{font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:12px;color:var(--muted);margin-left:8px;font-weight:400}
+details.traj.missing{background:color-mix(in srgb, var(--warn) 6%, var(--card))}
+p.miss{font-family:var(--serif);color:var(--muted)}
+ol.steplist{list-style:none;margin:12px 0 0;padding:0;max-height:520px;overflow:auto;border-top:1px solid var(--rule)}
+ol.steplist li{display:grid;grid-template-columns:2.2rem 5.6rem 1fr;gap:8px;padding:8px 0;border-bottom:1px dotted var(--rule);align-items:start}
+ol.steplist .n{font-family:var(--mono);font-size:11px;color:#fff;background:var(--accent);border-radius:4px;padding:1px 6px;font-weight:700;height:fit-content}
+ol.steplist .app{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+ol.steplist .act{font-family:var(--mono);font-size:12.5px;word-break:break-word}
+ol.steplist .why{margin:3px 0 0;font-family:var(--serif);font-size:13.5px;color:var(--muted)}
+ol.steplist .meta{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:2px;word-break:break-word}
+ol.steplist .ms{color:var(--fired)}
+details.seed5{margin-top:10px}
+.seed5-lead{font-family:var(--serif)}
+.verdict.muted{color:var(--muted)}
+@media (max-width:760px){ ol.steplist li{grid-template-columns:2rem 1fr} ol.steplist .app{grid-column:2} }

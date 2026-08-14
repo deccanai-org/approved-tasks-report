@@ -9,6 +9,7 @@ from pathlib import Path
 HUB = Path(__file__).resolve().parent
 if str(HUB) not in sys.path:
     sys.path.insert(0, str(HUB))
+from _traj import canon_id, load_catalog, traj_block_html, write_d460_page
 from _ui031_ui060 import TASKS_UI031_UI060, write_set_page
 
 ROOT = HUB.parent
@@ -938,10 +939,21 @@ def _check() -> None:
         assert not any(good in i for i in r)
 
 
+_CATALOG = None
+
+
+def _catalog() -> dict:
+    global _CATALOG
+    if _CATALOG is None:
+        _CATALOG = load_catalog()
+    return _CATALOG
+
+
 def row_html(task: dict, prefix: str) -> str:
     def href(path: str) -> str:
         return prefix + path
 
+    hid = canon_id(task["id"])
     links = []
     if task.get("dossier"):
         links.append(f'<a href="{href(task["dossier"])}">dossier</a>')
@@ -949,9 +961,14 @@ def row_html(task: dict, prefix: str) -> str:
         links.append(f'<a href="{href(task["qa"])}">dossier-qa</a>')
     if task.get("gallery"):
         links.append(f'<a href="{href(task["gallery"])}">gallery</a>')
-    for label, path in task.get("extra") or []:
+    extra = list(task.get("extra") or [])
+    if hid.startswith("d4") and not any("d460" in p for _, p in extra):
+        extra.append(("D460–D481 set", f"dossier/d460-d481.html#{hid}"))
+    for label, path in extra:
         links.append(f'<a href="{href(path)}">{html.escape(label)}</a>')
     link_html = " ".join(links) if links else '<span class="none">no dossier page</span>'
+    traj = _catalog().get(hid)
+    traj_html = traj_block_html(task, traj)
     q = " ".join(
         [
             task["id"],
@@ -982,6 +999,7 @@ def row_html(task: dict, prefix: str) -> str:
     <span class="chip {task["kind"]}">{html.escape(task["disp"])}</span>
     <div class="links">{link_html}</div>
   </div>
+  <div class="traj-wrap">{traj_html}</div>
 </article>"""
 
 
@@ -1014,7 +1032,9 @@ def page(prefix: str, css: str, canonical_note: str) -> str:
   at the top (18 HOLD / 12 BREAK; none Confirmed), then Mixed Errands D460–D481
   (including those 6 HOLDs), then mp_140 and scoring-correction HOLDs. Rejected is
   env, harness, false trap, or an agent success that is not a breaker. One card per
-  task id; latest episode only. No CONFIRMED inflation beyond this set.</p>
+  task id; latest episode only. Every card has an expandable seed0 step log
+  when a traj exists (text action list — screenshots optional). Confirmed cards
+  also carry the 5-seed HOLD/BREAK table. No CONFIRMED inflation beyond this set.</p>
   <div class="tally">
     <a class="fired" href="#confirmed"><span class="n">{n_c}</span><span class="l">confirmed / reviewed</span></a>
     <a class="warn" href="#tentative"><span class="n">{n_t}</span><span class="l">tentative / need review</span></a>
@@ -1027,6 +1047,7 @@ def page(prefix: str, css: str, canonical_note: str) -> str:
  Old paths stay live: <a href="{prefix}dossier/">/dossier/</a>,
  <a href="{prefix}dossier-qa/">/dossier-qa/</a>,
  <a href="{prefix}dossier/ui031-ui060.html">ui_031–ui_060 set</a>,
+ <a href="{prefix}dossier/d460-d481.html">D460–D481 set</a>,
  <a href="{prefix}dossier/n440-n449.html">N440–N449</a>,
  <a href="{prefix}mail002-0fff244a/">mail_002 traj</a>,
  <a href="{prefix}APPROVED_TASKS_REPORT_2026-08-11.html">11&nbsp;Aug screenshot gallery</a>.</p>
@@ -1119,6 +1140,7 @@ def main() -> None:
     (HUB / "index.html").write_text(hub, encoding="utf-8")
     (ROOT / "index.html").write_text(root, encoding="utf-8")
     write_set_page(ROOT / "dossier" / "ui031-ui060.html")
+    write_d460_page(ROOT / "dossier" / "d460-d481.html", TASKS)
     print(f"wrote hub/index.html + index.html  confirmed={n_c} tentative={n_t} rejected={n_r} total={n_c+n_t+n_r}")
 
 
