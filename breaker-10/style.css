@@ -79,7 +79,7 @@ h1 {
 }
 .banner strong { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase }
 
-.docket { display: flex; flex-direction: column; gap: 0; border-top: 2px solid var(--ink) }
+.docket { display: flex; flex-direction: column; gap: 0; border-top: 2px solid var(--ink); margin: 0 0 36px }
 .case-row {
   display: grid;
   grid-template-columns: 72px 1fr auto;

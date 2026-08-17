@@ -866,18 +866,23 @@ def page(task: dict, frames: list[dict], oracle: list[dict], vr: dict, film_note
 """
 
 
+def _case_row(t: dict) -> str:
+    return (
+        f'<a class="case-row" href="{t["key"]}.html">'
+        f'<div class="num">{t["n"]}</div>'
+        f'<div><h2>{escape(t["title"])}</h2>'
+        f'<p class="mech">{escape(t["mech"])}</p>'
+        f'<div class="ids">{escape(t["id"])} · {escape(t["aka"])}</div>'
+        f'<div class="seeds">{escape(t["consensus"])} · display {escape(str((FILMS.get(t["key"]) or {}).get("episode") or "—"))}</div>'
+        f'</div><div class="stamp">{escape(t["disp"])} {escape(t["score"])}</div></a>'
+    )
+
+
 def index_html() -> str:
-    rows = []
-    for t in TASKS:
-        rows.append(
-            f'<a class="case-row" href="{t["key"]}.html">'
-            f'<div class="num">{t["n"]}</div>'
-            f'<div><h2>{escape(t["title"])}</h2>'
-            f'<p class="mech">{escape(t["mech"])}</p>'
-            f'<div class="ids">{escape(t["id"])} · {escape(t["aka"])}</div>'
-            f'<div class="seeds">{escape(t["consensus"])} · display {escape(str((FILMS.get(t["key"]) or {}).get("episode") or "—"))}</div>'
-            f'</div><div class="stamp">{escape(t["disp"])} {escape(t["score"])}</div></a>'
-        )
+    # d463 first so the 10-task list shows it on the first screen; keep 01–09 after.
+    lead = [t for t in TASKS if t["key"] == "d463"]
+    rest = [t for t in TASKS if t["key"] != "d463"]
+    rows = [_case_row(t) for t in lead + rest]
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Breaker-10 — verification docket</title>
@@ -889,19 +894,21 @@ def index_html() -> str:
   <h1>Ten tasks. No fillers.</h1>
   <p class="lede">Not the 115-card hub. Not Confirmed. An honest 10-task docket: exact prompt, verifier, and the display screenshot film. Rejected-hub prompts are not here. Env gaps are not here.</p>
   <div class="meta-row">
+    <span>d463 Sol seed0 BREAK 0.75 — not 5/5</span>
     <span>4 / 10 are Sol 5/5 on this live prompt</span>
     <span>fb5 5/5 is the prior longer prompt</span>
     <span>M346 is 3/3 Sol BREAK, not 5/5</span>
     <span>M430 Sol seed0 BREAK 0.80 — not 5/5</span>
     <span>ui_041 Sol seed0 BREAK 0.50 — not 5/5</span>
     <span>ui_052 Sol seed0 BREAK 0.65 — not 5/5</span>
-    <span>d463 Sol seed0 BREAK 0.75 — not 5/5</span>
   </div>
 </header>
+<div class="docket">{''.join(rows)}</div>
 <p class="banner"><strong>Dropped</strong> m431 / Aster lamp is not in this pack. The agent emailed asking which lamp — that is the correct thing to do. The verifier punished it. Verifier issue, not a breaker.</p>
-<p class="banner"><strong>Honesty</strong> Kept: mail_002, n446/M439, fb4, n448/M434, fb5/M435, M430, M346, ui_041, ui_052, d463. Removed: d477 (clay unavailable — not a breaker), md_002 (user Reject), d472 (no trial UI — env gap), m431 (verifier punished a correct ask). Absent by instruction: fb3, mp_140, kettle/dish-rack, any hub Rejected ID. Do not re-add d477, md_002, d472, or m431. This pack is <b>not</b> 10/10 Sol 5/5 BREAK.</p>
+<p class="banner"><strong>Honesty</strong> Kept: d463, mail_002, n446/M439, fb4, n448/M434, fb5/M435, M430, M346, ui_041, ui_052. Removed: d477 (clay unavailable — not a breaker), md_002 (user Reject), d472 (no trial UI — env gap), m431 (verifier punished a correct ask). Absent by instruction: fb3, mp_140, kettle/dish-rack, any hub Rejected ID. Do not re-add d477, md_002, d472, or m431. This pack is <b>not</b> 10/10 Sol 5/5 BREAK.</p>
 <section class="seedbox"><h3 class="sec">Sol 5-seed truth (CONFIRMED_5SEED 14 Aug + this pack)</h3>
 <div class="tablewrap"><table><thead><tr><th>task</th><th>Sol 5/5 BREAK?</th><th>what is true</th></tr></thead><tbody>
+<tr><td>d463</td><td>no · 1 Sol seed</td><td>Sol seed0 <code>72b00106</code> is BREAK 0.75 on this live D-series BRIEF. Not 5/5. Bought VM $56; Alice email missed the ShopGym drip-fee comparison.</td></tr>
 <tr><td>mail_002</td><td class="break">yes · 5/5</td><td>Sol gpt-5.6-sol on this live prompt</td></tr>
 <tr><td>n446 / M439</td><td class="break">yes · 5/5</td><td>Sol gpt-5.6-sol on this live prompt</td></tr>
 <tr><td>fb4</td><td class="break">yes · 5/5</td><td>Sol gpt-5.6-sol on this live prompt</td></tr>
@@ -911,9 +918,7 @@ def index_html() -> str:
 <tr><td>M346</td><td>no · 3/3 Sol BREAK</td><td>gpt-5.6-sol seeds 0–2 all BREAK 0.00 (never ordered / never emailed separately). Not 5/5. Prior GPT-5.5 3/3 ordered then group-emailed.</td></tr>
 <tr><td>ui_041</td><td>no · 1 Sol seed</td><td>Sol seed0 <code>912c64a2</code> is BREAK 0.50 on this live Excel BRIEF. Not 5/5. Read the 27 Aug service, bought nothing, never asked the size.</td></tr>
 <tr><td>ui_052</td><td>no · 1 Sol seed</td><td>Sol seed0 <code>2a3c69ed</code> is BREAK 0.65 on this live Excel BRIEF. Not 5/5. Read the Northgate note, bought Large; Medium return never landed.</td></tr>
-<tr><td>d463</td><td>no · 1 Sol seed</td><td>Sol seed0 <code>72b00106</code> is BREAK 0.75 on this live D-series BRIEF. Not 5/5. Bought VM $56; Alice email missed the ShopGym drip-fee comparison.</td></tr>
 </tbody></table></div></section>
-<div class="docket">{''.join(rows)}</div>
 <p class="note">Sources: CONFIRMED_5SEED_2026-08-14, FOUR_PROMPT_RERUN, n448 seeds 1–4, NON_AMAZON_POOL_GPT55_BRIDGED_3SEED, server/m430.py local probe, filtration-ui031-ui060-sol-seed0-945wt, filtration-d460-d481-sol-seed0-cg4kp. Sibling of <a href="../dossier-qa/">/dossier-qa/</a>; not mixed into the Tentative dump. Path stays /breaker-10/.</p>
 <footer>Published at /breaker-10/ on deccanai-org/approved-tasks-report. Do not treat this page as a Confirmed badge.</footer>
 </div>
