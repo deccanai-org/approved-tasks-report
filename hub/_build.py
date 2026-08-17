@@ -1043,11 +1043,24 @@ def page(prefix: str, css: str, canonical_note: str) -> str:
   </div>
 </header>
 
+<nav class="series-nav" aria-label="Look-through series">
+  <a class="series-card" href="{prefix}dossier/ui031-ui060.html">
+    <span class="kicker">UI series</span>
+    <strong>ui_031–ui_060</strong>
+    <span class="desc">30 Excel tasks. Each: verbatim BRIEF, gold, HOLD/BREAK, seed0 trajectory.</span>
+  </a>
+  <a class="series-card" href="{prefix}dossier/d460-d481.html">
+    <span class="kicker">D series</span>
+    <strong>D460–D481</strong>
+    <span class="desc">22 Mixed Errands. Each: verbatim BRIEF, gold, HOLD/BREAK, seed0 trajectory.</span>
+  </a>
+</nav>
+
 <p class="banner">{canonical_note}
  Old paths stay live: <a href="{prefix}dossier/">/dossier/</a>,
  <a href="{prefix}dossier-qa/">/dossier-qa/</a>,
- <a href="{prefix}dossier/ui031-ui060.html">ui_031–ui_060 set</a>,
- <a href="{prefix}dossier/d460-d481.html">D460–D481 set</a>,
+ <a href="{prefix}dossier/ui031-ui060.html">UI series</a>,
+ <a href="{prefix}dossier/d460-d481.html">D series</a>,
  <a href="{prefix}dossier/n440-n449.html">N440–N449</a>,
  <a href="{prefix}mail002-0fff244a/">mail_002 traj</a>,
  <a href="{prefix}APPROVED_TASKS_REPORT_2026-08-11.html">11&nbsp;Aug screenshot gallery</a>.</p>
@@ -1072,10 +1085,11 @@ ui_031–ui_060 are not here.</p>
 {block("confirmed")}
 
 <h2 class="sec" id="tentative">Tentative / need reviewing</h2>
-<p class="sec-lead"><a href="{prefix}dossier/ui031-ui060.html">ui_031–ui_060</a> Excel
-bank (30 tasks, Sol seed0 14&nbsp;Aug) sit at the top — 18 HOLD / 12 BREAK, all
-Tentative, none Confirmed. Then D460–D481 Mixed Errands (22 tasks, 6 HOLD / 16 BREAK,
-also Tentative). Then: mp_140 (not treated as a breaker), scoring-correction HOLDs
+<p class="sec-lead"><a href="{prefix}dossier/ui031-ui060.html">UI series · ui_031–ui_060</a>
+(30 tasks, Sol seed0 14&nbsp;Aug) sit at the top — 18 HOLD / 12 BREAK, all
+Tentative, none Confirmed. Then
+<a href="{prefix}dossier/d460-d481.html">D series · D460–D481</a>
+Mixed Errands (22 tasks, 6 HOLD / 16 BREAK, also Tentative). Then: mp_140 (not treated as a breaker), scoring-correction HOLDs
 (mp_131, mp_147), the rest of n440–n449 after prompt-review apply (n445 is in
 Confirmed with the dossier-qa set), fb2a/fb2c successes, scored br_* BREAKs, and
 remaining mp_130–162 that are not confirmed or rejected. Latest score wins where a

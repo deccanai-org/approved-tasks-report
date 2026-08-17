@@ -267,7 +267,7 @@ def write_set_page(path) -> None:
     from html import escape
     from pathlib import Path
 
-    from _traj import case_article_html, load_catalog
+    from _traj import case_article_html, load_catalog, series_switch_html
 
     catalog = load_catalog()
     rows = []
@@ -293,13 +293,14 @@ def write_set_page(path) -> None:
         )
         briefs.append(case_article_html(t, catalog.get(tid)))
 
-    html = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ui_031–ui_060 — Excel bank Sol seed0</title><link rel="stylesheet" href="style.css"></head>
+    html = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>UI series — ui_031–ui_060</title><link rel="stylesheet" href="style.css"></head>
 <body>
 <div class="wrap">
  <header class="masthead">
-  <p class="eyebrow"><a href="../">&larr; hub</a> · ui_031–ui_060</p>
-  <h1>Thirty new Excel tasks. Eighteen holds. Twelve breaks.</h1>
-  <p class="standfirst">Frozen clock Friday 14 August 2026 11:00 ET. Sol
+  <p class="eyebrow"><a href="../">&larr; hub</a> · UI series</p>
+  <h1>UI series. Thirty Excel tasks, each with prompt and trajectory.</h1>
+  <p class="standfirst">Look-through page for <strong>ui_031–ui_060</strong>.
+  Frozen clock Friday 14 August 2026 11:00 ET. Sol
   <code>openai_pixel[gpt-5.6-sol]</code>, seed 0, 100-step cap, tip-locked Cloud Run
   <code>filtration-ui031-ui060-sol-seed0-945wt</code>
   (RUN_ID <code>ui031-ui060-sol-seed0-20260814T184710Z</code>).
@@ -312,16 +313,19 @@ def write_set_page(path) -> None:
    <div><span class="n">30</span><span class="l">tasks in this set</span></div>
   </div>
  </header>
+ {series_switch_html("ui")}
  <p class="banner">Audit:
  <code>docs/history/audits/UI031_UI060_SEED0_2026-08-14.md</code>
  in ecommerce-browser-gym. Gym modules <code>server/ui_031.py</code> …
  <code>ui_060.py</code>. Job
  <a href="https://console.cloud.google.com/run/jobs/executions/details/us-central1/filtration-ui031-ui060-sol-seed0-945wt?project=gemini-503300">filtration-ui031-ui060-sol-seed0-945wt</a>.
  GCS <code>gs://gemini-503300-filtration-runs/filtration/ui031_ui060_20260814/ui031-ui060-sol-seed0-20260814T184710Z/</code>.
- Each case below has the verbatim Excel BRIEF, eval gold/forbidden, and an
- expandable Sol seed0 step log (action + page + reasoning). Screenshot tars stay
- on GCS. Cards also sit at the top of <a href="../">Tentative on the hub</a>.</p>
- <h2 class="sec">ui_031–ui_060 · Sol seed0</h2>
+ Each case: verbatim Excel BRIEF, gold one-liner, HOLD/BREAK + score + episode,
+ and the Sol seed0 step log (action + page + reasoning). Screenshot tars stay
+ on GCS. Matching D series:
+ <a href="d460-d481.html">D460–D481</a>. Cards also sit at the top of
+ <a href="../">Tentative on the hub</a>.</p>
+ <h2 class="sec">Index of 30 · ui_031–ui_060</h2>
  <div class="tablewrap"><table>
   <thead><tr><th>task</th><th>short plot</th><th class="num">score</th>
   <th class="num">steps</th><th>episode</th><th>status</th></tr></thead>
@@ -333,10 +337,12 @@ def write_set_page(path) -> None:
  <code>tasks_updated</code>. Episode hashes are the Cloud Run seed0 rollouts.
  Step lists are the agent action log, not a Confirmed film. Screenshot tars stay
  on GCS. Nothing here is CONFIRMED.</p>
- <h2 class="sec">Excel BRIEFs + seed0 trajectories</h2>
+ <h2 class="sec">Each task · BRIEF + gold + seed0 trajectory</h2>
  {"".join(briefs)}
- <footer>Published under <code>/dossier/ui031-ui060.html</code> on
+ <footer>This is the <strong>UI series</strong> look-through:
+ <code>/dossier/ui031-ui060.html</code> on
  <a href="https://github.com/deccanai-org/approved-tasks-report">deccanai-org/approved-tasks-report</a>.
+ D series: <a href="d460-d481.html">D460–D481</a>.
  Hub catalog: <a href="../">site root</a>.</footer>
 </div>
 </body></html>
