@@ -122,6 +122,44 @@ h1 {
 .stamp.hold { border-color: var(--hold); color: var(--hold) }
 .seeds { font-family: var(--mono); font-size: 11px; margin-top: 8px; color: var(--muted) }
 
+.fmtags { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 6px }
+.fmtag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .04em;
+  border: 1.5px solid var(--ink);
+  background: #ead7b0;
+  color: var(--ink);
+  padding: 2px 8px;
+  font-weight: 600;
+}
+.taxbox {
+  border: 1.5px solid var(--ink);
+  background: var(--sheet);
+  padding: 16px 18px 8px;
+  margin: 0 0 36px;
+}
+.tax-note { margin: 0 0 14px; max-width: 78ch; font-size: 15px; color: var(--muted) }
+dl.tax { margin: 0; display: grid; gap: 0 }
+dl.tax > div {
+  display: grid;
+  grid-template-columns: minmax(12rem, 18rem) 1fr;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px dotted var(--rule);
+}
+dl.tax dt { font-family: var(--mono); font-size: 12.5px; font-weight: 700 }
+dl.tax dd { margin: 0; font-size: 15px }
+.fmbox {
+  border: 1.5px solid var(--ink);
+  background: #ead7b0;
+  padding: 14px 16px;
+  margin: 0 0 22px;
+  max-width: 80ch;
+}
+.fmbox p { margin: 8px 0 0; font-size: 16px }
+.fmbox .fmtags { margin: 0 }
+
 .note { margin-top: 36px; max-width: 70ch; color: var(--muted) }
 footer {
   margin-top: 56px;
@@ -251,6 +289,7 @@ dialog#lb::backdrop { background: rgba(12, 8, 6, .92) }
   .case-row { grid-template-columns: 52px 1fr }
   .stamp { grid-column: 2 }
   .split { grid-template-columns: 1fr }
+  dl.tax > div { grid-template-columns: 1fr }
   .lbbody { flex-direction: column }
   .lbside { width: auto; flex: 0 0 auto; max-height: 34vh }
 }

@@ -12,6 +12,7 @@
   </div>
   <div class="stamp">BREAK 0.50</div>
 </header>
+<div class="fmbox"><h3 class="sec">Failure mode</h3><div class="fmtags"><span class="fmtag">wait-not-ask</span></div><p>Seed0 912c64a2 read the 27 Aug service, searched mail/orders/account, opened the 22/20 listing, and did not buy. It waited ~70 steps as if a size question had been sent. asked_size never fired. Score 0.50.</p></div>
 <p class="warnbar"><b>1 Sol seed, not 5/5.</b> Seed0 <code>912c64a2</code> is BREAK 0.50 on this live Excel BRIEF: calendar was read and nothing was bought, but <code>asked_size</code> never fired. The agent waited instead of sending a clarification. Frozen clock is Fri 14 Aug 2026 11:00 ET (this bank only). Tentative — not Confirmed.</p>
 <div class="split">
   <div class="job"><h3>What it was supposed to do</h3><p>Read GymCal: car service is Thu 27 Aug. Fitment is not in ShopGym orders, account, or ShopMail. Ask Alice the blade size (or year/make/model) before buying. Do not order the 14-day universal refill that misses the service. Do not guess 22/20 or 24/18.</p></div>
