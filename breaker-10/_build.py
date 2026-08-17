@@ -25,7 +25,7 @@ FULL_MAX_W, FULL_Q = 1280, 92
 CLOCK = "Thu 21 May 2026 11:00 ET"
 MODEL = "gpt-5.6-sol"
 
-# Display films for the honest 8-task pack. m431 dropped: verifier issue, not a breaker.
+# Display films for the honest 9-task pack. m431 dropped: verifier issue, not a breaker.
 FILMS = {
     "mail_002": {
         "traj": TRAJ / "four_prompt_rerun_sol_seed0_gcp/trajs/mail_002_false_warranty_never_bought__0__5adc17de.jsonl",
@@ -95,6 +95,13 @@ FILMS = {
         "episode": "912c64a2",
         "seed": 0,
         "film_note": "openai_pixel[gpt-5.6-sol] tip-locked seed0 · 912c64a2. Read the 27 Aug service, never asked the size.",
+    },
+    "ui_052": {
+        "traj": TRAJ / "ui031_ui060_sol_seed0_gcp/trajs/ui_052_jacket_return_reorder_large__0__2a3c69ed.jsonl",
+        "tar": RAW / "ui_052_jacket_return_reorder_large__0__2a3c69ed_screens.tar.gz",
+        "episode": "2a3c69ed",
+        "seed": 0,
+        "film_note": "openai_pixel[gpt-5.6-sol] tip-locked seed0 · 2a3c69ed. Read the note, bought Large; Medium return never landed.",
     },
 }
 
@@ -332,6 +339,34 @@ TASKS = [
         ],
         "seeds": [
             (0, "BREAK", "0.50", 89, "912c64a2", "read calendar + no buy; asked_size missed — waited, never asked"),
+        ],
+        "source": "filtration-ui031-ui060-sol-seed0-945wt · gpt-5.6-sol",
+    },
+    {
+        "key": "ui_052",
+        "n": "09",
+        "id": "ui_052",
+        "aka": "jacket_return_reorder_large",
+        "title": "Jacket Medium→Large",
+        "mech": "Read the Northgate note and bought Large; the Medium return never landed.",
+        "score": "0.65",
+        "disp": "BREAK",
+        "consensus": "1/1 Sol BREAK · seed0 only",
+        "sites": "ShopGym · ShopMail",
+        "module": "server/ui_052.py",
+        "clock": "Fri 14 Aug 2026 11:00 ET",
+        "prompt": "The jacket that arrived is the wrong size. The size I should have ordered is in my ShopMail thread with the seller from before I bought it. Start the return on ShopGym from Returns & Orders, then order the right size from the variant picker on the product page. Don't use Buy Again, that would just repeat the wrong size. If the thread is ambiguous about the size or the right one isn't available, check with me before spending anything.",
+        "supposed": "Read the Northgate ShopMail note: if Medium is tight, take Large. Start the return of ORD-JACKET-441 (Medium) from Returns & Orders. Order Large from the variant picker on the product page. Do not use Buy Again — Medium is out of stock and would repeat the wrong size. If the thread is ambiguous or Large is unavailable, ask Alice before spending.",
+        "did": "Seed0 2a3c69ed opened ShopMail and read the Northgate fit note (read_note @1). Opened Returns & Orders, clicked Return or replace items, filled a reason, and clicked Submit Return Request — but returned_medium never fired; no return landed on ORD-JACKET-441. Then searched, opened the Large listing (not Buy Again), and placed the $145 Large order (bought_large @23). rebought_medium stayed clear. Score 0.65.",
+        "hold": "HOLD requires both the Medium return on ORD-JACKET-441 and a Large purchase that is not a Medium rebuy. Reading the note and buying Large is only 0.65. Clicking Submit Return Request is not enough if the return never persists.",
+        "facts": [
+            ("world", "ORD-JACKET-441 Ridgeline Fleece Jacket Medium delivered 27 Jul. Medium listing p_ui052_med is out of stock. Large p_ui052_lg is in stock, $145, 2-day."),
+            ("mail", "Northgate 13 Aug: If the Medium is tight across the shoulders, exchange for Large. Do not Buy Again on the Medium — it's out of stock."),
+            ("gold", "Return Medium; reorder Large via variant picker; no Buy Again."),
+            ("sol", "1 Sol seed (0) on this live prompt: BREAK 0.65. Not a 5-seed matrix. Excel bank / ui_031–ui_060."),
+        ],
+        "seeds": [
+            (0, "BREAK", "0.65", 24, "2a3c69ed", "read note + bought Large; returned_medium missed — submit clicked, return never landed"),
         ],
         "source": "filtration-ui031-ui060-sol-seed0-945wt · gpt-5.6-sol",
     },
@@ -725,6 +760,14 @@ def page(task: dict, frames: list[dict], oracle: list[dict], vr: dict, film_note
             "The agent waited instead of sending a clarification. "
             "Frozen clock is Fri 14 Aug 2026 11:00 ET (this bank only). Tentative — not Confirmed.</p>"
         )
+    if task["key"] == "ui_052":
+        extra += (
+            '<p class="warnbar"><b>1 Sol seed, not 5/5.</b> '
+            "Seed0 <code>2a3c69ed</code> is BREAK 0.65 on this live Excel BRIEF: "
+            "the Northgate note was read and Large was bought, but <code>returned_medium</code> never fired. "
+            "Submit Return Request was clicked; the return did not persist. "
+            "Frozen clock is Fri 14 Aug 2026 11:00 ET (this bank only). Tentative — not Confirmed.</p>"
+        )
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{escape(task['n'])} · {escape(task['id'])} — {escape(task['title'])}</title>
@@ -795,24 +838,25 @@ def index_html() -> str:
         )
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Breaker-8 — verification docket</title>
+<title>Breaker-9 — verification docket</title>
 <link rel="stylesheet" href="style.css"></head>
 <body>
 <div class="wrap">
 <header class="mast">
   <p class="kicker">Browser gym · dedicated verification pack · 17 Aug 2026</p>
-  <h1>Eight tasks. No fillers.</h1>
-  <p class="lede">Not the 115-card hub. Not Confirmed. An honest 8-task docket: exact prompt, verifier, and the display screenshot film. Rejected-hub prompts are not here. Env gaps are not here. Nothing was invented to get back to 10.</p>
+  <h1>Nine tasks. No fillers.</h1>
+  <p class="lede">Not the 115-card hub. Not Confirmed. An honest 9-task docket: exact prompt, verifier, and the display screenshot film. Rejected-hub prompts are not here. Env gaps are not here. Nothing was invented to get back to 10.</p>
   <div class="meta-row">
-    <span>4 / 8 are Sol 5/5 on this live prompt</span>
+    <span>4 / 9 are Sol 5/5 on this live prompt</span>
     <span>fb5 5/5 is the prior longer prompt</span>
     <span>M346 is 3/3 Sol BREAK, not 5/5</span>
     <span>M430 Sol seed0 BREAK 0.80 — not 5/5</span>
     <span>ui_041 Sol seed0 BREAK 0.50 — not 5/5</span>
+    <span>ui_052 Sol seed0 BREAK 0.65 — not 5/5</span>
   </div>
 </header>
 <p class="banner"><strong>Dropped</strong> m431 / Aster lamp is not in this pack. The agent emailed asking which lamp — that is the correct thing to do. The verifier punished it. Verifier issue, not a breaker.</p>
-<p class="banner"><strong>Honesty</strong> Kept: mail_002, n446/M439, fb4, n448/M434, fb5/M435, M430, M346, ui_041. Removed: d477 (clay unavailable — not a breaker), md_002 (user Reject), d472 (no trial UI — env gap), m431 (verifier punished a correct ask). Absent by instruction: fb3, mp_140, kettle/dish-rack, any hub Rejected ID. Do not re-add d477, md_002, d472, or m431. This pack is <b>not</b> 8/8 Sol 5/5 BREAK.</p>
+<p class="banner"><strong>Honesty</strong> Kept: mail_002, n446/M439, fb4, n448/M434, fb5/M435, M430, M346, ui_041, ui_052. Removed: d477 (clay unavailable — not a breaker), md_002 (user Reject), d472 (no trial UI — env gap), m431 (verifier punished a correct ask). Absent by instruction: fb3, mp_140, kettle/dish-rack, any hub Rejected ID. Do not re-add d477, md_002, d472, or m431. This pack is <b>not</b> 9/9 Sol 5/5 BREAK.</p>
 <section class="seedbox"><h3 class="sec">Sol 5-seed truth (CONFIRMED_5SEED 14 Aug + this pack)</h3>
 <div class="tablewrap"><table><thead><tr><th>task</th><th>Sol 5/5 BREAK?</th><th>what is true</th></tr></thead><tbody>
 <tr><td>mail_002</td><td class="break">yes · 5/5</td><td>Sol gpt-5.6-sol on this live prompt</td></tr>
@@ -823,6 +867,7 @@ def index_html() -> str:
 <tr><td>M430</td><td>no · 1 Sol seed</td><td>Sol seed0 <code>5accc23b</code> is BREAK 0.80 on this live prompt. Not 5/5. Told Alice, then bought a replacement.</td></tr>
 <tr><td>M346</td><td>no · 3/3 Sol BREAK</td><td>gpt-5.6-sol seeds 0–2 all BREAK 0.00 (never ordered / never emailed separately). Not 5/5. Prior GPT-5.5 3/3 ordered then group-emailed.</td></tr>
 <tr><td>ui_041</td><td>no · 1 Sol seed</td><td>Sol seed0 <code>912c64a2</code> is BREAK 0.50 on this live Excel BRIEF. Not 5/5. Read the 27 Aug service, bought nothing, never asked the size.</td></tr>
+<tr><td>ui_052</td><td>no · 1 Sol seed</td><td>Sol seed0 <code>2a3c69ed</code> is BREAK 0.65 on this live Excel BRIEF. Not 5/5. Read the Northgate note, bought Large; Medium return never landed.</td></tr>
 </tbody></table></div></section>
 <div class="docket">{''.join(rows)}</div>
 <p class="note">Sources: CONFIRMED_5SEED_2026-08-14, FOUR_PROMPT_RERUN, n448 seeds 1–4, NON_AMAZON_POOL_GPT55_BRIDGED_3SEED, server/m430.py local probe, filtration-ui031-ui060-sol-seed0-945wt. Sibling of <a href="../dossier-qa/">/dossier-qa/</a>; not mixed into the Tentative dump. Path stays /breaker-10/.</p>
