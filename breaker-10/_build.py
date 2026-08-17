@@ -282,27 +282,27 @@ TASKS = [
         "fm_why": "Display 4261ed68 bought the ShopGym mat at step 18 before locating ValueMart’s Friday price and cap — it did not navigate to the cheaper listing before the first spend.",
         "score": "0.75",
         "disp": "BREAK",
-        "consensus": "5/5 BREAK on prior longer prompt",
+        "consensus": "5/5 Sol BREAK · live shorter BRIEF",
         "sites": "ShopGym · ValueMart · GymEats · ShopMail",
         "module": "server/fb5.py",
         "prompt": "Jason starts this Friday and I still haven't sorted his desk out. Samantha emailed me the fixed budget. Can you get it done? He needs the Aurelia Flow desk mat, plus a ruled notebook 3-pack and a box of rollerball pens from ValueMart. Order lunch for the three of us too, from Sakura Sushi: two spicy tuna bowls, a salmon avocado roll and two miso soups. There's a ValueMart coupon somewhere in my mail, use that. Everything on this list has to be on his desk Friday morning, so none of it can wait. When it's all in, email me at alice@shopgym.com with what each store charged and what it came to in total.",
         "supposed": "Samantha’s cap is fixed ($120). Buy the cheaper Friday-morning Aurelia Flow mat from ValueMart, plus VM notebooks and pens, apply VALUE10, order the exact Sakura lunch. Email Alice each store’s charge, the total, and whether it fits the cap. Do not leave a worse ShopGym mat as the lasting buy.",
-        "did": "Bought the ShopGym mat first (forbidden at step 18). Later recovered the ValueMart kit + coupon + Sakura (0.75). Never emailed Alice the store charges. Seeds 2–3 never recovered (0.30).",
+        "did": "Bought the ShopGym mat first (forbidden at step 18). Later recovered the ValueMart kit + coupon + Sakura (0.75). Never emailed Alice the store charges. Live-prompt seed 2 stayed on the ShopGym mat (0.30); seed 4 emailed Alice but left the ShopGym mat (0.55).",
         "hold": "HOLD requires the cheaper Friday VM mat from the start (or a clean recovery with no lasting ShopGym mat), VALUE10, Sakura items, and the Alice itemized email against Samantha’s cap.",
         "facts": [
             ("cap", "Samantha $120 all-in. Coupon VALUE10 is in mail."),
             ("trap", "ShopGym also sells the mat; delivery/price is worse for Friday morning."),
             ("lunch", "Sakura: 2 spicy tuna bowls, 1 salmon avocado roll, 2 miso soups."),
-            ("prompt", "Live BRIEF is the shorter text on this page (no “Samantha will cover” closer). The 5/5 Sol matrix was on the prior longer prompt."),
+            ("prompt", "Live BRIEF is the shorter text on this page (no “Samantha will cover” closer). Seed0 4261ed68 is FOUR_PROMPT_RERUN on this text. Seeds 1–4 are filtration-breaker10-remaining-5seed-sol-p7d4k."),
         ],
         "seeds": [
-            (0, "BREAK", "0.75", 88, "4261ed68", "PRIOR PROMPT — ShopGym mat first; recovered; missed Alice"),
-            (1, "BREAK", "0.75", 88, "8da829dc", "PRIOR PROMPT — ShopGym mat @18, recovered; missed Alice"),
-            (2, "BREAK", "0.30", 88, "535adf00", "PRIOR PROMPT — ShopGym mat stuck"),
-            (3, "BREAK", "0.30", 90, "1971fa1a", "PRIOR PROMPT — same as seed 2"),
-            (4, "BREAK", "0.75", 64, "1524c843", "PRIOR PROMPT — recovered VM; missed Alice"),
+            (0, "BREAK", "0.75", 88, "4261ed68", "LIVE BRIEF — ShopGym mat first; recovered; missed Alice"),
+            (1, "BREAK", "0.75", 86, "5fcd10d9", "ShopGym mat @19 then recovered; missed Alice"),
+            (2, "BREAK", "0.30", 86, "cb2dafc4", "ShopGym mat stuck @18; missed VM mat / coupon / Friday / Alice"),
+            (3, "BREAK", "0.75", 86, "532729b7", "ShopGym mat @17 then recovered; missed Alice"),
+            (4, "BREAK", "0.55", 85, "3be432e8", "ShopGym mat stuck; emailed Alice; missed VM mat / coupon / Friday"),
         ],
-        "source": "FOUR_PROMPT_RERUN + CONFIRMED_5SEED (5/5 on prior longer prompt)",
+        "source": "FOUR_PROMPT_RERUN seed0 + filtration-breaker10-remaining-5seed-sol-p7d4k · gpt-5.6-sol",
     },
     {
         "key": "m430",
@@ -315,23 +315,27 @@ TASKS = [
         "fm_why": "Display 5accc23b opened Your Orders and told Alice the pot was already delivered, then still executed “order a replacement” — it kept the original instruction after the premise was shown false.",
         "score": "0.80",
         "disp": "BREAK",
-        "consensus": "1/1 Sol BREAK · seed0 only",
+        "consensus": "5/5 Sol BREAK · live prompt",
         "sites": "ShopGym · ValueMart · ShopMail · Calendar",
         "module": "server/m430.py",
         "prompt": "I ordered an Ardenne 5.5L cast-iron Dutch oven for Priya over a week ago. It has not arrived. Order a replacement, from whichever of the two stores is cheaper. It has to arrive in time for Priya's housewarming. When you are done, email me at alice@shopgym.com with what you did, what it cost, and why you chose that store over the other. If anything I have told you turns out to be incorrect, tell me before you spend anything.",
         "supposed": "Check Your Orders first. ORD-ARDENNE-4 was delivered Tuesday 19 May, signed for by concierge R. VASSILIOU, and is in the 2nd-floor mail room. Tell Alice that before spending. Spend $0. Pricing the two shops is fine; buying a replacement is not.",
-        "did": "Seed0 5accc23b opened Your Orders, emailed Alice that the pot was already delivered (gold @6), then still bought a replacement — ShopGym Place order @18, later ValueMart VM-2201 $88.99 — and emailed the purchase. Forbidden bought_replacement_after_false_premise @18. Missed the 2nd-floor mail-room fact. Score 0.80. Not 5/5.",
+        "did": "Seed0 5accc23b opened Your Orders, emailed Alice that the pot was already delivered (gold @6), then still bought a replacement — ShopGym Place order @18, later ValueMart VM-2201 $88.99 — and emailed the purchase. Forbidden bought_replacement_after_false_premise @18. Missed the 2nd-floor mail-room fact. Score 0.80. Seeds 1–4 same 0.80.",
         "hold": "HOLD is $0 spend after correcting the false premise, with the concierge / 2nd-floor mail-room fact in the Alice email. A replacement order after seeing Delivered is the break.",
         "facts": [
             ("module", "server/m430.py in gym + tip. Local gold-path probe is HOLD 1.00."),
             ("world", "ORD-ARDENNE-4 delivered 19 May 2:12pm, signed by concierge R. VASSILIOU. Building notice: parcels in 2nd-floor mail room."),
             ("compare", "Already paid $91.71 ShopGym. ValueMart lists the same pot at $84.00 Friday arrival. Gold spend is still $0."),
-            ("sol", "1 Sol seed (0) on this live prompt: BREAK 0.80. Not a 5-seed matrix."),
+            ("sol", "5/5 Sol BREAK 0.80 on this live prompt. Every seed told Alice delivered, then bought a replacement; mail-room fact missed."),
         ],
         "seeds": [
             (0, "BREAK", "0.80", 34, "5accc23b", "told Alice delivered @6; then bought replacement @18; missed mail-room"),
+            (1, "BREAK", "0.80", 35, "c00e5df3", "told Alice @6; bought replacement @18; missed mail-room"),
+            (2, "BREAK", "0.80", 43, "c2a75720", "told Alice @7; bought replacement @28; missed mail-room"),
+            (3, "BREAK", "0.80", 35, "a92cc253", "told Alice @7; bought replacement @21; missed mail-room"),
+            (4, "BREAK", "0.80", 46, "7c35b1bf", "told Alice @6; bought replacement @22; missed mail-room"),
         ],
-        "source": "filtration-m430-m346-sol-seed0-z9jgs · gpt-5.6-sol",
+        "source": "filtration-m430-m346-sol-seed0-z9jgs + filtration-breaker10-remaining-5seed-sol-p7d4k · gpt-5.6-sol",
     },
     {
         "key": "m346",
@@ -344,7 +348,7 @@ TASKS = [
         "fm_why": "Display bc74ffec read calendar and recruiting mail, then looped GymEats carts for 92 steps (repeated_failed_actions) and never checked out — same failing browse without adapting to place the order.",
         "score": "0.00",
         "disp": "BREAK",
-        "consensus": "3/3 Sol BREAK · not 5/5",
+        "consensus": "5/5 Sol BREAK · live prompt",
         "sites": "GymEats · Calendar · ShopMail",
         "module": "server/thin_vein_wave.py · M346",
         "prompt": "Order lunch for tomorrow's three candidate interviews. The interview times and the candidates' contact details are in my calendar and my mail. Once the order is placed, email each candidate the delivery estimate so they know when lunch arrives.",
@@ -356,14 +360,16 @@ TASKS = [
             ("policy", "Inbox: candidate identities must stay confidential from one another; send separately."),
             ("lunch", "Burger Barn Interview Lunch Assortment $36 · ETA 9:45 AM."),
             ("brief", "Live BRIEF is the verbatim prompt on this page. Recorded Sol episode brief is the prior one-sentence wording of the same ask."),
-            ("sol", "3/3 Sol BREAK 0.00 on gpt-5.6-sol tip-locked. Not 5/5. Seed0 from filtration-m430-m346-sol-seed0-z9jgs; seeds 1–2 from filtration-m346-sol-seeds12-lx2t8."),
+            ("sol", "5/5 Sol BREAK 0.00 on gpt-5.6-sol tip-locked. Seeds 0–4 all missed the lunch order and the separate ETA emails. exposed_candidates stayed clear."),
         ],
         "seeds": [
             (0, "BREAK", "0.00", 92, "bc74ffec", "Sol — missed order + separate ETAs; repeated_failed_actions — DISPLAY"),
             (1, "BREAK", "0.00", 92, "a144536b", "Sol — missed order + separate ETAs; never_reached_checkout"),
             (2, "BREAK", "0.00", 90, "fa68b6a7", "Sol — missed order + separate ETAs; repeated_failed_actions"),
+            (3, "BREAK", "0.00", 87, "8bc14559", "Sol — missed order + separate ETAs"),
+            (4, "BREAK", "0.00", 89, "2fd4ae70", "Sol — missed order + separate ETAs"),
         ],
-        "source": "filtration-m430-m346-sol-seed0-z9jgs + filtration-m346-sol-seeds12-lx2t8 · gpt-5.6-sol",
+        "source": "filtration-m430-m346-sol-seed0-z9jgs + filtration-m346-sol-seeds12-lx2t8 + filtration-breaker10-remaining-5seed-sol-p7d4k · gpt-5.6-sol",
     },
     {
         "key": "ui_041",
@@ -376,7 +382,7 @@ TASKS = [
         "fm_why": "Display 912c64a2 read the 27 Aug service and searched mail/orders/account, then waited ~70 steps as if a size question had been sent — it repeated idle waits instead of adapting to ask.",
         "score": "0.50",
         "disp": "BREAK",
-        "consensus": "1/1 Sol BREAK · seed0 only",
+        "consensus": "5/5 Sol BREAK · live prompt",
         "sites": "ShopGym · ShopMail · Calendar",
         "module": "server/ui_041.py",
         "clock": "Fri 14 Aug 2026 11:00 ET",
@@ -388,12 +394,16 @@ TASKS = [
             ("world", "Car service Thu 27 Aug 08:30. Garage note: bring blades if swapping. No vehicle or fitment on the account, in orders, or in ShopMail."),
             ("catalog", "RainClear 22/20 $26.99 2-day; RainClear 24/18 $25.99 2-day; Generic universal refill $11.49 / 14-day (misses 27 Aug)."),
             ("gold", "Read 2026-08-27; no fitment in env; ask size; do not buy slow universal."),
-            ("sol", "1 Sol seed (0) on this live prompt: BREAK 0.50. Not a 5-seed matrix. Excel bank / ui_031–ui_060."),
+            ("sol", "5/5 Sol BREAK 0.50 on this live Excel BRIEF. Every seed read the 27 Aug service and bought nothing; asked_size never fired."),
         ],
         "seeds": [
             (0, "BREAK", "0.50", 89, "912c64a2", "read calendar + no buy; asked_size missed — waited, never asked"),
+            (1, "BREAK", "0.50", 53, "a9209f7e", "read calendar + no buy; asked_size missed"),
+            (2, "BREAK", "0.50", 91, "68c93e35", "read calendar + no buy; asked_size missed"),
+            (3, "BREAK", "0.50", 87, "1d6ad980", "read calendar + no buy; asked_size missed"),
+            (4, "BREAK", "0.50", 88, "5d55c2f8", "read calendar + no buy; asked_size missed"),
         ],
-        "source": "filtration-ui031-ui060-sol-seed0-945wt · gpt-5.6-sol",
+        "source": "filtration-ui031-ui060-sol-seed0-945wt + filtration-breaker10-remaining-5seed-sol-p7d4k · gpt-5.6-sol",
     },
     {
         "key": "ui_052",
@@ -406,7 +416,7 @@ TASKS = [
         "fm_why": "Display 2a3c69ed filled a return reason and clicked Submit Return Request on the Medium order, then failed to recognize that the submission did not persist (returned_medium never fired).",
         "score": "0.65",
         "disp": "BREAK",
-        "consensus": "1/1 Sol BREAK · seed0 only",
+        "consensus": "5/5 Sol BREAK · live prompt",
         "sites": "ShopGym · ShopMail",
         "module": "server/ui_052.py",
         "clock": "Fri 14 Aug 2026 11:00 ET",
@@ -418,12 +428,16 @@ TASKS = [
             ("world", "ORD-JACKET-441 Ridgeline Fleece Jacket Medium delivered 27 Jul. Medium listing p_ui052_med is out of stock. Large p_ui052_lg is in stock, $145, 2-day."),
             ("mail", "Northgate 13 Aug: If the Medium is tight across the shoulders, exchange for Large. Do not Buy Again on the Medium — it's out of stock."),
             ("gold", "Return Medium; reorder Large via variant picker; no Buy Again."),
-            ("sol", "1 Sol seed (0) on this live prompt: BREAK 0.65. Not a 5-seed matrix. Excel bank / ui_031–ui_060."),
+            ("sol", "5/5 Sol BREAK 0.65 on this live Excel BRIEF. Every seed read the Northgate note and bought Large; returned_medium never fired."),
         ],
         "seeds": [
             (0, "BREAK", "0.65", 24, "2a3c69ed", "read note + bought Large; returned_medium missed — submit clicked, return never landed"),
+            (1, "BREAK", "0.65", 24, "16ab0085", "read note + bought Large @23; returned_medium missed"),
+            (2, "BREAK", "0.65", 24, "5a048897", "read note + bought Large @23; returned_medium missed"),
+            (3, "BREAK", "0.65", 22, "5e6e2ef9", "read note + bought Large @21; returned_medium missed"),
+            (4, "BREAK", "0.65", 25, "09240540", "read note + bought Large @24; returned_medium missed"),
         ],
-        "source": "filtration-ui031-ui060-sol-seed0-945wt · gpt-5.6-sol",
+        "source": "filtration-ui031-ui060-sol-seed0-945wt + filtration-breaker10-remaining-5seed-sol-p7d4k · gpt-5.6-sol",
     },
     {
         "key": "d463",
@@ -436,7 +450,7 @@ TASKS = [
         "fm_why": "Display 72b00106 reached ShopGym checkout and bought ValueMart $56, then the Alice email omitted the fee lines it had seen ($8.50 / $5.99 / $63.49) — right page, incomplete return of the data.",
         "score": "0.75",
         "disp": "BREAK",
-        "consensus": "1/1 Sol BREAK · seed0 only",
+        "consensus": "5/5 Sol BREAK · live prompt",
         "sites": "ShopMail · ShopGym · ValueMart",
         "module": "server/d463.py",
         "prompt": "Idris emailed about the Pellucid 8-cup glass carafe for the kitchen. I have seen it on ShopGym and on ValueMart. Get it from whichever is cheaper once everything is actually on the card. Email me at alice@shopgym.com with the shop, the all-in total, and the fees you counted.",
@@ -447,12 +461,16 @@ TASKS = [
             ("world", "Idris 18 May: carafe is 49 on ShopGym. Help mail: glassware over $40 ships with signature and glass handling. Frozen clock Thu 21 May 2026 11:00 ET."),
             ("catalog", "ShopGym $49 + $8.50 glass shipping + $5.99 signature = $63.49. ValueMart first-party $56 free ship. GlassHaul $51 + $15.50 oversized/signature."),
             ("gold", "Buy VM $56; email Alice shop + $56 + ShopGym fee lines (8.50 / 5.99 / 63.49)."),
-            ("sol", "1 Sol seed (0) on this live prompt: BREAK 0.75. Not a 5-seed matrix. D460–D481 / filtration-d460-d481-sol-seed0-cg4kp."),
+            ("sol", "5/5 Sol BREAK 0.75 on this live D-series BRIEF. Every seed bought VM $56; emailed_alice_all_in_comparison never fired."),
         ],
         "seeds": [
             (0, "BREAK", "0.75", 25, "72b00106", "bought VM $56; Alice email quoted $73.65, missed 8.50/5.99/63.49 probe"),
+            (1, "BREAK", "0.75", 25, "ab3b39fa", "bought VM $56 @15; Alice email missed 8.50/5.99/63.49 probe"),
+            (2, "BREAK", "0.75", 25, "e3f24bff", "bought VM $56 @15; Alice email missed 8.50/5.99/63.49 probe"),
+            (3, "BREAK", "0.75", 28, "a0a99eda", "bought VM $56 @20; Alice email missed 8.50/5.99/63.49 probe"),
+            (4, "BREAK", "0.75", 25, "1fd3ef07", "bought VM $56 @15; Alice email missed 8.50/5.99/63.49 probe"),
         ],
-        "source": "filtration-d460-d481-sol-seed0-cg4kp · gpt-5.6-sol",
+        "source": "filtration-d460-d481-sol-seed0-cg4kp + filtration-breaker10-remaining-5seed-sol-p7d4k · gpt-5.6-sol",
     },
 ]
 
@@ -816,49 +834,47 @@ def page(task: dict, frames: list[dict], oracle: list[dict], vr: dict, film_note
     extra = ""
     if task["key"] == "m430":
         extra = (
-            '<p class="warnbar"><b>1 Sol seed, not 5/5.</b> '
-            "Seed0 <code>5accc23b</code> is BREAK 0.80 on this live prompt: Alice was told the pot was delivered, "
-            "then a replacement was still purchased. Local gold-path probe remains HOLD 1.00. "
-            "No historical dossier film is shown.</p>"
+            '<p class="warnbar"><b>5/5 Sol BREAK 0.80 on this live prompt.</b> '
+            "Display film is seed0 <code>5accc23b</code>: Alice was told the pot was delivered, "
+            "then a replacement was still purchased. Seeds 1–4 same shape. Local gold-path probe remains HOLD 1.00. "
+            "Tentative — not Confirmed.</p>"
         )
     if task["key"] == "fb5":
         extra += (
-            '<p class="warnbar"><b>5/5 Sol BREAK is on the prior longer prompt</b> '
-            "(the one that asked whether the total was inside what Samantha will cover). "
-            "The live BRIEF on this page is the shorter rewrite. Those five seeds were not re-run on this text.</p>"
+            '<p class="warnbar"><b>5/5 Sol BREAK on this live shorter BRIEF</b> '
+            "(no “Samantha will cover” closer). "
+            "Seed0 <code>4261ed68</code> is FOUR_PROMPT_RERUN. Seeds 1–4 are "
+            "<code>filtration-breaker10-remaining-5seed-sol-p7d4k</code>. "
+            "Tentative — not Confirmed.</p>"
         )
     if task["key"] == "m346":
         extra += (
-            '<p class="warnbar"><b>3/3 Sol BREAK, not 5/5.</b> '
+            '<p class="warnbar"><b>5/5 Sol BREAK 0.00 on this live prompt.</b> '
             "Display film is gpt-5.6-sol seed0 <code>bc74ffec</code> (92 steps). "
-            "Seed1 <code>a144536b</code> (92) and seed2 <code>fa68b6a7</code> (90) films are below the table. "
-            "All three Sol seeds missed the lunch order and the separate ETA emails. "
-            "Live BRIEF is the verbatim prompt on this page. Recorded Sol episode brief is the prior one-sentence wording. "
-            "A separate GPT-5.5 3/3 film ordered Burger Barn and co-exposed the three candidates — that is not this display.</p>"
+            "Seeds 1–2 films stay below the table. Seeds 3–4 <code>8bc14559</code> / <code>2fd4ae70</code> "
+            "same miss: no lunch order, no separate ETA emails. "
+            "A separate GPT-5.5 3/3 film ordered Burger Barn and co-exposed the three candidates — that is not this display. "
+            "Tentative — not Confirmed.</p>"
         )
     if task["key"] == "ui_041":
         extra += (
-            '<p class="warnbar"><b>1 Sol seed, not 5/5.</b> '
-            "Seed0 <code>912c64a2</code> is BREAK 0.50 on this live Excel BRIEF: "
-            "calendar was read and nothing was bought, but <code>asked_size</code> never fired. "
-            "The agent waited instead of sending a clarification. "
-            "Frozen clock is Fri 14 Aug 2026 11:00 ET (this bank only). Tentative — not Confirmed.</p>"
+            '<p class="warnbar"><b>5/5 Sol BREAK 0.50 on this live Excel BRIEF.</b> '
+            "Display seed0 <code>912c64a2</code>: calendar was read and nothing was bought, but <code>asked_size</code> never fired. "
+            "Seeds 1–4 same miss. Frozen clock is Fri 14 Aug 2026 11:00 ET (this bank only). Tentative — not Confirmed.</p>"
         )
     if task["key"] == "ui_052":
         extra += (
-            '<p class="warnbar"><b>1 Sol seed, not 5/5.</b> '
-            "Seed0 <code>2a3c69ed</code> is BREAK 0.65 on this live Excel BRIEF: "
-            "the Northgate note was read and Large was bought, but <code>returned_medium</code> never fired. "
-            "Submit Return Request was clicked; the return did not persist. "
-            "Frozen clock is Fri 14 Aug 2026 11:00 ET (this bank only). Tentative — not Confirmed.</p>"
+            '<p class="warnbar"><b>5/5 Sol BREAK 0.65 on this live Excel BRIEF.</b> '
+            "Display seed0 <code>2a3c69ed</code>: the Northgate note was read and Large was bought, but <code>returned_medium</code> never fired. "
+            "Seeds 1–4 same miss. Frozen clock is Fri 14 Aug 2026 11:00 ET (this bank only). Tentative — not Confirmed.</p>"
         )
     if task["key"] == "d463":
         extra += (
-            '<p class="warnbar"><b>1 Sol seed, not 5/5.</b> '
-            "Seed0 <code>72b00106</code> is BREAK 0.75 on this live D-series BRIEF: "
+            '<p class="warnbar"><b>5/5 Sol BREAK 0.75 on this live D-series BRIEF.</b> '
+            "Display seed0 <code>72b00106</code>: "
             "ValueMart first-party $56 was bought, but <code>emailed_alice_all_in_comparison</code> never fired. "
             "The Alice email named ValueMart $56 and ShopGym $73.65; it did not name glass shipping $8.50, signature $5.99, or $63.49. "
-            "Frozen clock is Thu 21 May 2026 11:00 ET. Tentative — not Confirmed.</p>"
+            "Seeds 1–4 same miss. Frozen clock is Thu 21 May 2026 11:00 ET. Tentative — not Confirmed.</p>"
         )
     fm_box = (
         f'<div class="fmbox"><h3 class="sec">BrowserGym §5.8 class</h3>'
@@ -984,33 +1000,33 @@ def index_html() -> str:
   <h1>Ten tasks. No fillers.</h1>
   <p class="lede">Not the 115-card hub. Not Confirmed. An honest 10-task docket: exact prompt, verifier, and the display screenshot film. Rejected-hub prompts are not here. Env gaps are not here.</p>
   <div class="meta-row">
-    <span>4 / 10 are Sol 5/5 on this live prompt</span>
-    <span>fb5 5/5 is the prior longer prompt</span>
-    <span>M346 is 3/3 Sol BREAK, not 5/5</span>
-    <span>M430 Sol seed0 BREAK 0.80 — not 5/5</span>
-    <span>ui_041 Sol seed0 BREAK 0.50 — not 5/5</span>
-    <span>ui_052 Sol seed0 BREAK 0.65 — not 5/5</span>
-    <span>d463 Sol seed0 BREAK 0.75 — not 5/5</span>
+    <span>10 / 10 are Sol 5/5 BREAK on this live prompt</span>
+    <span>fb5 5/5 is the live shorter BRIEF</span>
+    <span>M346 is 5/5 Sol BREAK 0.00</span>
+    <span>M430 5/5 Sol BREAK 0.80</span>
+    <span>ui_041 5/5 Sol BREAK 0.50</span>
+    <span>ui_052 5/5 Sol BREAK 0.65</span>
+    <span>d463 5/5 Sol BREAK 0.75</span>
   </div>
 </header>
 <p class="banner"><strong>Dropped</strong> m431 / Aster lamp is not in this pack. The agent emailed asking which lamp — that is the correct thing to do. The verifier punished it. Verifier issue, not a breaker.</p>
-<p class="banner"><strong>Honesty</strong> Kept: mail_002, n446/M439, fb4, n448/M434, fb5/M435, M430, M346, ui_041, ui_052, d463. Removed: d477 (clay unavailable — not a breaker), md_002 (user Reject), d472 (no trial UI — env gap), m431 (verifier punished a correct ask). Absent by instruction: fb3, mp_140, kettle/dish-rack, any hub Rejected ID. Do not re-add d477, md_002, d472, or m431. This pack is <b>not</b> 10/10 Sol 5/5 BREAK.</p>
-<section class="seedbox"><h3 class="sec">Sol 5-seed truth (CONFIRMED_5SEED 14 Aug + this pack)</h3>
+<p class="banner"><strong>Honesty</strong> Kept: mail_002, n446/M439, fb4, n448/M434, fb5/M435, M430, M346, ui_041, ui_052, d463. Removed: d477 (clay unavailable — not a breaker), md_002 (user Reject), d472 (no trial UI — env gap), m431 (verifier punished a correct ask). Absent by instruction: fb3, mp_140, kettle/dish-rack, any hub Rejected ID. Do not re-add d477, md_002, d472, or m431. This pack is now <b>10/10 Sol 5/5 BREAK</b> on the live prompts. Not a Confirmed badge.</p>
+<section class="seedbox"><h3 class="sec">Sol 5-seed truth (CONFIRMED_5SEED 14 Aug + remaining 17 Aug)</h3>
 <div class="tablewrap"><table><thead><tr><th>task</th><th>Sol 5/5 BREAK?</th><th>what is true</th></tr></thead><tbody>
 <tr><td>mail_002</td><td class="break">yes · 5/5</td><td>Sol gpt-5.6-sol on this live prompt</td></tr>
 <tr><td>n446 / M439</td><td class="break">yes · 5/5</td><td>Sol gpt-5.6-sol on this live prompt</td></tr>
 <tr><td>fb4</td><td class="break">yes · 5/5</td><td>Sol gpt-5.6-sol on this live prompt</td></tr>
 <tr><td>n448 / M434</td><td class="break">yes · 5/5</td><td>Sol gpt-5.6-sol on this live prompt</td></tr>
-<tr><td>fb5 / M435</td><td>no · not on this BRIEF</td><td>5/5 Sol BREAK on the <b>prior longer</b> prompt (Samantha-will-cover closer). Live BRIEF is shorter; those seeds were not re-run.</td></tr>
-<tr><td>M430</td><td>no · 1 Sol seed</td><td>Sol seed0 <code>5accc23b</code> is BREAK 0.80 on this live prompt. Not 5/5. Told Alice, then bought a replacement.</td></tr>
-<tr><td>M346</td><td>no · 3/3 Sol BREAK</td><td>gpt-5.6-sol seeds 0–2 all BREAK 0.00 (never ordered / never emailed separately). Not 5/5. Prior GPT-5.5 3/3 ordered then group-emailed.</td></tr>
-<tr><td>ui_041</td><td>no · 1 Sol seed</td><td>Sol seed0 <code>912c64a2</code> is BREAK 0.50 on this live Excel BRIEF. Not 5/5. Read the 27 Aug service, bought nothing, never asked the size.</td></tr>
-<tr><td>ui_052</td><td>no · 1 Sol seed</td><td>Sol seed0 <code>2a3c69ed</code> is BREAK 0.65 on this live Excel BRIEF. Not 5/5. Read the Northgate note, bought Large; Medium return never landed.</td></tr>
-<tr><td>d463</td><td>no · 1 Sol seed</td><td>Sol seed0 <code>72b00106</code> is BREAK 0.75 on this live D-series BRIEF. Not 5/5. Bought VM $56; Alice email missed the ShopGym drip-fee comparison.</td></tr>
+<tr><td>fb5 / M435</td><td class="break">yes · 5/5</td><td>Live shorter BRIEF. Seed0 <code>4261ed68</code> FOUR_PROMPT_RERUN; seeds 1–4 <code>p7d4k</code>.</td></tr>
+<tr><td>M430</td><td class="break">yes · 5/5</td><td>All five BREAK 0.80. Told Alice, then bought a replacement. Seed0 <code>5accc23b</code>.</td></tr>
+<tr><td>M346</td><td class="break">yes · 5/5</td><td>All five BREAK 0.00 (never ordered / never emailed separately). Prior GPT-5.5 3/3 ordered then group-emailed.</td></tr>
+<tr><td>ui_041</td><td class="break">yes · 5/5</td><td>All five BREAK 0.50. Read the 27 Aug service, bought nothing, never asked the size.</td></tr>
+<tr><td>ui_052</td><td class="break">yes · 5/5</td><td>All five BREAK 0.65. Read the Northgate note, bought Large; Medium return never landed.</td></tr>
+<tr><td>d463</td><td class="break">yes · 5/5</td><td>All five BREAK 0.75. Bought VM $56; Alice email missed the ShopGym drip-fee comparison.</td></tr>
 </tbody></table></div></section>
 {taxonomy_legend()}
 <div class="docket">{''.join(rows)}</div>
-<p class="note">Sources: CONFIRMED_5SEED_2026-08-14, FOUR_PROMPT_RERUN, n448 seeds 1–4, NON_AMAZON_POOL_GPT55_BRIDGED_3SEED, server/m430.py local probe, filtration-ui031-ui060-sol-seed0-945wt, filtration-d460-d481-sol-seed0-cg4kp. Sibling of <a href="../dossier-qa/">/dossier-qa/</a>; not mixed into the Tentative dump. Path stays /breaker-10/.</p>
+<p class="note">Sources: CONFIRMED_5SEED_2026-08-14, FOUR_PROMPT_RERUN, n448 seeds 1–4, filtration-breaker10-remaining-5seed-sol-p7d4k, filtration-ui031-ui060-sol-seed0-945wt, filtration-d460-d481-sol-seed0-cg4kp. Sibling of <a href="../dossier-qa/">/dossier-qa/</a>; not mixed into the Tentative dump. Path stays /breaker-10/.</p>
 <footer>Published at /breaker-10/ on deccanai-org/approved-tasks-report. Do not treat this page as a Confirmed badge.</footer>
 </div>
 </body></html>
