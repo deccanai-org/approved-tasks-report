@@ -4,7 +4,7 @@ Static HTML gallery of approved BrowserGym breaker tasks (UI-oracle + Sol agent 
 
 ## View online
 
-**Breaker-7 verification pack (dedicated, not the 115-card hub):** https://deccanai-org.github.io/approved-tasks-report/breaker-10/
+**Breaker-8 verification pack (dedicated, not the 115-card hub):** https://deccanai-org.github.io/approved-tasks-report/breaker-10/
 
 **Hub (all tasks, three sections):** https://deccanai-org.github.io/approved-tasks-report/  
 same catalog: https://deccanai-org.github.io/approved-tasks-report/hub/

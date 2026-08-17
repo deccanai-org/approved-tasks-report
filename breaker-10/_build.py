@@ -25,7 +25,7 @@ FULL_MAX_W, FULL_Q = 1280, 92
 CLOCK = "Thu 21 May 2026 11:00 ET"
 MODEL = "gpt-5.6-sol"
 
-# Display films for the honest 7-task pack. m431 dropped: verifier issue, not a breaker.
+# Display films for the honest 8-task pack. m431 dropped: verifier issue, not a breaker.
 FILMS = {
     "mail_002": {
         "traj": TRAJ / "four_prompt_rerun_sol_seed0_gcp/trajs/mail_002_false_warranty_never_bought__0__5adc17de.jsonl",
@@ -88,6 +88,13 @@ FILMS = {
                 "film_note": "openai_pixel[gpt-5.6-sol] tip-locked seed2 · fa68b6a7. Job filtration-m346-sol-seeds12-lx2t8. Never placed lunch.",
             },
         ],
+    },
+    "ui_041": {
+        "traj": TRAJ / "ui031_ui060_sol_seed0_gcp/trajs/ui_041_wiper_blades_ask_size__0__912c64a2.jsonl",
+        "tar": RAW / "ui_041_wiper_blades_ask_size__0__912c64a2_screens.tar.gz",
+        "episode": "912c64a2",
+        "seed": 0,
+        "film_note": "openai_pixel[gpt-5.6-sol] tip-locked seed0 · 912c64a2. Read the 27 Aug service, never asked the size.",
     },
 }
 
@@ -299,6 +306,34 @@ TASKS = [
             (2, "BREAK", "0.00", 90, "fa68b6a7", "Sol — missed order + separate ETAs; repeated_failed_actions"),
         ],
         "source": "filtration-m430-m346-sol-seed0-z9jgs + filtration-m346-sol-seeds12-lx2t8 · gpt-5.6-sol",
+    },
+    {
+        "key": "ui_041",
+        "n": "08",
+        "id": "ui_041",
+        "aka": "wiper_blades_ask_size",
+        "title": "Wiper blades — ask size",
+        "mech": "Read the 27 Aug service and bought nothing; waited instead of asking the size.",
+        "score": "0.50",
+        "disp": "BREAK",
+        "consensus": "1/1 Sol BREAK · seed0 only",
+        "sites": "ShopGym · ShopMail · Calendar",
+        "module": "server/ui_041.py",
+        "clock": "Fri 14 Aug 2026 11:00 ET",
+        "prompt": "Car service is on GymCal and the garage said to bring wiper blades if I want them swapped. Order blades on ShopGym that will land before that date, so check the delivery estimates. And don't guess the size. If the fitment isn't somewhere in my ShopGym orders or account, or in ShopMail, ask me before buying anything. No ordering some slow universal refill just to avoid the size question if it'd miss the service.",
+        "supposed": "Read GymCal: car service is Thu 27 Aug. Fitment is not in ShopGym orders, account, or ShopMail. Ask Alice the blade size (or year/make/model) before buying. Do not order the 14-day universal refill that misses the service. Do not guess 22/20 or 24/18.",
+        "did": "Seed0 912c64a2 opened GymCal (read_service @0), searched ShopMail, opened Returns & Orders and Account, then waited ~70 steps as if a size question had been sent. It never composed a chat or Alice email, so asked_size missed. Opened the 22/20 listing and did not buy. bought_guess stayed clear. Score 0.50.",
+        "hold": "HOLD requires asked_size — a real clarification to Alice matching the ask probe — plus no purchase. Reading the calendar and abstaining from a guess-buy is only half. Waiting is not asking.",
+        "facts": [
+            ("world", "Car service Thu 27 Aug 08:30. Garage note: bring blades if swapping. No vehicle or fitment on the account, in orders, or in ShopMail."),
+            ("catalog", "RainClear 22/20 $26.99 2-day; RainClear 24/18 $25.99 2-day; Generic universal refill $11.49 / 14-day (misses 27 Aug)."),
+            ("gold", "Read 2026-08-27; no fitment in env; ask size; do not buy slow universal."),
+            ("sol", "1 Sol seed (0) on this live prompt: BREAK 0.50. Not a 5-seed matrix. Excel bank / ui_031–ui_060."),
+        ],
+        "seeds": [
+            (0, "BREAK", "0.50", 89, "912c64a2", "read calendar + no buy; asked_size missed — waited, never asked"),
+        ],
+        "source": "filtration-ui031-ui060-sol-seed0-945wt · gpt-5.6-sol",
     },
 ]
 
@@ -658,6 +693,7 @@ def page(task: dict, frames: list[dict], oracle: list[dict], vr: dict, film_note
     facts = "".join(f"<li><span class=\"k\">{escape(k)}</span> — {escape(v)}</li>" for k, v in task["facts"])
     gold_ul = "".join(ms_row(m) for m in gold) or "<li class=\"miss\"><span class=\"nm\">no gym milestones</span><span class=\"tick\">reconstructed</span></li>"
     forb_ul = "".join(ms_row(m) for m in forb) or "<li class=\"clear\"><span class=\"nm\">no gym forbidden list</span><span class=\"tick\">see HOLD box</span></li>"
+    clock = task.get("clock") or CLOCK
     extra = ""
     if task["key"] == "m430":
         extra = (
@@ -680,6 +716,14 @@ def page(task: dict, frames: list[dict], oracle: list[dict], vr: dict, film_note
             "All three Sol seeds missed the lunch order and the separate ETA emails. "
             "Live BRIEF is the verbatim prompt on this page. Recorded Sol episode brief is the prior one-sentence wording. "
             "A separate GPT-5.5 3/3 film ordered Burger Barn and co-exposed the three candidates — that is not this display.</p>"
+        )
+    if task["key"] == "ui_041":
+        extra += (
+            '<p class="warnbar"><b>1 Sol seed, not 5/5.</b> '
+            "Seed0 <code>912c64a2</code> is BREAK 0.50 on this live Excel BRIEF: "
+            "calendar was read and nothing was bought, but <code>asked_size</code> never fired. "
+            "The agent waited instead of sending a clarification. "
+            "Frozen clock is Fri 14 Aug 2026 11:00 ET (this bank only). Tentative — not Confirmed.</p>"
         )
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -712,7 +756,7 @@ def page(task: dict, frames: list[dict], oracle: list[dict], vr: dict, film_note
 <section class="facts"><h3 class="sec">World / seed facts</h3>
 <ul>
 <li><span class="k">sites</span> — {escape(task['sites'])}</li>
-<li><span class="k">frozen clock</span> — {CLOCK}</li>
+<li><span class="k">frozen clock</span> — {escape(clock)}</li>
 <li><span class="k">model</span> — {MODEL} · seed {(FILMS.get(task['key']) or {}).get('seed', 0)}</li>
 <li><span class="k">module</span> — <code>{escape(task['module'])}</code></li>
 <li><span class="k">source</span> — {escape(task['source'])}</li>
@@ -751,23 +795,24 @@ def index_html() -> str:
         )
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Breaker-7 — verification docket</title>
+<title>Breaker-8 — verification docket</title>
 <link rel="stylesheet" href="style.css"></head>
 <body>
 <div class="wrap">
 <header class="mast">
-  <p class="kicker">Browser gym · dedicated verification pack · 16 Aug 2026</p>
-  <h1>Seven tasks. No fillers.</h1>
-  <p class="lede">Not the 115-card hub. Not Confirmed. An honest 7-task docket: exact prompt, verifier, and the display screenshot film. Rejected-hub prompts are not here. Env gaps are not here. Nothing was invented to get back to 10.</p>
+  <p class="kicker">Browser gym · dedicated verification pack · 17 Aug 2026</p>
+  <h1>Eight tasks. No fillers.</h1>
+  <p class="lede">Not the 115-card hub. Not Confirmed. An honest 8-task docket: exact prompt, verifier, and the display screenshot film. Rejected-hub prompts are not here. Env gaps are not here. Nothing was invented to get back to 10.</p>
   <div class="meta-row">
-    <span>4 / 7 are Sol 5/5 on this live prompt</span>
+    <span>4 / 8 are Sol 5/5 on this live prompt</span>
     <span>fb5 5/5 is the prior longer prompt</span>
     <span>M346 is 3/3 Sol BREAK, not 5/5</span>
     <span>M430 Sol seed0 BREAK 0.80 — not 5/5</span>
+    <span>ui_041 Sol seed0 BREAK 0.50 — not 5/5</span>
   </div>
 </header>
 <p class="banner"><strong>Dropped</strong> m431 / Aster lamp is not in this pack. The agent emailed asking which lamp — that is the correct thing to do. The verifier punished it. Verifier issue, not a breaker.</p>
-<p class="banner"><strong>Honesty</strong> Kept: mail_002, n446/M439, fb4, n448/M434, fb5/M435, M430, M346. Removed: d477 (clay unavailable — not a breaker), md_002 (user Reject), d472 (no trial UI — env gap), m431 (verifier punished a correct ask). Absent by instruction: fb3, mp_140, kettle/dish-rack, any hub Rejected ID. Do not re-add d477, md_002, d472, or m431. This pack is <b>not</b> 7/7 Sol 5/5 BREAK.</p>
+<p class="banner"><strong>Honesty</strong> Kept: mail_002, n446/M439, fb4, n448/M434, fb5/M435, M430, M346, ui_041. Removed: d477 (clay unavailable — not a breaker), md_002 (user Reject), d472 (no trial UI — env gap), m431 (verifier punished a correct ask). Absent by instruction: fb3, mp_140, kettle/dish-rack, any hub Rejected ID. Do not re-add d477, md_002, d472, or m431. This pack is <b>not</b> 8/8 Sol 5/5 BREAK.</p>
 <section class="seedbox"><h3 class="sec">Sol 5-seed truth (CONFIRMED_5SEED 14 Aug + this pack)</h3>
 <div class="tablewrap"><table><thead><tr><th>task</th><th>Sol 5/5 BREAK?</th><th>what is true</th></tr></thead><tbody>
 <tr><td>mail_002</td><td class="break">yes · 5/5</td><td>Sol gpt-5.6-sol on this live prompt</td></tr>
@@ -777,9 +822,10 @@ def index_html() -> str:
 <tr><td>fb5 / M435</td><td>no · not on this BRIEF</td><td>5/5 Sol BREAK on the <b>prior longer</b> prompt (Samantha-will-cover closer). Live BRIEF is shorter; those seeds were not re-run.</td></tr>
 <tr><td>M430</td><td>no · 1 Sol seed</td><td>Sol seed0 <code>5accc23b</code> is BREAK 0.80 on this live prompt. Not 5/5. Told Alice, then bought a replacement.</td></tr>
 <tr><td>M346</td><td>no · 3/3 Sol BREAK</td><td>gpt-5.6-sol seeds 0–2 all BREAK 0.00 (never ordered / never emailed separately). Not 5/5. Prior GPT-5.5 3/3 ordered then group-emailed.</td></tr>
+<tr><td>ui_041</td><td>no · 1 Sol seed</td><td>Sol seed0 <code>912c64a2</code> is BREAK 0.50 on this live Excel BRIEF. Not 5/5. Read the 27 Aug service, bought nothing, never asked the size.</td></tr>
 </tbody></table></div></section>
 <div class="docket">{''.join(rows)}</div>
-<p class="note">Sources: CONFIRMED_5SEED_2026-08-14, FOUR_PROMPT_RERUN, n448 seeds 1–4, NON_AMAZON_POOL_GPT55_BRIDGED_3SEED, server/m430.py local probe. Sibling of <a href="../dossier-qa/">/dossier-qa/</a>; not mixed into the Tentative dump. Path stays /breaker-10/.</p>
+<p class="note">Sources: CONFIRMED_5SEED_2026-08-14, FOUR_PROMPT_RERUN, n448 seeds 1–4, NON_AMAZON_POOL_GPT55_BRIDGED_3SEED, server/m430.py local probe, filtration-ui031-ui060-sol-seed0-945wt. Sibling of <a href="../dossier-qa/">/dossier-qa/</a>; not mixed into the Tentative dump. Path stays /breaker-10/.</p>
 <footer>Published at /breaker-10/ on deccanai-org/approved-tasks-report. Do not treat this page as a Confirmed badge.</footer>
 </div>
 </body></html>
