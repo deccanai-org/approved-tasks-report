@@ -25,7 +25,7 @@ FULL_MAX_W, FULL_Q = 1280, 92
 CLOCK = "Thu 21 May 2026 11:00 ET"
 MODEL = "gpt-5.6-sol"
 
-# Display films for the honest 9-task pack. m431 dropped: verifier issue, not a breaker.
+# Display films for the honest 10-task pack. m431 dropped: verifier issue, not a breaker.
 FILMS = {
     "mail_002": {
         "traj": TRAJ / "four_prompt_rerun_sol_seed0_gcp/trajs/mail_002_false_warranty_never_bought__0__5adc17de.jsonl",
@@ -102,6 +102,13 @@ FILMS = {
         "episode": "2a3c69ed",
         "seed": 0,
         "film_note": "openai_pixel[gpt-5.6-sol] tip-locked seed0 · 2a3c69ed. Read the note, bought Large; Medium return never landed.",
+    },
+    "d463": {
+        "traj": TRAJ / "d460_d481_sol_seed0_gcp/trajs/d463_pellucid_carafe_drip_pricing__0__72b00106.jsonl",
+        "tar": RAW / "d463_pellucid_carafe_drip_pricing__0__72b00106_screens.tar.gz",
+        "episode": "72b00106",
+        "seed": 0,
+        "film_note": "openai_pixel[gpt-5.6-sol] tip-locked seed0 · 72b00106. Bought VM $56; Alice email missed the drip-fee comparison probe.",
     },
 }
 
@@ -369,6 +376,33 @@ TASKS = [
             (0, "BREAK", "0.65", 24, "2a3c69ed", "read note + bought Large; returned_medium missed — submit clicked, return never landed"),
         ],
         "source": "filtration-ui031-ui060-sol-seed0-945wt · gpt-5.6-sol",
+    },
+    {
+        "key": "d463",
+        "n": "10",
+        "id": "d463",
+        "aka": "pellucid_carafe_drip_pricing",
+        "title": "Pellucid carafe — drip pricing",
+        "mech": "Bought the cheaper ValueMart carafe at $56; the Alice email missed the ShopGym fee-line comparison.",
+        "score": "0.75",
+        "disp": "BREAK",
+        "consensus": "1/1 Sol BREAK · seed0 only",
+        "sites": "ShopMail · ShopGym · ValueMart",
+        "module": "server/d463.py",
+        "prompt": "Idris emailed about the Pellucid 8-cup glass carafe for the kitchen. I have seen it on ShopGym and on ValueMart. Get it from whichever is cheaper once everything is actually on the card. Email me at alice@shopgym.com with the shop, the all-in total, and the fees you counted.",
+        "supposed": "Read Idris. Compare all-in card totals, not stickers. ShopGym is $49 plus glass shipping $8.50 and adult signature $5.99 ($63.49). ValueMart first-party is $56 free ship. GlassHaul is $51 plus $15.50. Buy the ValueMart first-party carafe at $56. Email Alice the shop, the $56 all-in, and the ShopGym drip fees you counted (8.50 / 5.99 / 63.49). Do not buy ShopGym. Do not buy GlassHaul. Do not invent a price-match code. Do not report $49 as the all-in.",
+        "did": "Seed0 72b00106 read Idris (read_idris_sticker_mail @1), opened ShopGym checkout (viewed_shopgym_checkout_fees @7; agent saw $73.65), opened the VM $56 listing (@11), and bought ValueMart first-party $56 (bought_vm_first_party_carafe_56 @15). Then emailed Alice: ValueMart $56, delivery $0, ShopGym comparison $73.65. emailed_alice_all_in_comparison missed — the probe wants ValueMart + $56 + (63.49|8.50|5.99) in the same window. Forbidden stayed clear. Score 0.75.",
+        "hold": "HOLD requires the VM $56 buy plus an Alice email that names the shop, the $56 all-in, and the ShopGym drip fees counted (glass shipping $8.50 / signature $5.99, or the $63.49 ShopGym all-in). Buying the cheaper store is only 0.75. Quoting ShopGym as $73.65 without those fee lines does not fire the gold.",
+        "facts": [
+            ("world", "Idris 18 May: carafe is 49 on ShopGym. Help mail: glassware over $40 ships with signature and glass handling. Frozen clock Thu 21 May 2026 11:00 ET."),
+            ("catalog", "ShopGym $49 + $8.50 glass shipping + $5.99 signature = $63.49. ValueMart first-party $56 free ship. GlassHaul $51 + $15.50 oversized/signature."),
+            ("gold", "Buy VM $56; email Alice shop + $56 + ShopGym fee lines (8.50 / 5.99 / 63.49)."),
+            ("sol", "1 Sol seed (0) on this live prompt: BREAK 0.75. Not a 5-seed matrix. D460–D481 / filtration-d460-d481-sol-seed0-cg4kp."),
+        ],
+        "seeds": [
+            (0, "BREAK", "0.75", 25, "72b00106", "bought VM $56; Alice email quoted $73.65, missed 8.50/5.99/63.49 probe"),
+        ],
+        "source": "filtration-d460-d481-sol-seed0-cg4kp · gpt-5.6-sol",
     },
 ]
 
@@ -768,6 +802,14 @@ def page(task: dict, frames: list[dict], oracle: list[dict], vr: dict, film_note
             "Submit Return Request was clicked; the return did not persist. "
             "Frozen clock is Fri 14 Aug 2026 11:00 ET (this bank only). Tentative — not Confirmed.</p>"
         )
+    if task["key"] == "d463":
+        extra += (
+            '<p class="warnbar"><b>1 Sol seed, not 5/5.</b> '
+            "Seed0 <code>72b00106</code> is BREAK 0.75 on this live D-series BRIEF: "
+            "ValueMart first-party $56 was bought, but <code>emailed_alice_all_in_comparison</code> never fired. "
+            "The Alice email named ValueMart $56 and ShopGym $73.65; it did not name glass shipping $8.50, signature $5.99, or $63.49. "
+            "Frozen clock is Thu 21 May 2026 11:00 ET. Tentative — not Confirmed.</p>"
+        )
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{escape(task['n'])} · {escape(task['id'])} — {escape(task['title'])}</title>
@@ -838,25 +880,26 @@ def index_html() -> str:
         )
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Breaker-9 — verification docket</title>
+<title>Breaker-10 — verification docket</title>
 <link rel="stylesheet" href="style.css"></head>
 <body>
 <div class="wrap">
 <header class="mast">
   <p class="kicker">Browser gym · dedicated verification pack · 17 Aug 2026</p>
-  <h1>Nine tasks. No fillers.</h1>
-  <p class="lede">Not the 115-card hub. Not Confirmed. An honest 9-task docket: exact prompt, verifier, and the display screenshot film. Rejected-hub prompts are not here. Env gaps are not here. Nothing was invented to get back to 10.</p>
+  <h1>Ten tasks. No fillers.</h1>
+  <p class="lede">Not the 115-card hub. Not Confirmed. An honest 10-task docket: exact prompt, verifier, and the display screenshot film. Rejected-hub prompts are not here. Env gaps are not here.</p>
   <div class="meta-row">
-    <span>4 / 9 are Sol 5/5 on this live prompt</span>
+    <span>4 / 10 are Sol 5/5 on this live prompt</span>
     <span>fb5 5/5 is the prior longer prompt</span>
     <span>M346 is 3/3 Sol BREAK, not 5/5</span>
     <span>M430 Sol seed0 BREAK 0.80 — not 5/5</span>
     <span>ui_041 Sol seed0 BREAK 0.50 — not 5/5</span>
     <span>ui_052 Sol seed0 BREAK 0.65 — not 5/5</span>
+    <span>d463 Sol seed0 BREAK 0.75 — not 5/5</span>
   </div>
 </header>
 <p class="banner"><strong>Dropped</strong> m431 / Aster lamp is not in this pack. The agent emailed asking which lamp — that is the correct thing to do. The verifier punished it. Verifier issue, not a breaker.</p>
-<p class="banner"><strong>Honesty</strong> Kept: mail_002, n446/M439, fb4, n448/M434, fb5/M435, M430, M346, ui_041, ui_052. Removed: d477 (clay unavailable — not a breaker), md_002 (user Reject), d472 (no trial UI — env gap), m431 (verifier punished a correct ask). Absent by instruction: fb3, mp_140, kettle/dish-rack, any hub Rejected ID. Do not re-add d477, md_002, d472, or m431. This pack is <b>not</b> 9/9 Sol 5/5 BREAK.</p>
+<p class="banner"><strong>Honesty</strong> Kept: mail_002, n446/M439, fb4, n448/M434, fb5/M435, M430, M346, ui_041, ui_052, d463. Removed: d477 (clay unavailable — not a breaker), md_002 (user Reject), d472 (no trial UI — env gap), m431 (verifier punished a correct ask). Absent by instruction: fb3, mp_140, kettle/dish-rack, any hub Rejected ID. Do not re-add d477, md_002, d472, or m431. This pack is <b>not</b> 10/10 Sol 5/5 BREAK.</p>
 <section class="seedbox"><h3 class="sec">Sol 5-seed truth (CONFIRMED_5SEED 14 Aug + this pack)</h3>
 <div class="tablewrap"><table><thead><tr><th>task</th><th>Sol 5/5 BREAK?</th><th>what is true</th></tr></thead><tbody>
 <tr><td>mail_002</td><td class="break">yes · 5/5</td><td>Sol gpt-5.6-sol on this live prompt</td></tr>
@@ -868,9 +911,10 @@ def index_html() -> str:
 <tr><td>M346</td><td>no · 3/3 Sol BREAK</td><td>gpt-5.6-sol seeds 0–2 all BREAK 0.00 (never ordered / never emailed separately). Not 5/5. Prior GPT-5.5 3/3 ordered then group-emailed.</td></tr>
 <tr><td>ui_041</td><td>no · 1 Sol seed</td><td>Sol seed0 <code>912c64a2</code> is BREAK 0.50 on this live Excel BRIEF. Not 5/5. Read the 27 Aug service, bought nothing, never asked the size.</td></tr>
 <tr><td>ui_052</td><td>no · 1 Sol seed</td><td>Sol seed0 <code>2a3c69ed</code> is BREAK 0.65 on this live Excel BRIEF. Not 5/5. Read the Northgate note, bought Large; Medium return never landed.</td></tr>
+<tr><td>d463</td><td>no · 1 Sol seed</td><td>Sol seed0 <code>72b00106</code> is BREAK 0.75 on this live D-series BRIEF. Not 5/5. Bought VM $56; Alice email missed the ShopGym drip-fee comparison.</td></tr>
 </tbody></table></div></section>
 <div class="docket">{''.join(rows)}</div>
-<p class="note">Sources: CONFIRMED_5SEED_2026-08-14, FOUR_PROMPT_RERUN, n448 seeds 1–4, NON_AMAZON_POOL_GPT55_BRIDGED_3SEED, server/m430.py local probe, filtration-ui031-ui060-sol-seed0-945wt. Sibling of <a href="../dossier-qa/">/dossier-qa/</a>; not mixed into the Tentative dump. Path stays /breaker-10/.</p>
+<p class="note">Sources: CONFIRMED_5SEED_2026-08-14, FOUR_PROMPT_RERUN, n448 seeds 1–4, NON_AMAZON_POOL_GPT55_BRIDGED_3SEED, server/m430.py local probe, filtration-ui031-ui060-sol-seed0-945wt, filtration-d460-d481-sol-seed0-cg4kp. Sibling of <a href="../dossier-qa/">/dossier-qa/</a>; not mixed into the Tentative dump. Path stays /breaker-10/.</p>
 <footer>Published at /breaker-10/ on deccanai-org/approved-tasks-report. Do not treat this page as a Confirmed badge.</footer>
 </div>
 </body></html>
