@@ -143,7 +143,7 @@ h1 {
 dl.tax { margin: 0; display: grid; gap: 0 }
 dl.tax > div {
   display: grid;
-  grid-template-columns: minmax(12rem, 18rem) 1fr;
+  grid-template-columns: minmax(14rem, 22rem) 1fr;
   gap: 12px;
   padding: 8px 0;
   border-top: 1px dotted var(--rule);
@@ -159,6 +159,7 @@ dl.tax dd { margin: 0; font-size: 15px }
 }
 .fmbox p { margin: 8px 0 0; font-size: 16px }
 .fmbox .fmtags { margin: 0 }
+.fmbox .tax-cite { font-size: 13px; color: var(--muted) }
 
 .note { margin-top: 36px; max-width: 70ch; color: var(--muted) }
 footer {

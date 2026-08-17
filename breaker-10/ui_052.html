@@ -12,7 +12,7 @@
   </div>
   <div class="stamp">BREAK 0.65</div>
 </header>
-<div class="fmbox"><h3 class="sec">Failure mode</h3><div class="fmtags"><span class="fmtag">unverified-commit</span></div><p>Seed0 2a3c69ed read the Northgate note and bought Large. It clicked Submit Return Request on the Medium order, but returned_medium never fired. The agent treated the return as done without a durable state change.</p></div>
+<div class="fmbox"><h3 class="sec">BrowserGym §5.8 class</h3><div class="fmtags"><span class="fmtag">Form Handling Errors</span></div><p>Display 2a3c69ed filled a return reason and clicked Submit Return Request on the Medium order, then failed to recognize that the submission did not persist (returned_medium never fired).</p><p class="tax-cite">Tag name from Chezelles et al. 2024 (BrowserGym ecosystem), §5.8. Evidence is the display film already on this page — not a new fail.</p></div>
 <p class="warnbar"><b>1 Sol seed, not 5/5.</b> Seed0 <code>2a3c69ed</code> is BREAK 0.65 on this live Excel BRIEF: the Northgate note was read and Large was bought, but <code>returned_medium</code> never fired. Submit Return Request was clicked; the return did not persist. Frozen clock is Fri 14 Aug 2026 11:00 ET (this bank only). Tentative — not Confirmed.</p>
 <div class="split">
   <div class="job"><h3>What it was supposed to do</h3><p>Read the Northgate ShopMail note: if Medium is tight, take Large. Start the return of ORD-JACKET-441 (Medium) from Returns &amp; Orders. Order Large from the variant picker on the product page. Do not use Buy Again — Medium is out of stock and would repeat the wrong size. If the thread is ambiguous or Large is unavailable, ask Alice before spending.</p></div>
