@@ -1130,12 +1130,12 @@ def main() -> None:
     hub = page(
         prefix="../",
         css="style.css",
-        canonical_note="This is <code>/hub/</code>. The same catalog is the site root.",
+        canonical_note="This is <code>/hub/</code>. The same catalog is the site root. Dedicated 7-task verification pack (not this dump): <a href=\"../breaker-10/\">/breaker-10/</a>.",
     )
     root = page(
         prefix="",
         css="hub/style.css",
-        canonical_note="This is the site root catalog. A copy lives at <a href=\"hub/\">/hub/</a>.",
+        canonical_note="This is the site root catalog. A copy lives at <a href=\"hub/\">/hub/</a>. Dedicated 7-task verification pack (not this dump): <a href=\"breaker-10/\">/breaker-10/</a>.",
     )
     (HUB / "index.html").write_text(hub, encoding="utf-8")
     (ROOT / "index.html").write_text(root, encoding="utf-8")
