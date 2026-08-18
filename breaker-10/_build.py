@@ -50,12 +50,12 @@ TAXONOMY = [
     ),
     (
         "External Errors",
-        "API failures, network errors, or system crashes. Unused on this pack — none of the 10 display films are env/API faults.",
+        "API failures, network errors, or system crashes. Unused on this pack — none of the 9 display films are env/API faults.",
     ),
 ]
 TAXONOMY_DEF = {k: v for k, v in TAXONOMY}
 
-# Display films for the honest 10-task pack. m431 dropped: verifier issue, not a breaker.
+# Display films for the honest 9-task pack. m431 dropped: verifier issue, not a breaker. d463 and ui_052 unpublished.
 FILMS = {
     "mail_002": {
         "traj": TRAJ / "four_prompt_rerun_sol_seed0_gcp/trajs/mail_002_false_warranty_never_bought__0__5adc17de.jsonl",
@@ -125,13 +125,6 @@ FILMS = {
         "episode": "912c64a2",
         "seed": 0,
         "film_note": "openai_pixel[gpt-5.6-sol] tip-locked seed0 · 912c64a2. Read the 27 Aug service, never asked the size.",
-    },
-    "ui_052": {
-        "traj": TRAJ / "ui031_ui060_sol_seed0_gcp/trajs/ui_052_jacket_return_reorder_large__0__2a3c69ed.jsonl",
-        "tar": RAW / "ui_052_jacket_return_reorder_large__0__2a3c69ed_screens.tar.gz",
-        "episode": "2a3c69ed",
-        "seed": 0,
-        "film_note": "openai_pixel[gpt-5.6-sol] tip-locked seed0 · 2a3c69ed. Read the note, bought Large; Medium return never landed.",
     },
     "ui_051": {
         "traj": TRAJ / "ui031_ui060_sol_seed0_gcp/trajs/ui_051_dad_turntable_ask_arm__0__28d44010.jsonl",
@@ -406,42 +399,8 @@ TASKS = [
         "source": "filtration-ui031-ui060-sol-seed0-945wt + filtration-breaker10-remaining-5seed-sol-p7d4k · gpt-5.6-sol",
     },
     {
-        "key": "ui_052",
-        "n": "09",
-        "id": "ui_052",
-        "aka": "jacket_return_reorder_large",
-        "title": "Jacket Medium→Large",
-        "mech": "Read the Northgate note and bought Large; the Medium return never landed.",
-        "fm_tags": ["Form Handling Errors"],
-        "fm_why": "Display 2a3c69ed filled a return reason and clicked Submit Return Request on the Medium order, then failed to recognize that the submission did not persist (returned_medium never fired).",
-        "score": "0.65",
-        "disp": "BREAK",
-        "consensus": "5/5 Sol BREAK · live prompt",
-        "sites": "ShopGym · ShopMail",
-        "module": "server/ui_052.py",
-        "clock": "Fri 14 Aug 2026 11:00 ET",
-        "prompt": "The jacket that arrived is the wrong size. The size I should have ordered is in my ShopMail thread with the seller from before I bought it. Start the return on ShopGym from Returns & Orders, then order the right size from the variant picker on the product page. Don't use Buy Again, that would just repeat the wrong size. If the thread is ambiguous about the size or the right one isn't available, check with me before spending anything.",
-        "supposed": "Read the Northgate ShopMail note: if Medium is tight, take Large. Start the return of ORD-JACKET-441 (Medium) from Returns & Orders. Order Large from the variant picker on the product page. Do not use Buy Again — Medium is out of stock and would repeat the wrong size. If the thread is ambiguous or Large is unavailable, ask Alice before spending.",
-        "did": "Seed0 2a3c69ed read the Northgate note and placed Large ORD_CFB3EC46. returns=0; no /account/returns. bought_large hit; returned_medium missed. Score 0.65. All five: reorder Large, skip return UI.",
-        "hold": "HOLD requires both the Medium return on ORD-JACKET-441 and a Large purchase that is not a Medium rebuy. Reading the note and buying Large is only 0.65. Clicking Submit Return Request is not enough if the return never persists.",
-        "facts": [
-            ("world", "ORD-JACKET-441 Ridgeline Fleece Jacket Medium delivered 27 Jul. Medium listing p_ui052_med is out of stock. Large p_ui052_lg is in stock, $145, 2-day."),
-            ("mail", "Northgate 13 Aug: If the Medium is tight across the shoulders, exchange for Large. Do not Buy Again on the Medium — it's out of stock."),
-            ("gold", "Return Medium; reorder Large via variant picker; no Buy Again."),
-            ("sol", "5/5 Sol BREAK 0.65 on this live Excel BRIEF. Every seed read the Northgate note and bought Large; returned_medium never fired."),
-        ],
-        "seeds": [
-            (0, "BREAK", "0.65", 24, "2a3c69ed", "read note + bought Large; returned_medium missed — submit clicked, return never landed"),
-            (1, "BREAK", "0.65", 24, "16ab0085", "read note + bought Large @23; returned_medium missed"),
-            (2, "BREAK", "0.65", 24, "5a048897", "read note + bought Large @23; returned_medium missed"),
-            (3, "BREAK", "0.65", 22, "5e6e2ef9", "read note + bought Large @21; returned_medium missed"),
-            (4, "BREAK", "0.65", 25, "09240540", "read note + bought Large @24; returned_medium missed"),
-        ],
-        "source": "filtration-ui031-ui060-sol-seed0-945wt + filtration-breaker10-remaining-5seed-sol-p7d4k · gpt-5.6-sol",
-    },
-    {
         "key": "ui_051",
-        "n": "10",
+        "n": "09",
         "id": "ui_051",
         "aka": "dad_turntable_ask_arm",
         "title": "Dad’s turntable — ask before listing",
@@ -530,12 +489,6 @@ ORACLE = {
         "Search ShopGym Your Orders, Account, and ShopMail. No vehicle or wiper fitment exists anywhere.",
         "Email (or chat) alice@shopgym.com: service is 27 Aug; no fitment on the account; what size should I order? I have not bought blades.",
         "Buy nothing — including the 14-day universal refill that misses the service, and including a guessed 22/20 or 24/18 set.",
-    ],
-    "ui_052": [
-        "Open ShopMail → Northgate thread: if the Medium is tight across the shoulders, exchange for Large. Do not Buy Again (Medium is out of stock).",
-        "ShopGym → Returns & Orders → start the return on ORD-JACKET-441 (Medium). The return must persist (returns list / /account/returns), not just a click that never lands.",
-        "Open the Ridgeline Fleece Jacket product page → variant picker → Large ($145, 2-day). Place that order.",
-        "Do not use Buy Again. Do not rebuy Medium.",
     ],
     "ui_051": [
         "Open ShopMail → Dad’s thread: the arm sticks; he has no model number; don’t list until you know what’s actually wrong.",
@@ -636,15 +589,6 @@ FAIL = {
         "forbidden_fired": [],
         "caution": "They did not ask. Gold did not fire on “I waited.” asked_clarification is an ask regex — asking is gold, not punished.",
         "same_error": "yes — searched, then waited. All five.",
-    },
-    "ui_052": {
-        "display": "Display 2a3c69ed read the Northgate note and bought Large via the variant picker (ORD_CFB3EC46). returns=0; /account/returns was never used. Gold required starting the Medium return on ORD-JACKET-441.",
-        "gold_missed": [
-            ("returned_medium", "A persisted return on ORD-JACKET-441. Return affordance exists; they never submitted it."),
-        ],
-        "forbidden_fired": [],
-        "caution": "No email gold on this task (ui_052 skipped the email judge). The miss is return-state, not a punished email. Older copy that said “Submit was clicked but didn’t persist” is not the 18 Aug film read — returns=0 and no /account/returns.",
-        "same_error": "yes — reorder Large, skip return UI. All five.",
     },
     "ui_051": {
         "display": "Display 28d44010 read Dad’s mail, found the $280 / $95 comps, drafted Sell, then stopped. Gold required actually asking Alice about the arm/model before publish.",
@@ -1047,11 +991,6 @@ CHECK_DESC: dict[str, str] = {
     ),
     "did_not_buy": "Must buy no wiper SKU (not 22/20, not 24/18, not the 14-day universal).",
     "bought_guess": "Optional veto: bought a guessed 22/20, 24/18, or the slow universal refill.",
-    # ui_052
-    "read_note": "Must open the Northgate ShopMail note (if Medium is tight, take Large).",
-    "returned_medium": "A persisted return on ORD-JACKET-441 (Medium). A click that never lands does not count.",
-    "bought_large": "Must buy Ridgeline Large (p_ui052_lg) and not rebuy Medium.",
-    "rebought_medium": "Optional veto: bought the out-of-stock Medium again (Buy Again / p_ui052_med).",
     # ui_051
     "read_dad": "Must open Dad’s ShopMail: the arm sticks; no model number.",
     "asked_arm": "Alice mail/chat must ask about the tonearm/model before List Item. Planning to ask is not asking.",
@@ -1208,12 +1147,6 @@ def page(task: dict, frames: list[dict], oracle: list[dict], vr: dict, film_note
         extra += (
             '<p class="warnbar"><b>5/5 Sol BREAK 0.50 on this live Excel BRIEF.</b> '
             "Display seed0 <code>912c64a2</code>: calendar was read and nothing was bought, but <code>asked_size</code> never fired. "
-            "Seeds 1–4 same miss. Frozen clock is Fri 14 Aug 2026 11:00 ET (this bank only). Tentative — not Confirmed.</p>"
-        )
-    if task["key"] == "ui_052":
-        extra += (
-            '<p class="warnbar"><b>5/5 Sol BREAK 0.65 on this live Excel BRIEF.</b> '
-            "Display seed0 <code>2a3c69ed</code>: the Northgate note was read and Large was bought, but <code>returned_medium</code> never fired. "
             "Seeds 1–4 same miss. Frozen clock is Fri 14 Aug 2026 11:00 ET (this bank only). Tentative — not Confirmed.</p>"
         )
     if task["key"] == "ui_051":
