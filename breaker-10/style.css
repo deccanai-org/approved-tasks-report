@@ -216,9 +216,58 @@ h3.sec {
   background: var(--sheet);
   border: 1px dashed var(--ink);
   padding: 16px 18px;
-  max-width: 80ch;
+  max-width: 88ch;
 }
 .holdbox p { margin: 0 }
+.oracle-lead { color: var(--muted); margin: 0 0 10px !important; font-size: 14.5px }
+.hold-note { margin-top: 12px !important; color: var(--muted); font-size: 14.5px }
+ol.oracle {
+  margin: 0;
+  padding-left: 1.35rem;
+  max-width: 82ch;
+}
+ol.oracle li { margin: .45rem 0; font-size: 15.5px }
+ol.oracle.compact { font-size: 14.5px; margin: 8px 0 12px; max-width: 78ch }
+ol.oracle.compact li { margin: .32rem 0 }
+.oracle-h {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin: 14px 0 6px;
+  color: var(--hold);
+}
+.failbox {
+  border: 1.5px solid var(--stamp);
+  background: #f8e6df;
+  padding: 16px 18px;
+  margin: 0 0 28px;
+  max-width: 88ch;
+}
+.failbox h4 {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin: 14px 0 6px;
+  color: var(--stamp);
+}
+.display-fail, .sameerr { margin: 0 0 8px; font-size: 15.5px }
+.caution {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  background: #efe0b8;
+  border-left: 4px solid var(--warn);
+  font-size: 14.5px;
+}
+ul.checkmean { margin: 0; padding-left: 1.15rem }
+ul.checkmean li { margin: .35rem 0; font-size: 14.5px; max-width: 80ch }
+.case-row .display-fail, .case-row .sameerr, .case-row .caution {
+  color: var(--ink);
+  text-decoration: none;
+  max-width: 78ch;
+}
+.case-row .caution { margin-top: 8px }
 
 .metrics { display: flex; flex-wrap: wrap; gap: 22px; margin: 0 0 26px }
 .metrics .k { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted) }
