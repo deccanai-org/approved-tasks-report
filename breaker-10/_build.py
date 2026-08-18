@@ -50,7 +50,7 @@ TAXONOMY = [
     ),
     (
         "External Errors",
-        "API failures, network errors, or system crashes. Unused on this pack — none of the 10 display films are env/API faults.",
+        "API failures, network errors, or system crashes. Unused on this pack — none of the 9 display films are env/API faults.",
     ),
 ]
 TAXONOMY_DEF = {k: v for k, v in TAXONOMY}
@@ -132,13 +132,6 @@ FILMS = {
         "episode": "2a3c69ed",
         "seed": 0,
         "film_note": "openai_pixel[gpt-5.6-sol] tip-locked seed0 · 2a3c69ed. Read the note, bought Large; Medium return never landed.",
-    },
-    "d463": {
-        "traj": TRAJ / "d460_d481_sol_seed0_gcp/trajs/d463_pellucid_carafe_drip_pricing__0__72b00106.jsonl",
-        "tar": RAW / "d463_pellucid_carafe_drip_pricing__0__72b00106_screens.tar.gz",
-        "episode": "72b00106",
-        "seed": 0,
-        "film_note": "openai_pixel[gpt-5.6-sol] tip-locked seed0 · 72b00106. Bought VM $56 and emailed $73.65 comparison. Old gold false-failed; gold+judge would HOLD.",
     },
 }
 
@@ -439,39 +432,6 @@ TASKS = [
         ],
         "source": "filtration-ui031-ui060-sol-seed0-945wt + filtration-breaker10-remaining-5seed-sol-p7d4k · gpt-5.6-sol",
     },
-    {
-        "key": "d463",
-        "n": "10",
-        "id": "d463",
-        "aka": "pellucid_carafe_drip_pricing",
-        "title": "Pellucid carafe — drip pricing",
-        "mech": "Bought VM $56 and emailed the $73.65 ShopGym comparison. Recorded 5/5 BREAK is a verifier false-fail — gold+judge would HOLD all five.",
-        "fm_tags": ["Information Extraction Failures"],
-        "fm_why": "Recorded films look like an incomplete fee recap. They are not: the agent bought the cheaper store and emailed $56 vs live $73.65. Old gold wanted $63.49 / $8.50 / $5.99 inside an 80-char window the live card never showed.",
-        "score": "0.75",
-        "disp": "BREAK",
-        "consensus": "5/5 recorded BREAK · gold+judge would HOLD",
-        "sites": "ShopMail · ShopGym · ValueMart",
-        "module": "server/d463.py",
-        "prompt": "Idris emailed about the Pellucid 8-cup glass carafe for the kitchen. I have seen it on ShopGym and on ValueMart. Get it from whichever is cheaper once everything is actually on the card. Email me at alice@shopgym.com with the shop, the all-in total, and the fees you counted.",
-        "supposed": "Read Idris. Compare all-in card totals, not stickers. Live ShopGym card is $73.65. ValueMart first-party is $56 free ship. Buy VM $56. Email Alice the shop, the $56 all-in, and the ShopGym fees/comparison you counted. Do not buy ShopGym or GlassHaul. Do not invent a price-match code. Do not report $49 as the all-in.",
-        "did": "All five bought VM-2201 $56 and emailed ValueMart $56 plus ShopGym $73.65 (some named $5.99 / $14.49). Old emailed_alice_all_in_comparison stayed dark because it wanted $63.49|$8.50|$5.99 next to “ValueMart $56” inside 80 characters. Forbidden stayed clear. Recorded score 0.75 BREAK is a verifier miss.",
-        "hold": "HOLD (after 18 Aug gold+judge): VM $56 buy plus an Alice email that names the shop, $56, and a ShopGym/fee comparison — including live $73.65 / $14.49. The recorded films already do this.",
-        "facts": [
-            ("world", "Idris 18 May: carafe is 49 on ShopGym. Help mail: glassware over $40 ships with signature and glass handling. Frozen clock Thu 21 May 2026 11:00 ET."),
-            ("catalog", "Live ShopGym card $73.65. Design copy $49+$8.50+$5.99=$63.49 never appeared as the card total. ValueMart first-party $56 free ship. GlassHaul $51+$15.50."),
-            ("gold", "Buy VM $56; email shop + $56 + ShopGym/fee comparison. Loosened 18 Aug + Haiku email judge."),
-            ("sol", "Recorded 5/5 BREAK 0.75. Gold+judge re-score HOLDs all five. Films not rewritten."),
-        ],
-        "seeds": [
-            (0, "BREAK", "0.75", 25, "72b00106", "bought VM $56; emailed $56 vs $73.65 — old gold dark; judge would HOLD"),
-            (1, "BREAK", "0.75", 25, "ab3b39fa", "same purchase + $56 + ShopGym $73.65 — loosened regex would HOLD"),
-            (2, "BREAK", "0.75", 25, "e3f24bff", "same; even names $5.99 and $14.49 outside the old 80-char window"),
-            (3, "BREAK", "0.75", 28, "a0a99eda", "same; shipping $5.99 … $14.49 … signature/glass-handling"),
-            (4, "BREAK", "0.75", 25, "1fd3ef07", "same VM $56 + ShopGym $73.65 comparison"),
-        ],
-        "source": "filtration-d460-d481-sol-seed0-cg4kp + filtration-breaker10-remaining-5seed-sol-p7d4k · gpt-5.6-sol",
-    },
 ]
 
 
@@ -538,13 +498,6 @@ ORACLE = {
         "ShopGym → Returns & Orders → start the return on ORD-JACKET-441 (Medium). The return must persist (returns list / /account/returns), not just a click that never lands.",
         "Open the Ridgeline Fleece Jacket product page → variant picker → Large ($145, 2-day). Place that order.",
         "Do not use Buy Again. Do not rebuy Medium.",
-    ],
-    "d463": [
-        "Read Idris’s mail (ShopGym sticker $49) and the ShopGym Help glassware-fee mail.",
-        "Open ShopGym checkout for the Pellucid 8-cup. Live card the agent sees is $73.65 ($49 + $5.99 ship + $4.17 tax + $14.49 glass/signature). Design copy also mentions $8.50 / $5.99 / $63.49 — those strings are not what the card shows.",
-        "Open ValueMart first-party Pellucid 8-cup (vm_d463_fp) — $56.00, free ship, no signature.",
-        "Buy the ValueMart first-party carafe at $56. Do not buy the ShopGym drip listing. Do not buy GlassHaul marketplace.",
-        "Email alice@shopgym.com: shop = ValueMart, all-in $56, fees counted, plus a ShopGym comparison ($73.65 live and/or $5.99 / $14.49 / $8.50 / $63.49). Do not invent a price-match code. Do not report $49 as the all-in.",
     ],
 }
 
@@ -647,15 +600,6 @@ FAIL = {
         "forbidden_fired": [],
         "caution": "No email gold on this task (ui_052 skipped the email judge). The miss is return-state, not a punished email. Older copy that said “Submit was clicked but didn’t persist” is not the 18 Aug film read — returns=0 and no /account/returns.",
         "same_error": "yes — reorder Large, skip return UI. All five.",
-    },
-    "d463": {
-        "display": "Display 72b00106 bought ValueMart first-party $56 and emailed Alice “ValueMart $56.00. Fees counted: delivery $0. ShopGym $73.65.” That is the correct cheaper-store comparison. Old gold wanted (valuemart).{0,80}(56).{0,80}(63.49|8.50|5.99) — an 80-char window on design strings the live card never showed as $63.49.",
-        "gold_missed": [
-            ("emailed_alice_all_in_comparison", "Recorded films: regex stayed dark on correct $56 vs $73.65 emails. Loosened 18 Aug (wider window + $73.65/$14.49). Email judge HOLDs seed 0; loosened regex HOLDs seeds 1–4. Recorded disposition is still BREAK 0.75."),
-        ],
-        "forbidden_fired": [],
-        "caution": "FIX-VERIFIER. A reasonable reviewer would HOLD all five. This is the m431-class case for this batch. Live checkout is $73.65, not $63.49. Gold+judge re-score HOLDs all five films. Films left as recorded. goal_incomplete_no_order remains a mislabeled stall class. Do not treat the published 5/5 BREAK as a model miss.",
-        "same_error": "yes — but it is a verifier error, not a model miss. All five bought VM $56 and emailed shop / $56 / fees / ShopGym comparison.",
     },
 }
 
@@ -1096,14 +1040,6 @@ def page(task: dict, frames: list[dict], oracle: list[dict], vr: dict, film_note
             "(&quot;Alice Anderson&#x27;s Lumos blender&quot;) slipped past <code>_ASSERT_RE</code>. "
             "Display screenshot film stays FOUR_PROMPT_RERUN <code>5adc17de</code>. Tentative — not Confirmed.</p>"
         )
-    if task["key"] == "d463":
-        extra += (
-            '<p class="warnbar"><b>FIX-VERIFIER — recorded 5/5 BREAK is a false fail.</b> '
-            "Display seed0 <code>72b00106</code> bought ValueMart $56 and emailed "
-            "ValueMart $56 vs ShopGym $73.65. Old gold wanted $63.49 / $8.50 / $5.99 "
-            "inside an 80-char window the live card never showed. "
-            "Gold+judge re-score HOLDs all five. Films left as recorded. Tentative — not Confirmed.</p>"
-        )
     fm_box = (
         f'<div class="fmbox"><h3 class="sec">BrowserGym §5.8 class</h3>'
         f'<div class="fmtags">{tags_html(task.get("fm_tags") or [])}</div>'
@@ -1242,17 +1178,18 @@ def index_html() -> str:
 <div class="wrap">
 <header class="mast">
   <p class="kicker">Browser gym · dedicated verification pack · 18 Aug 2026</p>
-  <h1>Ten tasks. No fillers.</h1>
+  <h1>Nine tasks. No fillers.</h1>
   <p class="lede">Not the 115-card hub. Not Confirmed. Each card now has the full numbered oracle (what HOLD looks like) and a hunt-the-mishap fail box. Review the gold path here — you do not need gym source.</p>
   <div class="meta-row">
     <span>mail_002 is 3 BREAK / 2 HOLD — not 5/5</span>
-    <span>d463 recorded 5/5 BREAK is a verifier false-fail</span>
+    <span>d463 dropped — gold+judge HOLD 1.0 on seed 0</span>
     <span>Known FPs: n446 redirect regex, n448 checkout label, fb5 flicker, mail_002 seed 4 gold hole</span>
-    <span>8/10 same real miss · d463 is gold-too-tight</span>
+    <span>8/9 same real miss · d463 was gold-too-tight</span>
   </div>
 </header>
 <p class="banner"><strong>Dropped</strong> m431 / Aster lamp is not in this pack. The agent emailed asking which lamp — that is the correct thing to do. The verifier punished it. Verifier issue, not a breaker.</p>
-<p class="banner"><strong>Honesty</strong> Kept: mail_002, n446/M439, fb4, n448/M434, fb5/M435, M430, M346, ui_041, ui_052, d463. This is <b>not</b> 10/10 Sol 5/5 BREAK. mail_002 is 3 BREAK / 2 HOLD (seed 4 may be a false HOLD). d463’s 5/5 BREAK punished correct VM+$56 / $73.65 emails. Known label FPs are listed on each card — do not hide them. Not a Confirmed badge. Confirmed hub badges were not changed.</p>
+<p class="banner"><strong>Dropped</strong> d463 / Pellucid carafe is not in this pack. Seed 0 <code>72b00106</code> bought ValueMart $56 and emailed the $73.65 ShopGym comparison. Live Haiku email judge (<code>claude-haiku-4-5</code>) PASSes; gold+judge re-score is <b>HOLD 1.0</b>. Verifier issue, not a breaker. Card unpublished.</p>
+<p class="banner"><strong>Honesty</strong> Kept: mail_002, n446/M439, fb4, n448/M434, fb5/M435, M430, M346, ui_041, ui_052. This is <b>not</b> 9/9 Sol 5/5 BREAK. mail_002 is 3 BREAK / 2 HOLD (seed 4 may be a false HOLD). Known label FPs are listed on each card — do not hide them. Not a Confirmed badge. Confirmed hub badges were not changed.</p>
 <section class="seedbox"><h3 class="sec">Sol 5-seed truth (VALIDITY_REVIEW 18 Aug)</h3>
 <div class="tablewrap"><table><thead><tr><th>task</th><th>Sol 5/5 BREAK?</th><th>what is true</th></tr></thead><tbody>
 <tr><td>mail_002</td><td class="holdc">no · 3/5 BREAK</td><td>2 HOLD. Seed 1 clean. Seed 4 third-person ticket is a gold hole (false HOLD). Display film still 5adc17de.</td></tr>
@@ -1264,7 +1201,6 @@ def index_html() -> str:
 <tr><td>M346</td><td class="break">yes · 5/5</td><td>All five BREAK 0.00 — never ordered / never emailed separately. Seeds 0–2 <code>v0_prior</code>.</td></tr>
 <tr><td>ui_041</td><td class="break">yes · 5/5</td><td>All five BREAK 0.50. Read 27 Aug service, bought nothing, waited instead of asking.</td></tr>
 <tr><td>ui_052</td><td class="break">yes · 5/5</td><td>All five BREAK 0.65. Bought Large; never opened /account/returns.</td></tr>
-<tr><td>d463</td><td class="holdc">recorded yes · would HOLD</td><td>Bought VM $56; emailed $73.65 comparison. Old gold wanted $63.49 fee strings. <b>FIX-VERIFIER.</b></td></tr>
 </tbody></table></div></section>
 {taxonomy_legend()}
 <div class="docket">{''.join(rows)}</div>
