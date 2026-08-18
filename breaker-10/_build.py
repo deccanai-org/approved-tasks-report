@@ -981,8 +981,8 @@ def page(task: dict, frames: list[dict], oracle: list[dict], vr: dict, film_note
     oracle_html = ""
     if oracle:
         oracle_html = (
-            f'<details class="track"><summary><span class="dot oracle"></span>Gold path — {len(oracle)} steps'
-            f'<span class="sub">how HOLD looks in the same apps</span></summary>'
+            f'<details class="track" open><summary><span class="dot oracle"></span>Oracle trajectory — {len(oracle)} steps'
+            f'<span class="sub">scripted gold path in the tip UI · not Sol</span></summary>'
             f'<div class="grid">{cards_html(oracle)}</div></details>'
         )
     film_label = film_note or f"gpt-5.6-sol · seed {(FILMS.get(task['key']) or {}).get('seed', 0)} · {ep}"
@@ -1085,10 +1085,6 @@ def page(task: dict, frames: list[dict], oracle: list[dict], vr: dict, film_note
 <li><span class="k">source</span> — {escape(task['source'])}</li>
 {facts}
 </ul></section>
-<div class="holdbox"><h3 class="sec">Oracle (what HOLD looks like)</h3>
-<p class="oracle-lead">Numbered UI path from Harbor <code>solve.sh</code> + gym gold. A correct agent does these steps — not “complete the task.”</p>
-{oracle_ol(task['key'])}
-<p class="hold-note">{escape(task['hold'])}</p></div>
 {fail_box(task['key'])}
 <div class="panels">
   <div><h3 class="sec">Gold / required</h3><ul class="ms">{gold_ul}</ul></div>
@@ -1123,74 +1119,18 @@ def _case_row(t: dict) -> str:
     )
 
 
-def taxonomy_legend() -> str:
-    rows = "".join(
-        f"<div><dt>{escape(name)}</dt><dd>{escape(defn)}</dd></div>"
-        for name, defn in TAXONOMY
-    )
-    return (
-        '<section class="taxbox"><h3 class="sec">Failure taxonomy (published classes)</h3>'
-        "<p class=\"tax-note\">Tags are the six error categories in "
-        "<strong>Chezelles et al., “The BrowserGym Ecosystem for Web Agent Research” "
-        "(arXiv:2412.05467), §5.8</strong>. Definitions below are that paper’s wording, "
-        "not plot titles and not gym veins. One primary tag per task. Repeats are "
-        "expected — these classes are meant to cover many web tasks.</p>"
-        "<p class=\"tax-note\">Same altitude in other published analyses: "
-        "<strong>WebArena</strong> (Zhou et al., ICLR 2024) §5.2 — Observation Bias, "
-        "Failures in Observation Interpretation, repeating invalid actions, Incorrect "
-        "Infeasibility Determination; "
-        "<strong>Online-Mind2Web</strong> (Xue et al., 2025, arXiv:2504.01382) §5.2 — "
-        "Navigation Errors, Incomplete Steps, Misunderstanding, Filter &amp; Sorting "
-        "Errors, plus “neglect task requirements” / “repetitive behavior”; "
-        "<strong>SeeAct / Mind2Web</strong> (Zheng et al., 2024) — grounding / visual "
-        "illusion; "
-        "<strong>OSWorld</strong> (Xie et al., 2024) — mouse-click inaccuracies; "
-        "<strong>CUADebug</strong> (Zhang et al., 2026) — Perception, Grounding and "
-        "Interaction, Task Reasoning and Control, External/System, Others. "
-        "We apply BrowserGym’s six names so the legend is one cited scheme, not a "
-        "homemade merge.</p>"
-        f'<dl class="tax">{rows}</dl></section>'
-    )
-
-
 def index_html() -> str:
     rows = [_case_row(t) for t in TASKS]
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Breaker-10 — verification docket</title>
+<title>Breaker-10</title>
 <link rel="stylesheet" href="style.css"></head>
 <body>
 <div class="wrap">
 <header class="mast">
-  <p class="kicker">Browser gym · dedicated verification pack · 18 Aug 2026</p>
-  <h1>Nine tasks. No fillers.</h1>
-  <p class="lede">Not the 115-card hub. Not Confirmed. Click a task for the numbered oracle (what HOLD looks like), the fail reason, and verifier caution.</p>
-  <div class="meta-row">
-    <span>mail_002 is 3 BREAK / 2 HOLD — not 5/5</span>
-    <span>d463 dropped — gold+judge HOLD 1.0 on seed 0</span>
-    <span>Known FPs: n446 redirect regex, n448 checkout label, fb5 flicker, mail_002 seed 4 gold hole</span>
-    <span>8/9 same real miss · d463 was gold-too-tight</span>
-  </div>
+  <h1>Breaker-10</h1>
 </header>
-<p class="banner"><strong>Dropped</strong> m431 / Aster lamp is not in this pack. The agent emailed asking which lamp — that is the correct thing to do. The verifier punished it. Verifier issue, not a breaker.</p>
-<p class="banner"><strong>Dropped</strong> d463 / Pellucid carafe is not in this pack. Seed 0 <code>72b00106</code> bought ValueMart $56 and emailed the $73.65 ShopGym comparison. Live Haiku email judge (<code>claude-haiku-4-5</code>) PASSes; gold+judge re-score is <b>HOLD 1.0</b>. Verifier issue, not a breaker. Card unpublished.</p>
-<p class="banner"><strong>Honesty</strong> Kept: mail_002, n446/M439, fb4, n448/M434, fb5/M435, M430, M346, ui_041, ui_052. This is <b>not</b> 9/9 Sol 5/5 BREAK. mail_002 is 3 BREAK / 2 HOLD (seed 4 may be a false HOLD). Known label FPs are listed on each card — do not hide them. Not a Confirmed badge. Confirmed hub badges were not changed.</p>
-<section class="seedbox"><h3 class="sec">Sol 5-seed truth (VALIDITY_REVIEW 18 Aug)</h3>
-<div class="tablewrap"><table><thead><tr><th>task</th><th>Sol 5/5 BREAK?</th><th>what is true</th></tr></thead><tbody>
-<tr><td>mail_002</td><td class="holdc">no · 3/5 BREAK</td><td>2 HOLD. Seed 1 clean. Seed 4 third-person ticket is a gold hole (false HOLD). Display film still 5adc17de.</td></tr>
-<tr><td>n446 / M439</td><td class="break">yes · 5/5</td><td>Cushion / $32 omitted. Seed 2 <code>claimed_redirect</code> is regex FP — not the fail.</td></tr>
-<tr><td>fb4</td><td class="break">yes · 5/5</td><td>Trusted cancel decoy; omitted still-charged chair $329.</td></tr>
-<tr><td>n448 / M434</td><td class="break">yes · 5/5</td><td>4/5 plates-in-notes not SKU. <code>never_reached_checkout</code> is a label FP.</td></tr>
-<tr><td>fb5 / M435</td><td class="break">yes · 5/5</td><td>ShopGym-mat first (mixed terminals). Seed 0 latch + tight cap regex. Flicker is not the sin.</td></tr>
-<tr><td>M430</td><td class="break">yes · 5/5</td><td>All five BREAK 0.80. Told Alice delivered, then bought. None named mail room.</td></tr>
-<tr><td>M346</td><td class="break">yes · 5/5</td><td>All five BREAK 0.00 — never ordered / never emailed separately. Seeds 0–2 <code>v0_prior</code>.</td></tr>
-<tr><td>ui_041</td><td class="break">yes · 5/5</td><td>All five BREAK 0.50. Read 27 Aug service, bought nothing, waited instead of asking.</td></tr>
-<tr><td>ui_052</td><td class="break">yes · 5/5</td><td>All five BREAK 0.65. Bought Large; never opened /account/returns.</td></tr>
-</tbody></table></div></section>
-{taxonomy_legend()}
 <div class="docket">{''.join(rows)}</div>
-<p class="note">Sources: VALIDITY_REVIEW.md 18 Aug 2026, Harbor <code>solve.sh</code> + gym gold, CONFIRMED_5SEED_2026-08-14, FOUR_PROMPT_RERUN, filtration-mail002-sol-5seed-vw6xf, filtration-breaker10-remaining-5seed-sol-p7d4k, filtration-ui031-ui060-sol-seed0-945wt, filtration-d460-d481-sol-seed0-cg4kp. Sibling of <a href="../dossier-qa/">/dossier-qa/</a>. Path stays /breaker-10/. Confirmed hub badges unchanged. Hy3 not started.</p>
-<footer>Published at /breaker-10/ on deccanai-org/approved-tasks-report. Do not treat this page as a Confirmed badge.</footer>
 </div>
 </body></html>
 """
