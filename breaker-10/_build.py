@@ -965,7 +965,7 @@ def extra_tracks_html(tracks: list[dict]) -> str:
         ep = track.get("episode", "")
         note = track.get("note") or f"gpt-5.6-sol · seed {seed} · {ep}"
         bits.append(
-            f'<details class="track"><summary><span class="dot agent"></span>Sol seed{seed} film — {len(frames)} steps'
+            f'<details class="track"><summary><span class="dot agent"></span>Sol BREAK seed{seed} film — {len(frames)} steps'
             f'<span class="sub">{escape(note)}</span></summary>'
             f'<div class="grid">{cards_html(frames) if frames else "<p>No screenshot film for this episode.</p>"}</div></details>'
         )
@@ -985,9 +985,14 @@ def page(task: dict, frames: list[dict], oracle: list[dict], vr: dict, film_note
             f'<span class="sub">scripted gold path in the tip UI · not Sol</span></summary>'
             f'<div class="grid">{cards_html(oracle)}</div></details>'
         )
+    elif task.get("oracle_blocked"):
+        oracle_html = (
+            f'<p class="oracle-blocked">Oracle trajectory not captured — '
+            f'{escape(task["oracle_blocked"])}</p>'
+        )
     film_label = film_note or f"gpt-5.6-sol · seed {(FILMS.get(task['key']) or {}).get('seed', 0)} · {ep}"
     agent_html = (
-        f'<details class="track" open><summary><span class="dot agent"></span>Agent/Sol path — {len(frames)} steps'
+        f'<details class="track" open><summary><span class="dot agent"></span>Sol BREAK film — {len(frames)} steps'
         f'<span class="sub">{escape(film_label)}</span></summary>'
         f'<div class="grid">{cards_html(frames) if frames else "<p>No screenshot film for this episode.</p>"}</div></details>'
     )
@@ -1171,9 +1176,49 @@ def ingest_all() -> dict:
                 "frames": ex_frames,
             })
             print(f"  extra seed{seed} {sum(1 for f in ex_frames if f['thumb'])}/{len(ex_frames)}")
-        galleries[key] = {"agent": frames, "oracle": [], "note": spec.get("film_note", ""), "extra": extra}
+        oracle_frames, oracle_blocked = ingest_oracle_film(key)
+        galleries[key] = {
+            "agent": frames,
+            "oracle": oracle_frames,
+            "oracle_blocked": oracle_blocked,
+            "note": spec.get("film_note", ""),
+            "extra": extra,
+        }
         print(f"  agent {sum(1 for f in frames if f['thumb'])}/{len(frames)}")
+        print(f"  oracle {sum(1 for f in oracle_frames if f['thumb'])}/{len(oracle_frames)}"
+              + (f" blocked={oracle_blocked}" if oracle_blocked else ""))
     return galleries
+
+
+def ingest_oracle_film(key: str) -> tuple[list[dict], str]:
+    raw = RAW / "oracle_ui" / key
+    meta_path = raw / "steps.json"
+    dest = ASSETS / key / "oracle"
+    if not meta_path.is_file():
+        return [], "not captured yet"
+    meta = json.loads(meta_path.read_text())
+    if meta.get("blocked") or meta.get("success") is not True:
+        return [], str(meta.get("blocked") or meta.get("error") or "gold scorer did not HOLD")
+    pngs = sorted(raw.glob("step_*.png"))
+    if not pngs:
+        return [], "gold HOLD recorded but no screenshots"
+    names = encode_pngs(raw, dest)
+    ann = {int(s.get("step", i)): s for i, s in enumerate(meta.get("steps") or [])}
+    frames = []
+    for i, tname in enumerate(names):
+        st = ann.get(i) or {}
+        act = st.get("action") or f"oracle step {i}"
+        why = st.get("reasoning") or ""
+        frames.append({
+            "step": i,
+            "app": st.get("app") or infer_app(st),
+            "what": act,
+            "why": why,
+            "act": act,
+            "thumb": f"assets/{key}/oracle/thumbs/{tname}",
+            "full": f"assets/{key}/oracle/full/{tname}",
+        })
+    return frames, ""
 
 
 def main() -> None:
@@ -1187,6 +1232,7 @@ def main() -> None:
         vr = dict(traj.get("verifier_result") or {})
         vr["n_steps"] = len(traj.get("steps") or [])
         task["display_ep"] = spec.get("episode") or "—"
+        task["oracle_blocked"] = gal.get("oracle_blocked") or ""
         (OUT / f"{key}.html").write_text(page(task, gal["agent"], gal.get("oracle") or [], vr, gal.get("note") or "", gal.get("extra") or []))
         print("wrote", key)
     print("done")

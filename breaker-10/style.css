@@ -229,6 +229,13 @@ ol.oracle {
 ol.oracle li { margin: .45rem 0; font-size: 15.5px }
 ol.oracle.compact { font-size: 14.5px; margin: 8px 0 12px; max-width: 78ch }
 ol.oracle.compact li { margin: .32rem 0 }
+.oracle-blocked {
+  border: 1px dashed var(--rule);
+  padding: 12px 14px;
+  color: var(--muted);
+  font-size: 15px;
+  max-width: 80ch;
+}
 .oracle-h {
   font-family: var(--mono);
   font-size: 11px;
