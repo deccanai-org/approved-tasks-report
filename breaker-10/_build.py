@@ -1112,28 +1112,13 @@ def tags_html(tags: list[str]) -> str:
 
 
 def _case_row(t: dict) -> str:
-    f = FAIL.get(t["key"]) or {}
-    caution = f.get("caution") or ""
-    caution_p = (
-        f'<p class="caution"><b>Verifier caution.</b> {escape(caution)}</p>'
-        if caution else ""
-    )
-    fail_p = (
-        f'<p class="display-fail"><b>Display-seed fail.</b> {escape(f.get("display") or "")}</p>'
-        if f.get("display") else ""
-    )
-    same = f'<p class="sameerr"><b>Same error across seeds?</b> {escape(f.get("same_error") or "")}</p>' if f.get("same_error") else ""
+    # Index stays a short link-row. Oracle + fail-reason live on the task page.
     return (
         f'<a class="case-row" href="{t["key"]}.html">'
         f'<div class="num">{t["n"]}</div>'
         f'<div><h2>{escape(t["title"])}</h2>'
         f'<p class="mech">{escape(t["mech"])}</p>'
-        f'<div class="fmtags">{tags_html(t.get("fm_tags") or [])}</div>'
-        f'<div class="ids">{escape(t["id"])} · {escape(t["aka"])}</div>'
-        f'<div class="seeds">{escape(t["consensus"])} · display {escape(str((FILMS.get(t["key"]) or {}).get("episode") or "—"))}</div>'
-        f'<h3 class="oracle-h">Oracle (what HOLD looks like)</h3>'
-        f'{oracle_ol(t["key"], "oracle compact")}'
-        f'{fail_p}{same}{caution_p}'
+        f'<div class="ids">{escape(t["id"])} · {escape(t["aka"])} · {escape(t["consensus"])}</div>'
         f'</div><div class="stamp">{escape(t["disp"])} {escape(t["score"])}</div></a>'
     )
 
@@ -1179,7 +1164,7 @@ def index_html() -> str:
 <header class="mast">
   <p class="kicker">Browser gym · dedicated verification pack · 18 Aug 2026</p>
   <h1>Nine tasks. No fillers.</h1>
-  <p class="lede">Not the 115-card hub. Not Confirmed. Each card now has the full numbered oracle (what HOLD looks like) and a hunt-the-mishap fail box. Review the gold path here — you do not need gym source.</p>
+  <p class="lede">Not the 115-card hub. Not Confirmed. Click a task for the numbered oracle (what HOLD looks like), the fail reason, and verifier caution.</p>
   <div class="meta-row">
     <span>mail_002 is 3 BREAK / 2 HOLD — not 5/5</span>
     <span>d463 dropped — gold+judge HOLD 1.0 on seed 0</span>
