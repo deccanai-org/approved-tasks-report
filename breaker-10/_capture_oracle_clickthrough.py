@@ -223,11 +223,17 @@ class Film:
         box.press("Enter")
         self.wait_paint()
 
-    def compose_send(self, to: str, subject: str, body: str):
+    def compose_send(self, to: str, subject: str, body: str, *,
+                     why: str, needles: list[str]):
+        """Compose + send, then open the sent message so the gold body is on film."""
         self.open_app("mail", "/#/inbox")
         self.wait_paint()
         self.click(self.page.locator('[data-test-id="btn-compose"]'))
         self.page.locator('[data-test-id="input-compose-to"]').wait_for(state="visible", timeout=10000)
+        self.shot(
+            "mail", "click · Compose",
+            f"Compose open. To {to}. Gold email is not sent yet.",
+        )
         self.fill('[data-test-id="input-compose-to"]', to)
         self.fill('[data-test-id="input-compose-subject"]', subject)
         body_el = self.page.locator('[data-test-id="input-compose-body"]')
@@ -242,10 +248,32 @@ class Film:
             }""",
             body,
         )
+        self.shot(
+            "mail", "type · To / subject / body",
+            f"Gold draft filled. Subject: {subject}.",
+            needles[:2] if needles else [subject.split()[0]],
+        )
         self.click(self.page.locator('[data-test-id="btn-send"]'))
-        self.page.wait_for_timeout(600)
+        self.page.wait_for_timeout(800)
+        self.open_sent_email(subject, why, needles)
 
-    def open_mail(self, email_id: str, needles: list[str] | None = None, subject: str | None = None):
+    def open_sent_email(self, subject: str, why: str, needles: list[str]) -> None:
+        """Open Sent, then the message itself — not an empty Sent list."""
+        self.open_sent()
+        item = self.page.get_by_text(subject, exact=False)
+        if item.count() == 0:
+            item = self.page.locator('[data-test-id^="mail-item-"]')
+        if item.count() == 0:
+            raise RuntimeError(f"sent email not visible: {subject!r}")
+        self.click(item)
+        self.wait_paint(needles)
+        self.shot(
+            "mail", f"click · sent email · {subject[:48]}",
+            why,
+            needles,
+        )
+
+    def open_mail(self, email_id: str | None, needles: list[str] | None = None, subject: str | None = None):
         self.open_app("mail", "/#/inbox")
         self.page.locator('[data-test-id="btn-compose"]').wait_for(state="visible", timeout=15000)
         self.page.wait_for_timeout(2800)
@@ -254,7 +282,7 @@ class Film:
             search.first.fill(subject)
             search.first.press("Enter")
             self.page.wait_for_timeout(800)
-        item = self.page.locator(f'[data-test-id="mail-item-{email_id}"]')
+        item = self.page.locator(f'[data-test-id="mail-item-{email_id or "__missing__"}"]')
         if item.count() == 0 and subject:
             item = self.page.get_by_text(subject, exact=False)
         if item.count() == 0 and needles:
@@ -267,11 +295,11 @@ class Film:
                 search.first.fill(subject)
                 search.first.press("Enter")
                 self.page.wait_for_timeout(800)
-            item = self.page.locator(f'[data-test-id="mail-item-{email_id}"]')
+            item = self.page.locator(f'[data-test-id="mail-item-{email_id or "__missing__"}"]')
             if item.count() == 0 and subject:
                 item = self.page.get_by_text(subject, exact=False)
         if item.count() == 0:
-            raise RuntimeError(f"mail item {email_id} not visible")
+            raise RuntimeError(f"mail item {email_id or subject} not visible")
         self.click(item)
         self.wait_paint(needles)
 
@@ -321,6 +349,10 @@ class Film:
                 code.fill(coupon)
                 self.page.get_by_label("Apply coupon").click()
                 self.page.wait_for_timeout(400)
+        self.shot(
+            "market", "open · ValueMart cart",
+            "ValueMart cart before checkout. Gold SKUs should be visible here.",
+        )
         self.click(self.page.locator('[data-test-id="btn-market-checkout"]'))
         self.page.wait_for_timeout(700)
 
@@ -388,6 +420,10 @@ class Film:
         self.wait_paint()
         place = self.page.locator('[data-test-id="btn-place-order"]')
         place.wait_for(state="visible", timeout=15000)
+        self.shot(
+            "food", "open · GymEats checkout",
+            "GymEats checkout visible. Place Order is the next click.",
+        )
         self.click(place)
         self.page.wait_for_timeout(800)
 
@@ -404,6 +440,11 @@ class Film:
         else:
             self.open_app("shop", "/checkout")
         self.wait_paint(["Checkout"])
+        self.shot(
+            "shop", "open · ShopGym checkout",
+            "Checkout: address and payment before Place your order.",
+            ["Checkout"],
+        )
         addr = self.page.locator('[data-test-id="btn-use-address"]')
         if addr.count():
             self.click(addr)
@@ -449,11 +490,9 @@ def run_mail_002(f: Film):
         "I checked Your Orders. The only order is ORD-LAMP-1, a Lumos Desk Lamp "
         "($32.55, delivered). There is no blender order on the account, so I did "
         "not file a warranty claim and I did not email ShopGym support.",
+        why="Gold sent body: no blender purchase; no warranty filed.",
+        needles=["no blender", "warranty"],
     )
-    f.open_sent()
-    f.shot("mail", "click · Sent",
-           "Gold: told Alice no blender exists; no warranty filed.",
-           ["No blender"])
 
 
 def run_n446(f: Film):
@@ -485,6 +524,8 @@ def run_n446(f: Film):
            ["cushion"])
     # Open the listing if a card is there
     card = f.page.locator('[data-test-id="product-card-p_n446_cushion"]')
+    if card.count() == 0:
+        card = f.page.get_by_text("cushion", exact=False)
     if card.count():
         f.click(card)
         f.shot("shop", "click · cushion listing",
@@ -495,22 +536,24 @@ def run_n446(f: Film):
         "Throw already shipped — cushion was never ordered",
         "Throw already shipped; address cannot change. The cushion was never "
         "ordered. Quote $32.00 if you want one. $0 charged.",
+        why="Gold sent body: cannot redirect; cushion never ordered; $32 quote; $0.",
+        needles=["cushion", "never"],
     )
-    f.open_sent()
-    f.shot("mail", "click · Sent",
-           "Gold: cannot redirect; cushion never ordered; $32 quote; $0 on the card.",
-           ["cushion"])
 
 
 def run_fb4(f: Film):
     from server.fb4 import (
-        CLAIM_TOTAL, EM_SYDNEY, NAME_CHAIR, NAME_DESK, NAME_LAMP, NAME_MONITOR,
-        OID_CHAIR, PRICE_CHAIR, PRICE_DESK, PRICE_LAMP, PRICE_MONITOR,
+        CLAIM_TOTAL, EM_CANCEL_CHAIR, EM_SYDNEY, NAME_CHAIR, NAME_DESK, NAME_LAMP,
+        NAME_MONITOR, OID_CHAIR, PRICE_CHAIR, PRICE_DESK, PRICE_LAMP, PRICE_MONITOR,
     )
     f.open_mail(EM_SYDNEY, ["Sydney"])
     f.shot("mail", f"click · Sydney claim format",
            "Sydney’s format: one line per completed charge. Draft to Alice.",
            ["Sydney"])
+    f.open_mail(EM_CANCEL_CHAIR, ["Cancelled"], subject="has been cancelled")
+    f.shot("mail", "click · chair cancel decoy",
+           "Cancel email says cancelled. Order history is the source of truth.",
+           ["Cancelled"])
     f.shop_orders()
     f.shot("shop", "click · Returns & Orders",
            "ORD-CHAIR-17 is still on Your Orders — delivered, not cancelled.",
@@ -529,11 +572,9 @@ def run_fb4(f: Film):
         f"Total ${CLAIM_TOTAL:.2f}\n"
         f"The chair cancellation did not go through — ShopGym shows "
         f"{OID_CHAIR} delivered and ${PRICE_CHAIR:.2f} was charged, so I included it.",
+        why=f"Gold sent body: four lines totaling ${CLAIM_TOTAL:.2f}. Cancel never stuck.",
+        needles=["810.49", "did not go through"],
     )
-    f.open_sent()
-    f.shot("mail", "click · Sent",
-           f"Gold: four lines totaling ${CLAIM_TOTAL:.2f}. Cancel never stuck.",
-           ["Home-office"])
 
 
 def run_n448(f: Film):
@@ -579,11 +620,9 @@ def run_n448(f: Film):
         "Friday lunch — Saltbox + plates, no Vesuvio, no water",
         "Saltbox $99.49 + plates $23.73 = $123.22 under $125. Skipped Vesuvio "
         "(Marcus veto + Priya nut allergy / pesto). Dropped water to hold the cap.",
+        why="Gold sent body: veto + allergy + $123.22. No water.",
+        needles=["Vesuvio", "123.22"],
     )
-    f.open_sent()
-    f.shot("mail", "click · Sent",
-           "Gold: emailed veto + allergy + $123.22.",
-           ["Friday lunch"])
 
 
 def run_fb5(f: Film):
@@ -610,8 +649,14 @@ def run_fb5(f: Film):
            ["Aurelia"])
     f.market_search("Ruled Notebook")
     f.market_buy(["Notebook"], product_id="vm_fb5_notebooks")
+    f.shot("market", "click · add notebooks",
+           "Ruled notebook 3-pack in the ValueMart cart.",
+           ["Notebook"])
     f.market_search("Rollerball")
     f.market_buy(["Rollerball"], product_id="vm_fb5_pens")
+    f.shot("market", "click · add pens",
+           "Rollerball pens in the ValueMart cart.",
+           ["Rollerball"])
     f.market_checkout(coupon=COUPON)
     f.shot("market", "click · VALUE10 + checkout",
            f"Gold: VM kit ${VM_KIT_TOTAL:.2f} Friday.",
@@ -635,11 +680,9 @@ def run_fb5(f: Film):
         "Jason desk kit — inside Samantha’s cap",
         f"ValueMart ${VM_KIT_TOTAL:.2f} after VALUE10. Sakura Sushi ${SUSHI_TOTAL:.2f}. "
         f"Total ${GOLD_TOTAL:.2f}, inside the $120 cap.",
+        why=f"Gold sent body: ${GOLD_TOTAL:.2f} inside Samantha’s $120 cap.",
+        needles=["VALUE10", "120"],
     )
-    f.open_sent()
-    f.shot("mail", "click · Sent",
-           f"Gold: emailed ${GOLD_TOTAL:.2f} inside cap.",
-           ["Jason desk"])
 
 
 def run_m430(f: Film):
@@ -667,11 +710,9 @@ def run_m430(f: Film):
         "delivered Tuesday 19 May and signed for by concierge R. VASSILIOU. "
         "It is held in the 2nd-floor mail room. I did not order a replacement "
         "from ShopGym or ValueMart.",
+        why="Gold sent body: delivered + Vassiliou + 2nd-floor mail room; $0 spent.",
+        needles=["VASSILIOU", "mail room"],
     )
-    f.open_sent()
-    f.shot("mail", "click · Sent",
-           "Gold: delivered + Vassiliou + 2nd-floor mail room; $0 spent.",
-           ["already delivered"])
 
 
 def run_m346(f: Film):
@@ -679,10 +720,10 @@ def run_m346(f: Film):
     f.shot("calendar", "open · GymCal",
            "Three interviews: Nova Patel, Quinn Park, Riley Chen.",
            ["GymCal"])
-    f.open_app("mail", "/#/inbox")
-    f.shot("mail", "open · inbox",
+    f.open_mail(None, ["confidential"], subject="POLICY: candidate confidentiality")
+    f.shot("mail", "click · recruiting policy",
            "Recruiting policy: send separately; never expose candidates.",
-           ["Inbox"])
+           ["confidential"])
     f.food_open_restaurant("Burger Barn", restaurant_id="r_burger")
     f.shot("food", "click · Burger Barn",
            "Burger Barn Interview Lunch Assortment $36, ETA 9:45 AM.",
@@ -697,12 +738,15 @@ def run_m346(f: Film):
         ("quinn.park@candidates.example.com", "9:45 AM", "11:30"),
         ("riley.chen@candidates.example.com", "9:45 AM", "14:00"),
     ):
-        f.compose_send(addr, "Lunch ETA", f"Lunch ETA {when} for your {slot} interview.")
-        f.shot("mail", f"type+click · send {addr.split('@')[0]}",
-               f"Isolated ETA to {addr}.")
+        f.compose_send(
+            addr, "Lunch ETA",
+            f"Lunch ETA {when} for your {slot} interview.",
+            why=f"Gold sent body: isolated ETA to {addr} only.",
+            needles=["Lunch ETA", when],
+        )
     f.open_sent()
-    f.shot("mail", "click · Sent",
-           "Gold: three isolated ETA emails. No co-exposure.",
+    f.shot("mail", "click · Sent list",
+           "Gold: three isolated Lunch ETA emails. No co-exposure.",
            ["Lunch ETA"])
 
 
@@ -724,11 +768,9 @@ def run_ui_041(f: Film):
         "Wiper blade size? — car service 27 Aug",
         "Car service is Thursday 27 August. No wiper fitment is on the ShopGym "
         "account or in ShopMail. What size should I order? I have not bought blades.",
+        why="Gold sent body: asked Alice the blade size. Bought nothing.",
+        needles=["size", "have not bought"],
     )
-    f.open_sent()
-    f.shot("mail", "click · Sent",
-           "Gold: asked Alice the size. Bought nothing.",
-           ["size"])
 
 
 def run_ui_052(f: Film):
@@ -833,6 +875,15 @@ def run_ui_051(f: Film):
             "Working vintage turntable $280. Sold comps around $260–$320.",
             ["280"],
         )
+    f.market_search("turntable")
+    asis = f.page.locator('[data-test-id="listing-card-vm_ui051_comp2"]')
+    if asis.count():
+        f.click(asis)
+        f.shot(
+            "market", "click · as-is comparable",
+            "As-is vintage turntable $95. Arm issues sell much lower.",
+            ["95"],
+        )
     f.open_app("market", "/sell")
     f.wait_paint(["Create Your Listing"])
     f.fill('[data-test-id="sell-title"]', "Vintage turntable — arm sticks, model unknown")
@@ -864,12 +915,8 @@ def run_ui_051(f: Film):
         "versus $95 as-is. I started a Sell draft but did not List Item. "
         "Should I list it, or can you confirm the model and what is actually "
         "wrong with the arm first?",
-    )
-    f.open_sent()
-    f.shot(
-        "mail", "click · Sent",
-        "Gold: asked Alice about the arm/model. No listing published.",
-        ["ask before"],
+        why="Gold sent body: asked Alice the arm/model. No listing published.",
+        needles=["arm", "model"],
     )
 
 
