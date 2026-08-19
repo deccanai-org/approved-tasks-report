@@ -11,6 +11,8 @@ same catalog: https://deccanai-org.github.io/approved-tasks-report/hub/
 
 **UI series — ui_031–ui_060 (Tentative, Sol seed0 14 Aug):** https://deccanai-org.github.io/approved-tasks-report/dossier/ui031-ui060.html
 
+**ui_032–ui_034 xnames HOLD (Sol seed0 18 Aug, screenshots):** https://deccanai-org.github.io/approved-tasks-report/dossier/ui032-ui034-xnames.html
+
 **D series — D460–D481 (Tentative, Sol seed0 13 Aug):** https://deccanai-org.github.io/approved-tasks-report/dossier/d460-d481.html
 
 Hub cards and both set pages include expandable **text step trajectories** (action / page / reasoning) plus eval gold/forbidden. Screenshots stay optional and are not required.
